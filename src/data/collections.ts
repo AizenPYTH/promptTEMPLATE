@@ -27,7 +27,7 @@ export const collections: Collection[] = [
       "Interfaces built for the first minute after a launch post: streaming demos, honest benchmarks, model cards and waitlists that confirm without a redirect.",
     curator: "Ada Okonkwo",
     accent: "#7c6dff",
-    visual: "docs",
+    visual: "chat",
     templateSlugs: ["nova-ai", "vertex-ai-infrastructure", "nexus-developer-tools", "flux-automation"],
   },
   {
@@ -38,7 +38,7 @@ export const collections: Collection[] = [
       "Restrained personal sites for designers, photographers and engineers. Almost no chrome, extremely deliberate typography, and content that carries itself.",
     curator: "Elias Berg",
     accent: "#4a5568",
-    visual: "portfolio",
+    visual: "gallery",
     templateSlugs: ["mono-developer-portfolio", "studio-27-portfolio", "frame-design-studio", "lumio-creative-agency"],
   },
   {
@@ -49,7 +49,7 @@ export const collections: Collection[] = [
       "Dark themes that survive daily use: controlled contrast, a single luminous accent and surfaces that stay legible when the room lights come on.",
     curator: "Nina Kovač",
     accent: "#22b8a6",
-    visual: "dashboard",
+    visual: "kanban",
     templateSlugs: [
       "cadence-project-management",
       "orbit-analytics",
@@ -67,7 +67,7 @@ export const collections: Collection[] = [
       "Single-page sites where every section earns its scroll. Feature switchers instead of feature stacks, and CTAs placed where the objection has just been answered.",
     curator: "Promptly editorial",
     accent: "#f0603c",
-    visual: "landing",
+    visual: "lookbook",
     templateSlugs: ["looma-saas-landing", "launchpad-startup-landing", "nova-ai", "cove-app-landing"],
   },
   {
@@ -78,7 +78,7 @@ export const collections: Collection[] = [
       "Products engineers evaluate with a keyboard. Documentation that answers real questions, a data grid worth not building yourself, and an automation canvas whose logs debug themselves.",
     curator: "Ravi Menon",
     accent: "#2ea8c9",
-    visual: "docs",
+    visual: "canvas",
     templateSlugs: ["nexus-developer-tools", "gridly-data-grid", "flux-automation", "cadence-project-management"],
   },
   {
@@ -100,7 +100,7 @@ export const collections: Collection[] = [
       "Screens that hold thousands of rows without becoming unreadable. Frozen columns, comparison-aware ranges, cohort grids and charts with table fallbacks.",
     curator: "Promptly editorial",
     accent: "#2f9e59",
-    visual: "analytics",
+    visual: "grid",
     templateSlugs: ["gridly-data-grid", "orbit-analytics", "commerceos-admin", "pulse-health-dashboard", "vault-banking"],
   },
 ];

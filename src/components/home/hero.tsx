@@ -2,15 +2,9 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { ButtonLink } from "@/components/ui/button";
 import { HeroFlow } from "@/components/home/hero-flow";
-import { getTemplate } from "@/data/templates";
-import { buildPrompt } from "@/data/prompts";
 import { catalogTotals } from "@/lib/catalog";
 
 export function Hero() {
-  const template = getTemplate("nova-ai");
-  if (!template) return null;
-  const samplePrompt = buildPrompt(template, "claude-code");
-
   return (
     <section className="relative overflow-hidden border-b border-line">
       <div className="pointer-events-none absolute inset-0 grid-backdrop [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]" aria-hidden />
@@ -63,7 +57,7 @@ export function Hero() {
           </div>
 
           <div className="lg:pl-4">
-            <HeroFlow template={template} samplePrompt={samplePrompt} />
+            <HeroFlow slug="nova-ai" />
           </div>
         </div>
       </Container>

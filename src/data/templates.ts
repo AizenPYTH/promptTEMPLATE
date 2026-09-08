@@ -61,6 +61,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A cash-flow and spend platform for finance teams at 50-500 person companies.",
       audience: "Heads of finance and controllers evaluating three vendors in one afternoon.",
+      designDirection:
+        "Institutional calm. This is a page a controller reads with a procurement checklist open in the next tab, so credibility comes from precision rather than personality: exact numbers, honest screenshots, no illustration doing the work a product surface should do. Think of a well-set annual report that happens to be a website — generous margins, one blue, and figures that hold still while you read them.",
+      visualLanguage: [
+        "Rectangular geometry with small radii. Cards are separated by a single hairline border, never by a shadow",
+        "Exactly one shadow level, used only on the floating mega-menu panel",
+        "No illustration and no stock photography. Every visual is a framed product surface built in HTML",
+        "Icons are 1.5px stroke, 16 or 20px, used only where a label alone would be ambiguous",
+        "Data is always presented with its unit and its source label; a number never floats alone",
+      ],
+      layout: [
+        "1200px content container with 24px gutters, centred, on a white canvas",
+        "12-column grid on desktop; feature rows alternate 5/7 and 7/5 text-to-surface",
+        "Sticky header 64px tall, gaining a hairline bottom border after 8px of scroll",
+        "Sections separated by 96px of vertical space and, where the background does not change, a hairline rule",
+        "The pricing comparison table is full-container width with a sticky first column and sticky header row",
+      ],
       pages: [
         { route: "/", purpose: "Hero, proof bar, three-part product tour, security, testimonial, pricing teaser, CTA." },
         { route: "/product", purpose: "Long-form feature narrative with alternating text and product surface blocks." },
@@ -108,6 +124,25 @@ export const templates: Template[] = [
         "Comparison table rows highlight on hover and are keyboard focusable",
         "Mega-menu opens on hover with a 120ms intent delay and on Enter for keyboard users",
         "FAQ accordion supports Home/End and arrow-key navigation",
+      ],
+      responsive: [
+        "Below 1024px the comparison table becomes three stacked plan cards with the same data, not a horizontally scrolling table",
+        "The mega-menu becomes a full-height drawer with disclosure sections",
+        "Feature rows stack surface-above-text at 768px so the visual still leads",
+        "Metric groups go from four across to two across at 768px and stay two across at 390px",
+      ],
+      technical: [
+        "One plans module drives the pricing cards, the comparison table and the FAQ pricing answers",
+        "Metric counters use requestAnimationFrame with an IntersectionObserver trigger, and render their final value immediately under reduced motion",
+        "Currency and percentage formatting goes through Intl.NumberFormat, never string concatenation",
+        "Product surfaces are components, not images, so they inherit the theme",
+      ],
+      doNot: [
+        "Do not use gradients on text, glow effects, or glassmorphism anywhere",
+        "Do not invent statistics without a source label underneath them",
+        "Do not use more than two font weights on a single screen",
+        "Do not add a testimonial carousel — testimonials are laid out statically",
+        "Do not let a counter animation change the width of its container",
       ],
       content: [
         "Write real finance copy: 'Close the month in four days, not fourteen.' No lorem ipsum.",
@@ -158,11 +193,11 @@ export const templates: Template[] = [
     isNew: false,
     popular: true,
     accent: "#7c6dff",
-    visual: "landing",
+    visual: "chat",
     screenshots: [
-      { id: "hero", label: "Hero", caption: "One-sentence promise beside a streaming answer.", visual: "landing" },
-      { id: "playground", label: "Playground", caption: "Prompt input, model picker, token counter.", visual: "docs" },
-      { id: "benchmarks", label: "Benchmarks", caption: "Comparison table with honest footnotes.", visual: "analytics" },
+      { id: "hero", label: "Hero", caption: "One-sentence promise beside a streaming answer.", visual: "chat" },
+      { id: "playground", label: "Playground", caption: "Prompt input, model picker, token counter.", visual: "terminal" },
+      { id: "benchmarks", label: "Benchmarks", caption: "Comparison table with honest footnotes.", visual: "report" },
       { id: "waitlist", label: "Waitlist", caption: "Inline confirmation, no redirect.", visual: "auth" },
     ],
     demoUrl: null,
@@ -175,6 +210,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A reasoning model for developers, launching with an API waitlist.",
       audience: "Engineers who arrived from a launch post and will decide in under a minute.",
+      designDirection:
+        "A launch page with the confidence to show the product working in the first second. Near-black canvas, one violet accent, and a chat surface that answers a real question before the visitor has scrolled. The restraint is the point: every AI launch page reaches for aurora gradients and 3D orbs, and this one earns attention with a working demo and an honest benchmark table instead.",
+      visualLanguage: [
+        "Near-black canvas at #08080b with surfaces one step lighter; separation comes from a 1px #1e1e26 border, not from shadow",
+        "A single violet accent, used at most three times per viewport — one CTA, one active state, one highlight",
+        "One very subtle grain overlay across the page at 2-3% opacity, CSS only",
+        "Monospace for everything machine-generated: tokens, code, latency figures, model names",
+        "No illustration, no photography, no 3D. The chat surface is the hero image",
+      ],
+      layout: [
+        "1120px container, centred, with 120px between sections on desktop",
+        "Hero splits 45/55: the sentence on the left, the chat surface on the right, aligned to a shared baseline",
+        "Capability cards sit in a three-column grid separated by 1px gutters so they read as one panel",
+        "The benchmark table spans the full container width with the model column left-aligned and all figures right-aligned",
+        "Header is transparent over the hero and gains a blurred background plus a hairline border once scrolled past it",
+      ],
       pages: [
         { route: "/", purpose: "Hero with streaming demo, capabilities, benchmarks, model card, waitlist." },
         { route: "/playground", purpose: "A non-functional but convincing prompt playground with a canned response set." },
@@ -219,6 +270,25 @@ export const templates: Template[] = [
         "Benchmark table sorts client-side and announces the sort with aria-sort",
         "Code tabs remember the last selected language in localStorage",
         "Waitlist form blocks submit until the email regex passes and shows the error under the field",
+      ],
+      responsive: [
+        "Below 900px the hero stacks with the chat surface below the sentence, still above the fold on a 390px screen",
+        "The benchmark table scrolls horizontally inside its own container with the model name column pinned",
+        "Code tabs become a select on mobile rather than a row that wraps",
+        "The chat surface keeps a minimum height so the streaming demo never causes layout shift",
+      ],
+      technical: [
+        "The streaming demo replays a stored string — no network request, no model call, no API key anywhere",
+        "Streaming uses a single interval that is cleared on unmount and skipped entirely under reduced motion",
+        "The benchmark table sorts client-side and sets aria-sort on the active column header",
+        "Total JavaScript for the landing route stays under 120KB gzipped",
+      ],
+      doNot: [
+        "Do not ship a light theme for this template — it is dark only, by design",
+        "Do not use rainbow or aurora gradients, glowing orbs, or particle backgrounds",
+        "Do not claim benchmark results without a methodology footnote on the same page",
+        "Do not autoplay audio or video anywhere",
+        "Do not put the waitlist behind a modal — it is inline on the page",
       ],
       content: [
         "State the model's actual capability in the hero — no 'the future of intelligence'",
@@ -268,12 +338,12 @@ export const templates: Template[] = [
     isNew: false,
     popular: true,
     accent: "#6366f1",
-    visual: "dashboard",
+    visual: "kanban",
     screenshots: [
       { id: "list", label: "Issue list", caption: "Grouped by status with inline priority.", visual: "dashboard" },
-      { id: "detail", label: "Detail pane", caption: "Slides in beside the list, never replaces it.", visual: "settings" },
+      { id: "detail", label: "Detail pane", caption: "Slides in beside the list, never replaces it.", visual: "kanban" },
       { id: "command", label: "Command menu", caption: "Cmd+K over everything, fuzzy matched.", visual: "docs" },
-      { id: "board", label: "Board view", caption: "Drag-free columns with keyboard move.", visual: "analytics" },
+      { id: "board", label: "Board view", caption: "Drag-free columns with keyboard move.", visual: "settings" },
     ],
     demoUrl: null,
     features: [
@@ -285,6 +355,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "An issue tracker for engineering teams who navigate by keyboard.",
       audience: "Software teams of 5-50 who spend hours a day inside the tool.",
+      designDirection:
+        "An application shell built for people who resent their issue tracker. Density is the feature: 32px rows, 13px type, one line of metadata, 20px avatars. Nothing decorative survives, because at four hundred issues every pixel of chrome is a pixel of content lost. The interface should feel closer to a terminal than to a dashboard — instant, quiet, and completely operable without a mouse.",
+      visualLanguage: [
+        "Near-black application chrome with a marginally lighter content surface; the sidebar is the darkest layer",
+        "4px radii on rows and inputs, 8px on panels and dialogs. Nothing rounder",
+        "Status is a filled glyph plus a label, never colour alone",
+        "Icons at 14px with a 1.5px stroke, aligned to the text baseline, never larger than the text beside them",
+        "No shadows in the main layout; only the command menu and dialogs float",
+      ],
+      layout: [
+        "Three regions: a 220px sidebar collapsible to 56px, the list, and a detail pane that slides in at 460px wide",
+        "The list is full-bleed inside its region with 16px horizontal padding — no card wrapper around rows",
+        "Rows are 32px tall in compact mode and 40px in comfortable, toggled from the toolbar and persisted",
+        "Group headers are sticky within the scroll container and carry the group count",
+        "The detail pane never replaces the list on desktop; below 1100px it becomes a full-screen route",
+      ],
       pages: [
         { route: "/inbox", purpose: "Assigned and mentioned issues, grouped by recency." },
         { route: "/issues", purpose: "The main list with filters, grouping and a detail pane." },
@@ -329,6 +415,25 @@ export const templates: Template[] = [
         "J/K move selection, Enter opens, X selects, C creates",
         "Filters serialise into the URL so a view can be shared",
         "Bulk select shows a floating action bar with count and actions",
+      ],
+      responsive: [
+        "Below 1100px the detail pane becomes a full-screen view with a back control that restores the list scroll position",
+        "The sidebar collapses to a slide-over drawer below 900px, opened from a hamburger in the top bar",
+        "The filter bar becomes a horizontally scrolling chip row on mobile with the applied count visible",
+        "Bulk selection is available on mobile through a long-press equivalent: an explicit Select mode toggle",
+      ],
+      technical: [
+        "Virtualise the list — 500 rows must scroll at 60fps on a mid-range laptop",
+        "Keyboard handling lives in one module with a single documented shortcut map that also renders the cheatsheet",
+        "Selected issue and all filters are encoded in the URL so any view can be shared or restored",
+        "Optimistic status changes apply immediately with a five-second undo window in the toast",
+      ],
+      doNot: [
+        "Do not add drag-and-drop — implement keyboard move commands instead",
+        "Do not animate list rows on any state change; they must feel instant",
+        "Do not add a shortcut that has no visible menu equivalent",
+        "Do not use avatars larger than 20px in the list",
+        "Do not put primary actions behind hover-only affordances",
       ],
       content: [
         "Seed 60 realistic issues with plausible titles from an engineering backlog",
@@ -382,8 +487,8 @@ export const templates: Template[] = [
     screenshots: [
       { id: "overview", label: "Overview", caption: "Metric tiles with comparison deltas.", visual: "analytics" },
       { id: "funnel", label: "Funnel", caption: "Step builder with drop-off percentages.", visual: "dashboard" },
-      { id: "retention", label: "Retention", caption: "Single-hue cohort grid.", visual: "settings" },
-      { id: "events", label: "Events", caption: "Live event stream with property inspector.", visual: "docs" },
+      { id: "retention", label: "Retention", caption: "Single-hue cohort grid.", visual: "grid" },
+      { id: "events", label: "Events", caption: "Live event stream with property inspector.", visual: "report" },
     ],
     demoUrl: null,
     features: [
@@ -395,6 +500,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "Self-serve product analytics for growth and product teams.",
       audience: "Product managers and analysts checking numbers every morning.",
+      designDirection:
+        "A dashboard treated as a reading experience rather than a wall of gauges. One date control governs the whole page and carries a comparison window with it, so every tile answers both what and compared to what. Charts are hand-drawn SVG with a restrained teal accent, a single-hue retention scale, and a hidden data table behind each one — because half the people reading this would rather have the numbers.",
+      visualLanguage: [
+        "Deep desaturated green-black canvas with panels one step lighter, separated by hairline borders",
+        "A single teal accent for the active series; every other series is neutral grey at varying opacity",
+        "Retention uses one hue at graduated opacity, never a red-to-green ramp",
+        "6px radii on cards, 4px on controls; no shadows except on the range picker popover",
+        "All figures use tabular numerals so columns align and deltas do not jitter",
+      ],
+      layout: [
+        "An 88px icon rail rather than a full sidebar, so the content region is as wide as possible",
+        "Sticky toolbar holding the date range, the comparison toggle and the saved-view name",
+        "Overview is a six-tile metric row above a full-width trend chart, then a three-panel row beneath",
+        "Panels are 24px apart on a dark canvas with 20px internal padding",
+        "Charts always reserve their full height before data renders so nothing shifts",
+      ],
       pages: [
         { route: "/overview", purpose: "Six metric tiles, a trend chart and a top-pages table." },
         { route: "/funnels", purpose: "Funnel builder with step editor and drop-off visualisation." },
@@ -439,6 +560,25 @@ export const templates: Template[] = [
         "Hovering a chart shows a crosshair and a value readout; arrow keys move it",
         "Funnel steps reorder with keyboard buttons, not drag",
         "Saved views can be renamed inline and deleted with confirmation",
+      ],
+      responsive: [
+        "Metric tiles go six across to three across at 1024px and two across at 640px, never one",
+        "The trend chart keeps a 320px minimum height and drops every other x-axis label below 768px",
+        "The retention grid scrolls horizontally inside its panel with the cohort column pinned",
+        "The date range picker becomes a full-screen sheet below 768px with preset ranges listed first",
+      ],
+      technical: [
+        "One range context provides both the active window and its comparison period to every chart and tile",
+        "Charts are hand-rolled SVG — no charting library in the dependency list",
+        "Every chart renders a visually hidden table with the same data, associated by aria-describedby",
+        "Saved views serialise the whole filter and range state and persist locally",
+      ],
+      doNot: [
+        "Do not add a charting library",
+        "Do not use colour as the only carrier of meaning in any chart",
+        "Do not animate numbers between values — fade the tile instead",
+        "Do not put a metric on the page without its comparison delta",
+        "Do not use a rainbow palette for categorical series",
       ],
       content: [
         "Generate 90 days of plausible daily metrics with weekday seasonality",
@@ -491,7 +631,7 @@ export const templates: Template[] = [
     screenshots: [
       { id: "hero", label: "Statement", caption: "A single sentence at 96px.", visual: "editorial" },
       { id: "index", label: "Work index", caption: "A list that expands on hover.", visual: "portfolio" },
-      { id: "case", label: "Case study", caption: "Running narrative with full-bleed plates.", visual: "landing" },
+      { id: "case", label: "Case study", caption: "Running narrative with full-bleed plates.", visual: "lookbook" },
       { id: "studio", label: "Studio", caption: "Team, values and process.", visual: "docs" },
     ],
     demoUrl: null,
@@ -504,6 +644,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A ten-person brand and digital studio taking on four projects a year.",
       audience: "Marketing directors comparing three studios before a shortlist call.",
+      designDirection:
+        "A studio confident enough to be quiet. The site opens with one sentence at 96px and no imagery at all, then lets the work index do the selling: client, discipline, year, set as a typographic table that reveals a preview plate on hover. Capabilities are written as prose because a studio that cannot write a paragraph about its own practice should not be trusted with a brand.",
+      visualLanguage: [
+        "Warm off-white paper ground with pure white plates for imagery; the contrast between them is the only surface hierarchy",
+        "Zero border radius and zero shadows. Nothing floats",
+        "A high-contrast serif carries every heading; the sans is used only for metadata and body",
+        "The terracotta accent appears at most once per viewport — a hover state, or a single rule",
+        "Images are art-directed: different crops for mobile and desktop, never the same file scaled",
+      ],
+      layout: [
+        "A 12-column grid with 160px between sections on desktop, deliberately asymmetric — text columns sit on columns 1-6 or 7-12, rarely centred",
+        "The work index is a full-width table of rows, each 96px tall, separated by hairlines",
+        "Case studies alternate full-bleed plates with narrow 620px prose columns",
+        "The header is a single row of text links with no background, becoming a hairline-bordered bar on scroll",
+        "Preview plates on the work index are positioned near the cursor at 380x260 and clipped to the row band",
+      ],
       pages: [
         { route: "/", purpose: "Statement hero, work index, capabilities essay, client list, contact band." },
         { route: "/work", purpose: "The full index with discipline and year filters." },
@@ -548,6 +704,25 @@ export const templates: Template[] = [
         "Filters update the index without a page reload and reflect in the URL",
         "Images use a blurred placeholder and fade in on decode",
         "The contact form validates on blur and confirms inline",
+      ],
+      responsive: [
+        "Hover preview plates are suppressed entirely below 1024px; rows show a small static thumbnail instead",
+        "Display type clamps from 96px down to 40px between 1440px and 375px",
+        "Case study two-up blocks become stacked single images at 768px with captions beneath",
+        "Section spacing drops from 160px to 88px at 768px",
+      ],
+      technical: [
+        "Images use a blurred placeholder and fade in on decode, with width and height set to prevent shift",
+        "Work index filters update the URL and re-render without a navigation",
+        "Page transitions fade the content only — the header never re-mounts",
+        "Cumulative layout shift must stay below 0.02",
+      ],
+      doNot: [
+        "Do not use rounded cards, drop shadows, or gradients anywhere",
+        "Do not build the capabilities section as an icon grid — it is prose",
+        "Do not add a hero slideshow or a video background",
+        "Do not centre long-form text; it sits on the grid",
+        "Do not use more than one accent colour occurrence per viewport",
       ],
       content: [
         "Six case studies with real-sounding clients, disciplines and outcome numbers",
@@ -600,7 +775,7 @@ export const templates: Template[] = [
     screenshots: [
       { id: "home", label: "Home", caption: "Intro, now, selected work.", visual: "portfolio" },
       { id: "writing", label: "Writing", caption: "Article layout with a sticky contents.", visual: "editorial" },
-      { id: "project", label: "Project note", caption: "Problem, stack, what broke.", visual: "docs" },
+      { id: "project", label: "Project note", caption: "Problem, stack, what broke.", visual: "terminal" },
       { id: "uses", label: "Uses", caption: "Hardware, editor, terminal.", visual: "settings" },
     ],
     demoUrl: null,
@@ -613,6 +788,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "The personal site of a senior engineer who writes.",
       audience: "Hiring managers, conference organisers and other engineers.",
+      designDirection:
+        "What a working engineer's site should be: one column, one accent, and a monospace metadata spine down the left edge. The restraint is functional rather than fashionable — it builds to static HTML, loads in under a second on a bad connection, and puts the writing first. Project notes include what actually broke, which is the section every portfolio omits and every reader wants.",
+      visualLanguage: [
+        "Near-white paper ground with pure white content; the only surfaces are the code blocks",
+        "Effectively square corners at 2px. No shadows, no cards, no borders except the code block and the spine rule",
+        "A duospace family for both body and metadata — no separate display face anywhere",
+        "The slate accent is used for links and the active table-of-contents item only",
+        "No icons except a single external-link marker",
+      ],
+      layout: [
+        "A single 680px column with a 120px monospace metadata rail to its left on desktop",
+        "The rail collapses above the content on mobile as a single line of metadata",
+        "64px between blocks, 40px on mobile; the article measure is capped at 65 characters",
+        "The table of contents is sticky in the right margin above 1200px and inline at the top of the article below it",
+        "The header is one line: name on the left, three links and the theme toggle on the right",
+      ],
       pages: [
         { route: "/", purpose: "Short intro, a 'now' block and five selected projects." },
         { route: "/writing", purpose: "Reverse-chronological post list with reading times." },
@@ -656,6 +847,25 @@ export const templates: Template[] = [
         "Code blocks copy to clipboard with a fallback for insecure contexts",
         "Theme toggle cycles system → light → dark and persists the choice",
         "Every external link is marked and opens in a new tab",
+      ],
+      responsive: [
+        "Below 1200px the table of contents becomes a collapsed disclosure at the top of the article",
+        "The metadata spine moves above its content block and becomes a single comma-separated line",
+        "Code blocks scroll horizontally inside their own container and never widen the page",
+        "Font size stays at 17px on mobile — do not shrink body text below the desktop size",
+      ],
+      technical: [
+        "Static output only; no server runtime and no client framework beyond the theme toggle and the copy buttons",
+        "Content lives in markdown with typed frontmatter validated at build time",
+        "Total page weight under 60KB excluding fonts; perfect Lighthouse scores in all four categories",
+        "Syntax colouring is applied at build time — no highlighting runtime is shipped",
+      ],
+      doNot: [
+        "Do not add entrance animations of any kind",
+        "Do not add analytics or any third-party script",
+        "Do not use a separate display typeface",
+        "Do not write project notes without a section describing what went wrong",
+        "Do not exceed a 65-character measure in the article body",
       ],
       content: [
         "Write eight real project notes with honest 'what broke' sections",
@@ -719,6 +929,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A direct-to-consumer brand selling forty considered household objects.",
       audience: "Returning customers on mobile and first-time buyers arriving from an editorial link.",
+      designDirection:
+        "A storefront built for forty products rather than forty thousand, so every one of them gets room. Collections read as editorial spreads with wide margins and 4:5 photography; the product page pins the buy panel beside a gallery that scrolls at its own pace. Warmth comes from a sand-toned paper ground and a brass accent, not from colour saturation. The whole flow is slow, tactile and deliberately unhurried until checkout, which is fast.",
+      visualLanguage: [
+        "Sand paper ground with white product plates; borders are warm grey hairlines, never black",
+        "2px radius on cards and 6px on inputs — soft enough to feel considered, sharp enough to feel edited",
+        "Photography is always 4:5 portrait in the grid and 4:5 or full-bleed on the product page. No other ratio exists",
+        "A transitional serif for headings and prices, humanist sans for body; the brass accent is reserved for the primary action",
+        "One shadow level, used only on the cart drawer and the zoom dialog",
+      ],
+      layout: [
+        "1280px container with 32px gutters; the collection grid is three columns on desktop, two at 900px, one at 560px",
+        "The product page splits 58/42: gallery left scrolling normally, buy panel right sticky from 24px below the header",
+        "Checkout is a two-column page — three collapsed steps on the left, a sticky order summary on the right",
+        "The cart drawer is 420px wide, full height, entering from the right over a dimmed page",
+        "96px between homepage sections, with journal entries breaking the grid deliberately",
+      ],
       pages: [
         { route: "/", purpose: "Seasonal story, three collections, best sellers, journal teaser." },
         { route: "/collections/[slug]", purpose: "Filterable grid with sticky filter rail and sort." },
@@ -764,6 +990,25 @@ export const templates: Template[] = [
         "Quantity steppers clamp to stock and disable at the boundary",
         "Filters apply instantly, show as removable chips and sync to the URL",
         "Checkout steps validate on continue and keep completed values visible",
+      ],
+      responsive: [
+        "The buy panel collapses into a sticky bottom bar at 900px showing price, selected variant and add-to-cart",
+        "The gallery becomes a horizontally snapping carousel with dot pagination below 900px",
+        "The order summary moves above the checkout steps as a collapsed disclosure showing only the total",
+        "Filters move from a rail into a bottom sheet that previews the result count before applying",
+      ],
+      technical: [
+        "Cart state lives in a context backed by localStorage and survives a refresh",
+        "Prices are integer minor units with an explicit currency; formatting goes through Intl.NumberFormat",
+        "Variant selection updates price, gallery, availability and the URL together in one state transition",
+        "The pay button opens a demo dialog — there is no payment integration of any kind",
+      ],
+      doNot: [
+        "Do not integrate or simulate a real payment provider",
+        "Do not use any image ratio other than 4:5 in the product grid",
+        "Do not hide the total or the shipping cost until the final checkout step",
+        "Do not add an entry popup, a spin-to-win, or a countdown timer",
+        "Do not let the buy panel scroll out of reach on mobile",
       ],
       content: [
         "Twelve products with real material descriptions, dimensions and care instructions",
@@ -829,6 +1074,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A business bank account for companies that need dual authorisation.",
       audience: "Finance operators moving money several times a week.",
+      designDirection:
+        "An interface where two people have to agree before money moves, and the design says so. Near-black chrome with a single green accent used exclusively for confirmation and positive balance movement. Every amount is monospaced, signed and never truncated. The tone is calm and unglamorous — this is a screen someone uses to approve a forty thousand euro payment on a Friday afternoon, and it should feel like it takes that seriously.",
+      visualLanguage: [
+        "Very dark green-black canvas, panels one step lighter, hairline borders at low contrast",
+        "The green accent means confirmed, approved or incoming. Nothing else is ever green",
+        "Outgoing amounts are neutral with an explicit minus sign; incoming are green with a plus. Sign is never implied by colour alone",
+        "8px radii on cards, 6px on controls, no shadows in the main layout",
+        "Sparklines are 2px strokes without fills, 64x24, aligned to the balance baseline",
+      ],
+      layout: [
+        "220px sidebar, then a content region capped at 1180px so ledger rows never become unreadably wide",
+        "Account cards sit in a row of three at the top, each 220px tall with the balance at 28px",
+        "The ledger is a full-width table with a sticky header, 44px rows and a right-aligned running balance column",
+        "Transfer is a single centred 640px column with the review step replacing the form in place",
+        "The approvals queue is a two-column list: item detail left, approver state and actions right",
+      ],
       pages: [
         { route: "/accounts", purpose: "Account cards, combined balance, recent activity." },
         { route: "/transactions", purpose: "The ledger with filters, running balance and export." },
@@ -874,6 +1135,25 @@ export const templates: Template[] = [
         "Transfer cannot be confirmed without passing the review step",
         "Approvals require a reason when rejecting",
         "Ledger filters serialise to the URL and can be cleared individually",
+      ],
+      responsive: [
+        "The ledger becomes a stacked card list below 900px — counterparty and amount on the first line, date and reference on the second",
+        "Account cards become a horizontally snapping row with the combined balance pinned above them",
+        "The filter rail becomes a full-height sheet with an apply button showing the resulting count",
+        "The transfer review step is full-screen on mobile with the confirm action pinned to the bottom, above the safe area",
+      ],
+      technical: [
+        "Amounts are stored as integer minor units — never floats — and formatted through one money module",
+        "The amount input formats on blur and preserves the caret position while typing",
+        "A transfer cannot reach confirm without passing through the review screen; the route enforces it",
+        "All state is local mock data; nothing resembling a real banking API is called",
+      ],
+      doNot: [
+        "Do not build or call any real payment or banking integration",
+        "Do not use colour as the only indicator of transaction direction",
+        "Do not truncate or abbreviate an amount anywhere in the interface",
+        "Do not allow a destructive action without a confirmation step",
+        "Do not animate balance figures while they can be read",
       ],
       content: [
         "Seed 120 transactions across three accounts with realistic merchants",
@@ -922,11 +1202,11 @@ export const templates: Template[] = [
     isNew: false,
     popular: false,
     accent: "#d8567a",
-    visual: "dashboard",
+    visual: "timeline",
     screenshots: [
       { id: "roster", label: "Roster", caption: "Patient list with acuity indicators.", visual: "dashboard" },
       { id: "vitals", label: "Vitals", caption: "Timeline with reference ranges.", visual: "analytics" },
-      { id: "meds", label: "Medications", caption: "Schedule as a day timeline.", visual: "settings" },
+      { id: "meds", label: "Medications", caption: "Schedule as a day timeline.", visual: "timeline" },
       { id: "notes", label: "Notes", caption: "Structured entries with authors.", visual: "docs" },
     ],
     demoUrl: null,
@@ -939,6 +1219,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A ward-level dashboard for nursing teams.",
       audience: "Clinical staff at the end of a twelve-hour shift.",
+      designDirection:
+        "Designed for a screen someone reads at six in the morning at the end of a twelve-hour shift. Everything is one size larger than a normal dashboard, every reading carries its reference range, and no critical value is ever behind a hover. The palette is near-white and calm; the rose accent marks attention, never decoration. Nothing pulses, blinks or animates, because an interface that shouts at a tired person is an interface that gets ignored.",
+      visualLanguage: [
+        "Cool near-white ground with pure white cards and light grey hairlines; the interface recedes so the values do not",
+        "Out-of-range values carry a filled triangle glyph and a text label in addition to colour",
+        "8px card radii, 6px controls, one very soft shadow used only on dialogs",
+        "16px base type — deliberately larger than a typical dashboard — with tabular figures for every reading",
+        "The rose accent marks attention only; normal states are entirely neutral",
+      ],
+      layout: [
+        "A 240px patient roster rail on the left, content region capped at 1120px",
+        "The patient header is sticky and always carries the allergy banner, which cannot be dismissed",
+        "Vitals are a two-column grid of reading cards above a full-width timeline chart",
+        "The medication schedule is a horizontal day timeline, not a table, with the current time marked",
+        "44px minimum touch target and 20px card padding everywhere",
+      ],
       pages: [
         { route: "/roster", purpose: "Assigned patients with acuity, room and outstanding tasks." },
         { route: "/patients/[id]", purpose: "Overview: vitals, medications, notes, allergies." },
@@ -982,6 +1278,25 @@ export const templates: Template[] = [
         "Vitals timeline supports keyboard scrubbing with value announcements",
         "Allergy banner cannot be dismissed",
         "Handover page has a dedicated print stylesheet",
+      ],
+      responsive: [
+        "The roster becomes a full-screen list at 900px with the patient view as a separate route",
+        "Vitals cards go two across to one across at 600px, keeping the range line beneath each value",
+        "The medication timeline scrolls horizontally with the current hour scrolled into view on load",
+        "The handover view has a dedicated print stylesheet at A4 regardless of the screen it was opened on",
+      ],
+      technical: [
+        "One ranges module decides in-range, out-of-range and critical, and returns both a colour token and a glyph",
+        "The vitals timeline supports keyboard scrubbing, announcing value, unit and time on each step",
+        "Sample data is clearly labelled as sample data in the interface itself",
+        "No skeleton shimmer — use a static placeholder block, because motion in a clinical context reads as an alert",
+      ],
+      doNot: [
+        "Do not use colour as the only signal for an abnormal reading",
+        "Do not place any clinically relevant value behind a hover or a tooltip",
+        "Do not make the allergy banner dismissible",
+        "Do not use blinking, pulsing or looping animation anywhere",
+        "Do not drop the base font size below 16px on any breakpoint",
       ],
       content: [
         "Eight fictional patients with plausible but clearly fictional records",
@@ -1029,12 +1344,12 @@ export const templates: Template[] = [
     isNew: false,
     popular: false,
     accent: "#e4572e",
-    visual: "editorial",
+    visual: "archive",
     screenshots: [
-      { id: "index", label: "Index", caption: "Exposed grid and hairline borders.", visual: "editorial" },
-      { id: "archive", label: "Archive", caption: "Sortable work table.", visual: "docs" },
+      { id: "index", label: "Index", caption: "Exposed grid and hairline borders.", visual: "archive" },
+      { id: "archive", label: "Archive", caption: "Sortable work table.", visual: "gallery" },
       { id: "project", label: "Project", caption: "Full-bleed plates on a hard grid.", visual: "portfolio" },
-      { id: "info", label: "Info", caption: "Contact, clients, recognition.", visual: "settings" },
+      { id: "info", label: "Info", caption: "Contact, clients, recognition.", visual: "editorial" },
     ],
     demoUrl: null,
     features: [
@@ -1046,6 +1361,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A four-person design studio with a fifteen-year archive.",
       audience: "Art directors and cultural institutions.",
+      designDirection:
+        "Brutalism that survives contact with a real client: loud in structure, quiet in colour. A visible twelve-column grid runs behind the content as part of the design rather than as a debug tool, every block is bordered with the same single hairline, and the work archive is a sortable table rather than a gallery, because a fifteen-year body of work is a filing system. One orange accent, black on white, and no easing curve softer than linear.",
+      visualLanguage: [
+        "Pure white ground, pure black text and borders. One hairline width across the entire site",
+        "Zero border radius and zero shadows, with no exceptions",
+        "A grotesque at 700 for display, set tight and large; the same family at 400 for body",
+        "The orange accent appears only on links and the availability badge",
+        "The grid overlay is toggleable and persists — it is a feature, not a development aid",
+      ],
+      layout: [
+        "A visible 12-column grid with 24px gutters and a 24px baseline; all vertical spacing is a multiple of it",
+        "Full-bleed sections separated by hairline rules that run edge to edge",
+        "The archive table has four columns — year, client, discipline, and a link — with sortable headers",
+        "Project pages pair full-bleed plates with a sticky 240px metadata sidebar",
+        "Display type clamps from 140px down to 40px and always aligns to a column boundary",
+      ],
       pages: [
         { route: "/", purpose: "Index: statement, selected work, current availability." },
         { route: "/archive", purpose: "Complete sortable work table." },
@@ -1086,6 +1417,25 @@ export const templates: Template[] = [
         "Grid overlay toggles with a keyboard shortcut and persists",
         "Archive sort updates the URL and keeps the scroll position",
         "Images load without fade — they appear when decoded",
+      ],
+      responsive: [
+        "The archive table keeps all four columns down to 600px by dropping to 12px type before it wraps",
+        "The metadata sidebar moves above the plates at 900px as a horizontal definition list",
+        "The grid overlay reduces from 12 to 6 columns below 768px",
+        "Display type never drops below 40px — the scale is the identity",
+      ],
+      technical: [
+        "Sort state is encoded in the URL and preserves the scroll position",
+        "The grid overlay toggle is bound to a documented keyboard shortcut and persists locally",
+        "Images appear on decode with no fade — the transition is a hard cut",
+        "The layout must remain readable and unbroken at 200% browser zoom",
+      ],
+      doNot: [
+        "Do not use border-radius, box-shadow or gradients anywhere",
+        "Do not use any easing function other than linear",
+        "Do not add hover transitions — colour swaps are instant",
+        "Do not break the 24px baseline grid for any element",
+        "Do not use more than one accent colour occurrence per screen",
       ],
       content: [
         "Thirty archive entries spanning fifteen years",
@@ -1135,8 +1485,8 @@ export const templates: Template[] = [
     visual: "docs",
     screenshots: [
       { id: "docs", label: "Docs", caption: "Three panes: nav, content, contents.", visual: "docs" },
-      { id: "api", label: "API reference", caption: "Schema-driven parameter tables.", visual: "settings" },
-      { id: "search", label: "Search", caption: "Instant results grouped by section.", visual: "dashboard" },
+      { id: "api", label: "API reference", caption: "Schema-driven parameter tables.", visual: "terminal" },
+      { id: "search", label: "Search", caption: "Instant results grouped by section.", visual: "report" },
       { id: "quickstart", label: "Quickstart", caption: "Five steps with synced code tabs.", visual: "landing" },
     ],
     demoUrl: null,
@@ -1149,6 +1499,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "Documentation for an infrastructure API with a generous free tier.",
       audience: "Engineers integrating in an afternoon, and their future selves debugging at 2am.",
+      designDirection:
+        "Documentation designed around the questions people actually arrive with, at two in the morning, with a failing integration. Three panes so navigation, content and the section outline are all visible at once. Code samples in four languages that stay in sync across the entire page. The aesthetic is a dark, low-contrast reading surface with a cyan accent used only for links, active states and the language tab — nothing here is trying to be memorable, it is trying to be findable.",
+      visualLanguage: [
+        "Dark blue-black canvas with a marginally lighter content surface; the side rails are the darkest layer",
+        "Cyan accent on links, active navigation items and the selected code tab. Nothing else is coloured",
+        "6px radii on code blocks and callouts, 4px on controls; no shadows outside the search dialog",
+        "Body text at 15px with a 1.7 line height and a 72-character measure — this is long-form reading",
+        "Callouts are a left border plus a tinted background, never a full coloured box",
+      ],
+      layout: [
+        "Three panes: a 252px navigation rail, a fluid content column capped at 720px, and a 220px on-this-page rail",
+        "The content column is left-aligned within its region rather than centred, so the outline rail sits close to it",
+        "Code blocks break out to the full content width; prose stays at the 72-character measure",
+        "The header is a single 62px bar holding the logo, the version select and the search trigger",
+        "32px between content blocks, 64px between top-level sections, with a hairline above each h2",
+      ],
       pages: [
         { route: "/docs", purpose: "Landing with the three paths: quickstart, guides, reference." },
         { route: "/docs/quickstart", purpose: "Five numbered steps with synced code tabs." },
@@ -1193,6 +1559,25 @@ export const templates: Template[] = [
         "Language tab selection is global and persisted",
         "Copy buttons on every code block, with a fallback path",
         "Headings expose an anchor link on hover and on focus",
+      ],
+      responsive: [
+        "The on-this-page rail is hidden below 1280px and becomes a collapsed disclosure above the content",
+        "The navigation rail becomes a slide-over drawer below 1024px, opened from the header",
+        "Code blocks scroll horizontally inside their container and keep the copy button pinned to the top right",
+        "Search becomes a full-screen sheet on mobile with the input pinned at the top",
+      ],
+      technical: [
+        "Content is MDX with typed frontmatter; the search index is built at compile time, not at runtime",
+        "Language tab selection is global across the page through context and persists between visits",
+        "No syntax highlighting runtime over 20KB — colour is applied at build time",
+        "Every page must be reachable within two clicks of the docs landing page",
+      ],
+      doNot: [
+        "Do not put a marketing hero on the documentation landing page",
+        "Do not use a modal for anything other than search",
+        "Do not document an endpoint without at least one error response",
+        "Do not let the language tabs fall out of sync between code blocks",
+        "Do not add a chat widget or a feedback popup",
       ],
       content: [
         "A quickstart that genuinely takes five minutes",
@@ -1240,11 +1625,11 @@ export const templates: Template[] = [
     isNew: false,
     popular: false,
     accent: "#e07b39",
-    visual: "commerce",
+    visual: "map",
     screenshots: [
       { id: "search", label: "Search", caption: "Destination, dates, guests in one bar.", visual: "landing" },
-      { id: "results", label: "Results", caption: "List with filter rail and map toggle.", visual: "commerce" },
-      { id: "stay", label: "Stay", caption: "Gallery, amenities, availability calendar.", visual: "portfolio" },
+      { id: "results", label: "Results", caption: "List with filter rail and map toggle.", visual: "map" },
+      { id: "stay", label: "Stay", caption: "Gallery, amenities, availability calendar.", visual: "commerce" },
       { id: "booking", label: "Booking", caption: "Four steps with a persistent summary.", visual: "checkout" },
     ],
     demoUrl: null,
@@ -1257,6 +1642,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A curated stays marketplace with around 2,000 properties.",
       audience: "Travellers comparing options on a phone during a commute.",
+      designDirection:
+        "Built around the hardest screen in travel: a results list where forty options have to be compared in ninety seconds on a phone. Every card presents its information in the same fixed reading order so the eye can scan a column rather than re-parse each card. The palette is warm and confident without being childish, and the filter sheet previews its result count before you commit — because the worst thing a travel site does is make you apply filters to find out there is nothing left.",
+      visualLanguage: [
+        "Warm cream ground with white cards and soft sand borders; the orange accent carries price and primary actions",
+        "12px card radii and fully rounded filter chips — friendly, but not bubbly",
+        "Photography is 3:2 in results and 16:9 on the stay page, always with a consistent warm grade",
+        "Badges such as cheapest and fastest are outlined pills, not filled, so they never outweigh the price",
+        "One shadow level, on the sticky search bar and the filter sheet only",
+      ],
+      layout: [
+        "Results are a 60/40 split: list on the left, sticky map panel on the right above 1200px",
+        "Each result card is a fixed 168px tall row so forty of them scan as a column",
+        "Information order inside a card never changes: image, name, location, key constraints, rating, price",
+        "The stay page is a full-bleed gallery over a two-column body with a sticky booking panel",
+        "Booking is four steps with a persistent price summary that never leaves the viewport",
+      ],
       pages: [
         { route: "/", purpose: "Search bar, inspiration collections, destination grid." },
         { route: "/search", purpose: "Results list, filter rail, sort and a map toggle." },
@@ -1301,6 +1702,25 @@ export const templates: Template[] = [
         "Guest stepper enforces per-property maximums",
         "Filters preview the result count before applying on mobile",
         "Search state fully encoded in the URL for sharing",
+      ],
+      responsive: [
+        "The map becomes a toggle button that opens a full-screen view below 1200px",
+        "The filter rail becomes a bottom sheet with a live result count in its apply button",
+        "Result cards become vertical at 640px with the image on top at 16:9 and the price bottom-right",
+        "The booking price summary collapses to a sticky bottom bar showing the total and the next action",
+      ],
+      technical: [
+        "The entire search state — destination, dates, guests, filters, sort — lives in the URL",
+        "The date range picker supports keyboard range selection with arrow keys and Enter",
+        "Forty result cards must render without layout shift; reserve image space with explicit dimensions",
+        "Use a styled static map placeholder with markers rather than a mapping SDK",
+      ],
+      doNot: [
+        "Do not load a real map SDK or any third-party mapping script",
+        "Do not use scarcity pressure — no countdown timers, no viewing-now counters",
+        "Do not change the information order between result cards",
+        "Do not show a price without its currency and whether taxes are included",
+        "Do not require two hands to operate the filter sheet",
       ],
       content: [
         "Twenty stays across six destinations with honest descriptions",
@@ -1365,6 +1785,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A scheduling product launching with a two-plan pricing model.",
       audience: "Small-team buyers who will decide on this page or not at all.",
+      designDirection:
+        "One page doing the job of five. A layered translucent product panel floats over a soft field of colour in the hero, and the features section is a switcher rather than a stack — pick a capability, one panel changes — which removes about four screens of scrolling. Glass appears exactly three times on the entire page, which is precisely why it still reads as expensive rather than as a 2021 dribbble shot.",
+      visualLanguage: [
+        "Cool near-white ground with a soft blue colour field behind the hero, blurred heavily and drifting slowly",
+        "Translucent panels at 72% white with a 16px radius and a 1px light border — used three times, no more",
+        "Text over glass always sits on a solid inner surface so contrast never drops below 4.5:1",
+        "One blue accent across CTAs, the active switcher item and the recommended plan",
+        "Iconography is 20px at 1.5px stroke, monochrome, never in coloured circles",
+      ],
+      layout: [
+        "1120px container with 112px between sections on desktop",
+        "The hero is centred with the glass product panel overlapping the section boundary below it by 80px",
+        "The feature switcher is a 40/60 split: a vertical list of four capabilities on the left, one swapping panel on the right",
+        "Pricing sits directly above the FAQ so the last objection is answered before the final CTA",
+        "The sticky nav is 56px, transparent over the hero, gaining a blurred surface after the fold",
+      ],
       pages: [
         { route: "/", purpose: "Hero, logos, feature switcher, workflow, testimonials, pricing, FAQ, CTA." },
         { route: "/signup", purpose: "Three-field account form with inline validation." },
@@ -1407,6 +1843,25 @@ export const templates: Template[] = [
         "Sticky nav updates the active section with IntersectionObserver",
         "Pricing toggle animates the price with no layout shift",
         "Signup validates on blur and shows one error at a time",
+      ],
+      responsive: [
+        "The feature switcher becomes a horizontal tab row above the panel at 900px, still one panel not four sections",
+        "The hero panel drops its overlap and sits inline with 48px of space below it",
+        "Pricing cards stack with the recommended plan first on mobile, not in the middle",
+        "Backdrop blur is reduced to a solid surface below 640px where it costs more than it gives",
+      ],
+      technical: [
+        "The feature switcher is a proper tablist with roving tabindex and arrow-key support",
+        "The sticky nav tracks the active section with IntersectionObserver and moves focus correctly on anchor jumps",
+        "The pricing toggle animates the value without changing the container width",
+        "The landing route ships under 90KB of JavaScript",
+      ],
+      doNot: [
+        "Do not use backdrop blur more than three times on the page",
+        "Do not autoplay video in the hero",
+        "Do not let text sit directly on a blurred background without a solid layer behind it",
+        "Do not build four separate feature sections — the switcher replaces them",
+        "Do not add a cookie banner or an exit-intent modal",
       ],
       content: [
         "A hero headline of at most nine words and a two-line subhead",
@@ -1453,12 +1908,12 @@ export const templates: Template[] = [
     isNew: true,
     popular: false,
     accent: "#0ea5a4",
-    visual: "docs",
+    visual: "report",
     screenshots: [
       { id: "hero", label: "Hero", caption: "Availability and queue time, not a slogan.", visual: "landing" },
       { id: "pricing", label: "Instance pricing", caption: "Matrix with an hourly calculator.", visual: "pricing" },
-      { id: "topology", label: "Topology", caption: "Where inference actually runs.", visual: "docs" },
-      { id: "status", label: "Status", caption: "Ninety days of uptime per region.", visual: "analytics" },
+      { id: "topology", label: "Topology", caption: "Where inference actually runs.", visual: "report" },
+      { id: "status", label: "Status", caption: "Ninety days of uptime per region.", visual: "terminal" },
     ],
     demoUrl: null,
     features: [
@@ -1470,6 +1925,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "Managed GPU inference across four regions.",
       audience: "Platform engineers with a budget and a latency requirement.",
+      designDirection:
+        "A site for buyers who read the footnotes. The hero states region availability and current queue time instead of a slogan, because the first question a platform engineer has is whether there is capacity. Everything is measurable: instance prices in a sortable matrix, a cost calculator with a visible formula, a hand-built topology diagram, and ninety days of honest uptime including the outages. White, tight, technical, and completely free of superlatives.",
+      visualLanguage: [
+        "Pure white ground with a very light grey surface for tables and panels; borders are the primary separator",
+        "4px radii throughout — this is a technical product and tight corners suit it",
+        "The teal accent marks availability, the active table sort and the calculator output",
+        "Every number, region code and command is monospaced with tabular figures",
+        "Uptime bars are 3px wide with a 2px gap, ninety per region, coloured in three states",
+      ],
+      layout: [
+        "1160px container with 96px between sections; tables run the full container width",
+        "The hero is a two-row composition: the availability bar across the top, then the statement and the CTA row",
+        "The instance matrix has a sticky first column and a sticky header, with 40px rows",
+        "The topology diagram is a full-width SVG panel with the legend inline beneath it",
+        "Footnote references are superscript links resolving to a numbered list at the bottom of the page",
+      ],
       pages: [
         { route: "/", purpose: "Availability hero, capabilities, topology, benchmarks, footnotes." },
         { route: "/pricing", purpose: "Instance matrix, cost calculator, commitment discounts." },
@@ -1513,6 +1984,25 @@ export const templates: Template[] = [
         "Calculator inputs are number fields with sane min/max and keyboard steppers",
         "Hovering a topology node dims unrelated paths",
         "Footnote references jump to the note and back",
+      ],
+      responsive: [
+        "The instance matrix scrolls horizontally with the instance-name column pinned; it does not become cards",
+        "The cost calculator becomes a single stacked column with the formula shown beneath the result",
+        "The topology diagram scrolls horizontally inside its panel at a fixed minimum width",
+        "Uptime bars reduce from ninety days to thirty below 768px with a label saying so",
+      ],
+      technical: [
+        "The calculator recomputes synchronously on input with no animation — a mid-transition number is unreadable",
+        "The topology SVG carries a text alternative describing the routing it depicts",
+        "Table sorting sets aria-sort and preserves the sticky column",
+        "No third-party analytics or tag manager",
+      ],
+      doNot: [
+        "Do not use marketing superlatives — every claim must be measurable and footnoted",
+        "Do not publish a benchmark without stating model, batch size and precision",
+        "Do not hide or soften historical incidents on the status page",
+        "Do not convert the instance table into cards on mobile",
+        "Do not animate the calculator output",
       ],
       content: [
         "Real instance names, memory sizes and hourly prices",
@@ -1560,11 +2050,11 @@ export const templates: Template[] = [
     isNew: false,
     popular: false,
     accent: "#b4423f",
-    visual: "portfolio",
+    visual: "gallery",
     screenshots: [
       { id: "series", label: "Series", caption: "Horizontal viewer with keyboard control.", visual: "portfolio" },
-      { id: "lightbox", label: "Lightbox", caption: "Full-frame with metadata.", visual: "editorial" },
-      { id: "index", label: "Index", caption: "All series as a contact sheet.", visual: "commerce" },
+      { id: "lightbox", label: "Lightbox", caption: "Full-frame with metadata.", visual: "gallery" },
+      { id: "index", label: "Index", caption: "All series as a contact sheet.", visual: "lookbook" },
       { id: "about", label: "About", caption: "One column, one portrait.", visual: "docs" },
     ],
     demoUrl: null,
@@ -1577,6 +2067,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "The portfolio of a documentary photographer with six long-term series.",
       audience: "Picture editors and gallery curators.",
+      designDirection:
+        "A portfolio where the interface is almost entirely absent, which takes considerably more design than adding a sidebar. Series are browsed horizontally with native scroll-snap; frames carry real captions — location, year, process — because for documentary work the metadata is part of the work. Dark ground so the images hold the light, one muted red accent, and never any chrome over an image except in the lightbox.",
+      visualLanguage: [
+        "Near-black ground so photographs carry all the luminance; surfaces are barely distinguishable from it",
+        "Zero radius on images, ever. The only rounded element is the lightbox close control",
+        "A serif at 400 for the few headings, a neutral sans at 14px for captions and metadata",
+        "The muted red accent appears only in the progress indicator and the active series marker",
+        "Captions sit beneath frames in a fixed three-part order: location, year, process",
+      ],
+      layout: [
+        "The series viewer is a full-height horizontal scroll region with frames separated by 32px",
+        "Frame heights are uniform within a series; widths vary with aspect ratio",
+        "A 620px prose column holds the series statement, offset left rather than centred",
+        "The contact sheet is a dense grid of 180px thumbnails with 8px gutters",
+        "The header is a single line that fades out while the viewer is scrolled",
+      ],
       pages: [
         { route: "/", purpose: "One full-bleed frame and the series list." },
         { route: "/series/[slug]", purpose: "Horizontal viewer with captions and a series statement." },
@@ -1618,6 +2124,25 @@ export const templates: Template[] = [
         "Escape closes the lightbox and returns focus to the originating frame",
         "The viewer shows a progress indicator and the current frame number",
         "Images use width and height attributes so nothing shifts",
+      ],
+      responsive: [
+        "The horizontal viewer becomes a vertical single-column scroll below 900px, keeping scroll-snap",
+        "The contact sheet drops from six columns to three at 768px and two at 420px",
+        "The lightbox uses the full viewport on mobile with swipe and visible previous and next controls",
+        "Captions move from beneath the frame to a collapsible detail line on mobile",
+      ],
+      technical: [
+        "Native CSS scroll-snap only — never intercept or hijack the scroll event",
+        "Images carry explicit width and height and lazy-load below the fold",
+        "The lightbox traps focus, closes on Escape, and returns focus to the frame that opened it",
+        "Arrow keys move between frames in both the viewer and the lightbox",
+      ],
+      doNot: [
+        "Do not hijack, smooth or otherwise intercept the scroll",
+        "Do not overlay interface elements on an image outside the lightbox",
+        "Do not crop images to a uniform aspect ratio",
+        "Do not add a watermark or a right-click blocker",
+        "Do not autoplay a slideshow",
       ],
       content: [
         "Six series with genuine statements of 80-120 words",
@@ -1667,8 +2192,8 @@ export const templates: Template[] = [
     visual: "dashboard",
     screenshots: [
       { id: "orders", label: "Orders", caption: "Saved views and persistent bulk selection.", visual: "dashboard" },
-      { id: "order", label: "Order detail", caption: "Drawer with timeline and fulfilment.", visual: "settings" },
-      { id: "inventory", label: "Inventory", caption: "Available, committed and incoming.", visual: "analytics" },
+      { id: "order", label: "Order detail", caption: "Drawer with timeline and fulfilment.", visual: "grid" },
+      { id: "inventory", label: "Inventory", caption: "Available, committed and incoming.", visual: "settings" },
       { id: "refund", label: "Refund", caption: "Return and refund handled separately.", visual: "checkout" },
     ],
     demoUrl: null,
@@ -1681,6 +2206,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "The operations console for a mid-size online retailer.",
       audience: "Operations and customer support staff processing hundreds of orders a day.",
+      designDirection:
+        "The unglamorous half of retail, done properly. This is the screen a merchandiser has open for eight hours, so the table is the product: saved views in the sidebar, bulk selection that survives pagination, and a detail drawer that opens beside the list instead of destroying your place in it. Light, structured and institutional — a blue accent for actions, eight distinct status colours that all pass contrast, and nothing that moves without a reason.",
+      visualLanguage: [
+        "Cool grey application ground with white panels; borders carry the structure and there are no shadows outside the drawer",
+        "6px radii on panels, 4px on controls — square enough to read as a tool",
+        "Eight status states, each a tinted pill with a text label; colour never carries the state alone",
+        "13px body type with tabular figures for every quantity, price and order number",
+        "Icons at 16px, 1.5px stroke, only where the action would otherwise need a longer label",
+      ],
+      layout: [
+        "220px sidebar holding navigation above a saved-views list with counts",
+        "The orders table is full-bleed within the content region with a sticky header and 36px rows",
+        "The detail drawer is 520px, entering from the right, leaving the list visible and scrolled where it was",
+        "A bulk action bar rises from the bottom of the content region when the first row is selected",
+        "Pagination sits bottom-left with the page-size control beside it, both always visible",
+      ],
       pages: [
         { route: "/orders", purpose: "Table with saved views, filters, bulk actions and a detail drawer." },
         { route: "/products", purpose: "Catalogue with variant expansion and inline stock editing." },
@@ -1725,6 +2266,25 @@ export const templates: Template[] = [
         "Column visibility and page size persist to localStorage",
         "Filters and the open drawer are both encoded in the URL",
         "Every destructive bulk action requires typed confirmation",
+      ],
+      responsive: [
+        "Below 1280px the table keeps a sticky first column and scrolls horizontally rather than becoming cards",
+        "The drawer becomes a full-screen route below 1024px with an explicit close returning to the same scroll offset",
+        "The sidebar collapses to a drawer at 900px; saved views remain reachable from a select in the toolbar",
+        "The bulk action bar becomes a full-width sticky footer on mobile with the count on the left",
+      ],
+      technical: [
+        "Bulk selection persists across pagination and filter changes, with an explicit select-all-matching option",
+        "Column visibility, density and page size persist locally per user",
+        "The open drawer and every filter are encoded in the URL so a view can be sent to a colleague",
+        "The table must stay responsive with 200 rows and 12 columns rendered",
+      ],
+      doNot: [
+        "Do not lose the selection when the page or the filter changes",
+        "Do not convert the table into a card list on desktop or tablet",
+        "Do not allow a destructive bulk action without typed confirmation",
+        "Do not animate table rows",
+        "Do not combine restock and refund into a single decision",
       ],
       content: [
         "200 seeded orders across eight statuses with realistic totals",
@@ -1772,12 +2332,12 @@ export const templates: Template[] = [
     isNew: true,
     popular: false,
     accent: "#9b5cf0",
-    visual: "settings",
+    visual: "canvas",
     screenshots: [
-      { id: "canvas", label: "Canvas", caption: "Nodes and orthogonal edges.", visual: "settings" },
-      { id: "config", label: "Node config", caption: "Typed fields per action.", visual: "docs" },
-      { id: "runs", label: "Run history", caption: "Per-step duration and errors.", visual: "analytics" },
-      { id: "library", label: "Library", caption: "Connectors and templates.", visual: "dashboard" },
+      { id: "canvas", label: "Canvas", caption: "Nodes and orthogonal edges.", visual: "canvas" },
+      { id: "config", label: "Node config", caption: "Typed fields per action.", visual: "settings" },
+      { id: "runs", label: "Run history", caption: "Per-step duration and errors.", visual: "terminal" },
+      { id: "library", label: "Library", caption: "Connectors and templates.", visual: "report" },
     ],
     demoUrl: null,
     features: [
@@ -1789,6 +2349,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "An automation platform connecting SaaS tools without code.",
       audience: "Operations engineers building and debugging internal workflows.",
+      designDirection:
+        "A workflow builder where the debugging experience is the actual product. Anyone can draw boxes and arrows; almost nobody makes a failed run explain itself. So the canvas is deliberately plain — orthogonal edges, snap-to-grid nodes, a violet accent for selection — and the run history gets the detail: every step with its duration, input, output and the exact error, expandable and deep-linkable. Dark, dense, and engineered rather than styled.",
+      visualLanguage: [
+        "Deep violet-black canvas with a faint 8px dot grid; panels are a lighter neutral so they read as floating above it",
+        "Nodes are 240px wide cards with an 8px radius, a coloured 3px top edge by node type, and a single-line title",
+        "Edges are orthogonal 2px paths with rounded corners and a small arrowhead — no bezier curves",
+        "The violet accent marks selection and the running step; success is green, failure is amber, and both carry glyphs",
+        "JSON payloads render monospaced at 12px with two-space indentation and collapsible objects",
+      ],
+      layout: [
+        "The canvas fills the region between a 220px workflow sidebar and a 380px configuration panel",
+        "The configuration panel slides over the canvas rather than resizing it, so node positions never shift",
+        "Zoom controls and the minimap are pinned bottom-right with 16px of inset",
+        "The run history is a full-width list of collapsed rows, each expanding into an indented step table",
+        "A test-run bar is pinned to the top of the canvas while a run is in progress",
+      ],
       pages: [
         { route: "/workflows", purpose: "Workflow list with status, last run and enable toggle." },
         { route: "/workflows/[id]", purpose: "Canvas editor with node panel and test run." },
@@ -1833,6 +2409,25 @@ export const templates: Template[] = [
         "Connecting nodes works by click-source then click-target, not only by drag",
         "Zoom controls plus Cmd+scroll, with a reset-to-fit button",
         "Run steps expand and collapse individually, deep-linkable",
+      ],
+      responsive: [
+        "Below 1024px the canvas becomes read-only and pans and zooms only; editing happens in a linear step list view",
+        "The configuration panel becomes a full-height sheet with the field list scrolling under a fixed header",
+        "The run history collapses to one row per run, expanding into a stacked step list rather than a table",
+        "The minimap is hidden below 900px where it costs more space than it saves",
+      ],
+      technical: [
+        "Pan, zoom and edge routing are implemented directly — no canvas or flow library in the dependencies",
+        "Nodes snap to an 8px grid and can be added, connected, moved and deleted entirely from the keyboard",
+        "Connecting works by click-source then click-target as well as by drag, so a pointer is never required",
+        "Secrets are masked in the panel and must never appear in run logs or payload previews",
+      ],
+      doNot: [
+        "Do not add a node-graph or canvas library",
+        "Do not use bezier or curved edges",
+        "Do not require drag-and-drop for any operation",
+        "Do not log or display secret values in run detail",
+        "Do not report a failed run without the exact error message",
       ],
       content: [
         "Six connectors with plausible actions and field schemas",
@@ -1879,12 +2474,12 @@ export const templates: Template[] = [
     isNew: false,
     popular: false,
     accent: "#8b7355",
-    visual: "editorial",
+    visual: "lookbook",
     screenshots: [
-      { id: "cover", label: "Cover", caption: "One image, one sentence.", visual: "editorial" },
-      { id: "collection", label: "Collection", caption: "A vertical procession.", visual: "portfolio" },
-      { id: "piece", label: "Piece", caption: "Description over specification.", visual: "commerce" },
-      { id: "boutiques", label: "Boutiques", caption: "A considered list.", visual: "docs" },
+      { id: "cover", label: "Cover", caption: "One image, one sentence.", visual: "lookbook" },
+      { id: "collection", label: "Collection", caption: "A vertical procession.", visual: "editorial" },
+      { id: "piece", label: "Piece", caption: "Description over specification.", visual: "gallery" },
+      { id: "boutiques", label: "Boutiques", caption: "A considered list.", visual: "commerce" },
     ],
     demoUrl: null,
     features: [
@@ -1896,6 +2491,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A heritage leather goods house with four collections a year.",
       audience: "Existing clients and press, arriving from a campaign.",
+      designDirection:
+        "Paced deliberately, because speed reads as cheap here. Each screen holds one image and one idea; the margins are wide enough that the whitespace is doing the spending. A high-contrast serif at 104px, at most twelve words of copy per full-viewport section, and a brass accent that appears perhaps three times on the whole site. The collection is a vertical procession rather than a grid, and the boutique page is a typographic list rather than an embedded map.",
+      visualLanguage: [
+        "Warm bone-white ground with white plates; the only borders are hairlines under section headings",
+        "Zero border radius anywhere, including form fields",
+        "A high-contrast serif at 400 for all display type, tracked slightly tight; a quiet sans at 15px for the little body copy that exists",
+        "Images are portrait 4:5 or full-bleed 16:9 — no other ratio and no cropping variants",
+        "The brass accent is reserved for the single primary action and the wordmark rule",
+      ],
+      layout: [
+        "14% side margins on desktop, held even at 1920px; the content never exceeds 1320px",
+        "Full-viewport sections with a single image and a single line of copy, vertically centred",
+        "The collection procession alternates left-offset and right-offset plates with captions in the opposite margin",
+        "200px between sections on desktop — the pacing is part of the identity",
+        "Navigation is a minimal overlay with large targets, opened from a single word in the header",
+      ],
       pages: [
         { route: "/", purpose: "Cover, campaign, collection teaser, house story." },
         { route: "/collections/[season]", purpose: "Vertical procession of pieces with captions." },
@@ -1938,6 +2549,25 @@ export const templates: Template[] = [
         "Scroll-driven section reveals using IntersectionObserver, once only",
         "The appointment form validates gently, one message at a time",
         "Navigation is a minimal overlay with large targets",
+      ],
+      responsive: [
+        "Side margins drop from 14% to 24px at 768px, but the one-image-one-idea rhythm is preserved",
+        "Section height becomes content-driven rather than full-viewport below 768px so nothing is cut off",
+        "Display type clamps from 104px to 44px; never smaller, the scale is the brand",
+        "The procession becomes a single centred column with captions beneath each plate",
+      ],
+      technical: [
+        "Section reveals use IntersectionObserver, fire once, and are entirely disabled under reduced motion",
+        "Images use a mask wipe reveal at 900ms with explicit dimensions to prevent shift",
+        "The appointment form validates gently, surfacing one message at a time",
+        "Fonts are subset and preloaded; the display face must not cause a flash of fallback text",
+      ],
+      doNot: [
+        "Do not exceed twelve words of copy in a full-viewport section",
+        "Do not use cards, shadows, rounded corners or filled buttons other than the primary enquiry action",
+        "Do not add an exclamation mark or a discount message anywhere",
+        "Do not embed a map widget on the boutiques page",
+        "Do not let any motion play under prefers-reduced-motion",
       ],
       content: [
         "Copy written in a restrained brand voice, present tense, no exclamation marks",
@@ -1985,10 +2615,10 @@ export const templates: Template[] = [
     isNew: false,
     popular: true,
     accent: "#2f9e59",
-    visual: "analytics",
+    visual: "grid",
     screenshots: [
-      { id: "grid", label: "Grid", caption: "Frozen columns and inline editing.", visual: "analytics" },
-      { id: "filters", label: "Filters", caption: "Composed into a readable sentence.", visual: "dashboard" },
+      { id: "grid", label: "Grid", caption: "Frozen columns and inline editing.", visual: "grid" },
+      { id: "filters", label: "Filters", caption: "Composed into a readable sentence.", visual: "analytics" },
       { id: "groups", label: "Grouping", caption: "Collapsible row groups with aggregates.", visual: "settings" },
       { id: "detail", label: "Row detail", caption: "Expanded record view.", visual: "docs" },
     ],
@@ -2002,6 +2632,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A data grid component library demonstrated on a 5,000-row dataset.",
       audience: "Engineers evaluating whether to build or buy a grid.",
+      designDirection:
+        "The component most teams end up building badly, built properly and shown on five thousand rows. Hard 1px grid, no rounded corners, no card wrapper — a spreadsheet that pretends to be a card list helps nobody. Arrow keys navigate, Enter edits, Escape cancels, Cmd+C copies the selection as TSV. Filters compose into a plain-English sentence above the grid so the current state is readable rather than inferred from six chips.",
+      visualLanguage: [
+        "White ground with a near-black 1px grid; the border colour is the strongest ink on the page",
+        "Zero radius throughout, including the toolbar controls",
+        "A green accent for the selection outline, the active sort direction and the aggregate row",
+        "13px grotesque with tabular figures; numeric columns are right-aligned and text columns left-aligned, always",
+        "The selection range is a 2px outline with a 6% fill, never a solid highlight that hides the text",
+      ],
+      layout: [
+        "The grid is full-bleed with no page padding — the viewport edge is the grid edge",
+        "A 40px toolbar sits above it holding density, column visibility and the filter sentence",
+        "Row heights are 28px compact, 36px default and 44px comfortable, switched from the toolbar",
+        "Frozen columns are pinned left with a 2px divider and a subtle shadow only while scrolled",
+        "Group rows span the full width with aggregates aligned to their own columns",
+      ],
       pages: [
         { route: "/", purpose: "The grid demo with a control panel of feature toggles." },
         { route: "/docs", purpose: "Props reference and recipes." },
@@ -2044,6 +2690,25 @@ export const templates: Template[] = [
         "Copy selection to the clipboard as TSV",
         "Column resize by drag or by keyboard on the focused header",
         "Filter clauses removable individually, state encoded in the URL",
+      ],
+      responsive: [
+        "The grid stays a grid at every breakpoint — horizontal scroll with pinned columns, never a card list",
+        "The toolbar collapses into an overflow menu below 720px, keeping density and columns reachable",
+        "The filter sentence wraps to multiple lines rather than truncating",
+        "Row detail opens as a full-screen panel below 720px instead of a side panel",
+      ],
+      technical: [
+        "Virtualise rows and columns directly — no table or grid library in the dependencies",
+        "Five thousand rows must scroll at 60fps on a mid-range laptop",
+        "Copy writes the selected range to the clipboard as TSV so it pastes into a spreadsheet correctly",
+        "Every cell exposes its column and row position to assistive technology",
+      ],
+      doNot: [
+        "Do not add a table or data-grid library",
+        "Do not convert the grid to cards at any breakpoint",
+        "Do not animate rows, cells or group expansion",
+        "Do not require a pointer for resize, reorder or range selection",
+        "Do not round any corner in the grid itself",
       ],
       content: [
         "A 5,000-row dataset of plausible business records",
@@ -2106,6 +2771,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A pre-launch productivity product collecting a waitlist.",
       audience: "Visitors arriving from a launch post who will spend forty seconds here.",
+      designDirection:
+        "Built for day one, when the traffic is a spike rather than a trickle. Warm, direct and fast: the problem stated in the visitor's own words, the product shown in three frames, a founder note that reads like a person wrote it, and one email field. Geometric sans, a coral accent, generous rounding — friendly without being juvenile. Static output, one font family, under 40KB of CSS and JS, because a launch page that hangs is a launch that did not happen.",
+      visualLanguage: [
+        "Warm off-white ground with white cards and soft sand borders; nothing is pure grey",
+        "10px card radii and a fully rounded primary button — the one place the geometry relaxes",
+        "Illustration is geometric and flat, built from the same shapes as the product frames; never cartoon characters",
+        "The coral accent carries the primary action, the active frame indicator and the founder signature rule",
+        "One font family at two weights across the entire page",
+      ],
+      layout: [
+        "760px content column, centred, with 88px between sections — this is a reading page, not a grid",
+        "The hero pairs a left-aligned headline with the email field directly beneath it, above the fold at 390px",
+        "The three product frames sit in a horizontal sequence on desktop and a vertical one on mobile",
+        "The founder note is an inset panel with a 64px portrait, a signature and a hairline above it",
+        "The FAQ is a plain definition list, individually linkable, with no accordion chrome",
+      ],
       pages: [
         { route: "/", purpose: "Hero, problem, three-frame product story, founder note, waitlist, FAQ." },
         { route: "/thanks", purpose: "Confirmation with a referral link and a what-happens-next list." },
@@ -2146,6 +2827,25 @@ export const templates: Template[] = [
         "Email validates on submit with the error announced to screen readers",
         "Success state replaces the form in place and offers a copyable referral link",
         "FAQ entries are individually linkable",
+      ],
+      responsive: [
+        "The email field and its button stack at 420px, both full width, with the button 48px tall",
+        "The product frame sequence becomes vertical with each frame captioned beneath it",
+        "Section spacing drops from 88px to 56px at 768px",
+        "The founder portrait moves above the text and centres at 480px",
+      ],
+      technical: [
+        "Static output with vanilla JS only — no client framework on the page",
+        "Under 40KB of CSS and JS combined; critical CSS inlined",
+        "The page is fully readable and navigable with JavaScript disabled; only the inline waitlist confirmation requires it",
+        "The success state replaces the form in place and exposes a copyable referral link",
+      ],
+      doNot: [
+        "Do not add a client-side framework",
+        "Do not use a countdown timer or a fake signup counter",
+        "Do not put the email capture behind a modal or a second click",
+        "Do not use more than one font family",
+        "Do not animate anything above the fold before the page is interactive",
       ],
       content: [
         "A hero that names the problem, not the category",
@@ -2197,7 +2897,7 @@ export const templates: Template[] = [
       { id: "today", label: "Today", caption: "One question, one answer.", visual: "mobile" },
       { id: "session", label: "Live session", caption: "Readable from a metre away.", visual: "dashboard" },
       { id: "progress", label: "Progress", caption: "A weekly ring and volume trend.", visual: "analytics" },
-      { id: "library", label: "Library", caption: "Exercises with form notes.", visual: "docs" },
+      { id: "library", label: "Library", caption: "Exercises with form notes.", visual: "timeline" },
     ],
     demoUrl: null,
     features: [
@@ -2209,6 +2909,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A strength training app for people following a structured programme.",
       audience: "Lifters mid-session, one-handed, in a gym.",
+      designDirection:
+        "Designed for a phone propped against a water bottle, read at arm's length, operated with one sweaty thumb. Everything is bigger: 44px targets, 16px base text, set counters at 40px. The home screen answers exactly one question — what am I doing today — and the live session screen is legible from a metre away. Dark ground so it does not blind anyone in a badly lit gym, one coral accent for the action that matters.",
+      visualLanguage: [
+        "Near-black ground with elevated cards one step lighter; separation by surface, not by border, so it reads well in low light",
+        "14px radii on cards and sheets, fully rounded primary action — thumb-friendly geometry",
+        "The coral accent marks the single primary action per screen and nothing else",
+        "Weights, reps and the rest timer are tabular monospace at 28-40px",
+        "Icons at 24px with a 2px stroke — larger and heavier than a desktop app",
+      ],
+      layout: [
+        "Designed at 390px first: 16px screen padding, a 5-item tab bar respecting the bottom safe area",
+        "The today screen is a single scrolling column: greeting, session card, streak, quick start",
+        "The live session screen is a fixed header with the exercise, a scrolling set list, and a pinned rest timer",
+        "Set rows are 64px tall with the completion target occupying the right third of the row",
+        "Bottom sheets rise to at most 70% of the viewport with a visible grabber and a close control",
+      ],
       pages: [
         { route: "/today", purpose: "Today's session, streak, quick start." },
         { route: "/session/[id]", purpose: "Live workout: exercises, sets, rest timer." },
@@ -2253,6 +2969,25 @@ export const templates: Template[] = [
         "The timer survives navigation between screens",
         "Swipe or a visible button dismisses bottom sheets",
         "Weight input uses a numeric keypad with increment buttons",
+      ],
+      responsive: [
+        "390px is the design target; 430px increases padding to 20px rather than changing the layout",
+        "At 768px the app becomes a two-column layout with the session list beside the detail — not a stretched phone screen",
+        "The tab bar becomes a left rail above 900px",
+        "All touch targets remain at least 44px at every width",
+      ],
+      technical: [
+        "The rest timer lives in a context and keeps running across navigation between screens",
+        "Weight input uses a numeric keypad with explicit increment and decrement buttons",
+        "All sticky elements respect env(safe-area-inset-bottom) and env(safe-area-inset-top)",
+        "No behaviour depends on hover anywhere in the application",
+      ],
+      doNot: [
+        "Do not design at desktop width and scale down",
+        "Do not use any touch target smaller than 44 by 44 pixels",
+        "Do not rely on hover, long-press without an alternative, or swipe as the only route to an action",
+        "Do not show more than one primary action per screen",
+        "Do not let the rest timer reset when the user navigates away",
       ],
       content: [
         "A four-week programme with real exercise names and progression",
@@ -2315,6 +3050,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "A journalling app launching on iOS and Android.",
       audience: "People who clicked an ad on a phone.",
+      designDirection:
+        "An app marketing page that is itself pleasant on a phone, which is where its traffic comes from. A CSS device frame holds a screen sequence that advances as the feature sections scroll past, so one visual carries four features instead of four screenshots stacked vertically. Clean, blue and unfussy — and it answers the two questions every app page ignores: what data it collects, and what it costs.",
+      visualLanguage: [
+        "White ground with a very light blue-grey surface for alternating sections; borders are cool and light",
+        "A 40px radius on the device frame, 12px on cards — the frame is the only strongly rounded element",
+        "The blue accent carries the store badges area, the active sequence indicator and links",
+        "Screens inside the frame are flat colour blocks and type, never photographs of a screen",
+        "Store badges keep their official proportions and clear space, with real accessible names",
+      ],
+      layout: [
+        "1080px container; the hero is a 50/50 split with the device frame on the right, vertically centred",
+        "Feature sections alternate side to side around a device frame that stays pinned in the viewport centre while they scroll",
+        "96px between sections on desktop, with a hairline rule where two light sections meet",
+        "Reviews are a single-row carousel with visible pagination and a fixed card height",
+        "The privacy summary is a two-column table: what is collected, and why",
+      ],
       pages: [
         { route: "/", purpose: "Hero, features with screen sequence, reviews, pricing, FAQ." },
         { route: "/privacy", purpose: "Plain-language data summary plus the full policy." },
@@ -2355,6 +3106,25 @@ export const templates: Template[] = [
         "The screen sequence is driven by IntersectionObserver, not scroll position maths",
         "Carousel supports arrow keys, swipe and visible previous/next controls",
         "Store badges are links with descriptive accessible names",
+      ],
+      responsive: [
+        "Below 900px the device frame unpins and sits above each feature section as a static screen",
+        "The hero stacks with the frame beneath the headline, sized so the CTA stays above the fold at 390px",
+        "The review carousel shows one card at a time with swipe plus visible previous and next controls",
+        "Store badges stack to full width at 420px, each 48px tall",
+      ],
+      technical: [
+        "The screen sequence is driven by IntersectionObserver, never by scroll-position arithmetic",
+        "Under reduced motion the sequence is replaced by static screens beside each feature",
+        "The carousel never auto-advances and pauses nothing because nothing moves on its own",
+        "Store badges are links with descriptive accessible names, not images with alt text alone",
+      ],
+      doNot: [
+        "Do not stretch, recolour or restyle the official store badges",
+        "Do not autoplay video or audio",
+        "Do not use scroll-jacking or pin the page while the sequence advances",
+        "Do not omit the price and the trial length from the page",
+        "Do not use a real photograph of a phone",
       ],
       content: [
         "Four features described by outcome, not by feature name",
@@ -2401,10 +3171,10 @@ export const templates: Template[] = [
     isNew: false,
     popular: false,
     accent: "#3d7a5f",
-    visual: "settings",
+    visual: "invoice",
     screenshots: [
       { id: "invoices", label: "Invoices", caption: "Status-first list with ageing.", visual: "dashboard" },
-      { id: "editor", label: "Editor", caption: "Live totals and document preview.", visual: "settings" },
+      { id: "editor", label: "Editor", caption: "Live totals and document preview.", visual: "invoice" },
       { id: "ageing", label: "Receivables", caption: "Overdue first, always.", visual: "analytics" },
       { id: "reminder", label: "Reminders", caption: "Three tones, one click.", visual: "docs" },
     ],
@@ -2418,6 +3188,22 @@ export const templates: Template[] = [
     spec: {
       positioning: "Invoicing for independent studios and consultants.",
       audience: "Freelancers who invoice ten to forty clients a month.",
+      designDirection:
+        "The boring half of getting paid, done well. The editor calculates tax and totals as you type beside a preview of the exact document the client receives, so there is no gap between what you built and what they get. Receivables are bucketed by ageing so the overdue column is the first thing you see. Quiet, paper-toned and precise — a green accent for paid, and three reminder templates because chasing money is a writing problem as much as a product one.",
+      visualLanguage: [
+        "Warm paper-white ground with pure white document surfaces; the preview looks like paper because it will be",
+        "6px radii on panels, 4px on inputs; a single hairline table grid in the line-item editor",
+        "Six invoice states as tinted pills with text labels — draft, sent, viewed, paid, overdue, void",
+        "Every amount, invoice number and date uses tabular figures and right alignment in tables",
+        "The green accent means paid and nothing else",
+      ],
+      layout: [
+        "The editor is a 55/45 split: line-item table on the left, live document preview on the right",
+        "The totals panel is sticky at the bottom of the editor column, always visible while editing",
+        "The line-item table has 32px rows with quantity, rate, tax and amount right-aligned",
+        "Receivables are four ageing buckets as columns with per-bucket totals in their headers",
+        "The invoice list is a table with the status pill first and the ageing days last",
+      ],
       pages: [
         { route: "/invoices", purpose: "List with status, ageing and quick filters." },
         { route: "/invoices/new", purpose: "Editor with live totals and preview." },
@@ -2463,6 +3249,25 @@ export const templates: Template[] = [
         "Amounts accept pasted values with currency symbols and normalise them",
         "The reminder dialog previews the exact message before sending",
         "Print produces a single-page A4 invoice",
+      ],
+      responsive: [
+        "Below 1100px the document preview becomes a toggle above the editor rather than a second column",
+        "The line-item table becomes stacked field groups per item with the amount pinned to the right of each group",
+        "Ageing buckets become a vertical accordion with the overdue bucket expanded by default",
+        "The totals panel becomes a sticky bottom bar showing the total and an expand control",
+      ],
+      technical: [
+        "Amounts are integer minor units with an explicit currency, handled by one money module",
+        "Tax is calculated per line and shown as its own row — never folded silently into a total",
+        "Pasted amounts with currency symbols or thousands separators are normalised on input",
+        "A dedicated print stylesheet produces a clean single-page A4 invoice with no browser chrome",
+      ],
+      doNot: [
+        "Do not integrate a payment provider — sending and paying are simulated",
+        "Do not animate totals; a number mid-transition cannot be read",
+        "Do not hide the tax calculation inside the total",
+        "Do not use floating point arithmetic for money",
+        "Do not treat the print stylesheet as optional",
       ],
       content: [
         "Forty invoices across six states with realistic clients and amounts",

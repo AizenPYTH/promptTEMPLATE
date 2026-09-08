@@ -3,7 +3,7 @@ import { site } from "@/data/site";
 
 export function Stats() {
   return (
-    <section className="border-y border-line bg-surface/40">
+    <section className="border-t border-line bg-surface/40">
       <Container size="wide" className="py-12">
         <dl className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {site.stats.map((stat) => (

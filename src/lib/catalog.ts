@@ -130,10 +130,6 @@ export function featuredTemplates(limit = 6): Template[] {
   return sortTemplates(templates.filter((t) => t.featured), "popular").slice(0, limit);
 }
 
-export function newestTemplates(limit = 4): Template[] {
-  return sortTemplates(templates, "newest").slice(0, limit);
-}
-
 export function templatesByCategory(category: CategoryId): Template[] {
   return sortTemplates(templates.filter((t) => t.category === category), "popular");
 }

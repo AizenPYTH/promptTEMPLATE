@@ -27,7 +27,8 @@ export default function NotFound() {
             </ButtonLink>
           </div>
           <p className="mt-6 text-xs text-faint">
-            Or press <kbd className="rounded-xs border border-line bg-surface-2 px-1 font-sans">⌘K</kbd> to
+            Or press <kbd className="rounded-xs border border-line bg-surface-2 px-1 font-sans">Ctrl K</kbd>{" "}
+            (<kbd className="rounded-xs border border-line bg-surface-2 px-1 font-sans">⌘ K</kbd> on a Mac) to
             search from anywhere.
           </p>
         </div>

@@ -15,9 +15,11 @@ interface ModalProps {
   description?: string;
   children: React.ReactNode;
   footer?: React.ReactNode;
-  size?: "sm" | "md" | "lg" | "full";
+  size?: "sm" | "md" | "lg" | "full" | "screen";
   /** Hide the visible header — the title stays available to screen readers. */
   bare?: boolean;
+  /** Replace the default header entirely (it must include its own close control). */
+  header?: React.ReactNode;
 }
 
 const sizes = {
@@ -25,6 +27,7 @@ const sizes = {
   md: "max-w-lg",
   lg: "max-w-3xl",
   full: "max-w-[min(1400px,95vw)]",
+  screen: "max-w-none",
 };
 
 export function Modal({
@@ -36,6 +39,7 @@ export function Modal({
   footer,
   size = "md",
   bare = false,
+  header,
 }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const restoreFocus = useRef<HTMLElement | null>(null);
@@ -86,7 +90,12 @@ export function Modal({
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[70] flex items-end justify-center p-0 sm:items-center sm:p-6">
+    <div
+      className={cn(
+        "fixed inset-0 z-[70] flex justify-center",
+        size === "screen" ? "items-stretch p-0" : "items-end p-0 sm:items-center sm:p-6",
+      )}
+    >
       <div
         className="absolute inset-0 bg-[var(--overlay)] backdrop-blur-[2px] animate-fade-in"
         onClick={onClose}
@@ -100,11 +109,16 @@ export function Modal({
         aria-describedby={description ? "modal-description" : undefined}
         tabIndex={-1}
         className={cn(
-          "relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-xl border border-line bg-surface shadow-float animate-scale-in sm:rounded-xl",
+          "relative flex w-full flex-col overflow-hidden border-line bg-surface shadow-float animate-scale-in",
+          size === "screen"
+            ? "h-full max-h-none rounded-none border-0"
+            : "max-h-[92vh] rounded-t-xl border sm:rounded-xl",
           sizes[size],
         )}
       >
-        {bare ? (
+        {header ? (
+          header
+        ) : bare ? (
           <button
             type="button"
             onClick={onClose}
@@ -133,7 +147,14 @@ export function Modal({
             </button>
           </header>
         )}
-        <div className="min-h-0 flex-1 overflow-y-auto scrollbar-slim">{children}</div>
+        <div
+          className={cn(
+            "min-h-0 flex-1",
+            size === "screen" ? "overflow-hidden" : "overflow-y-auto scrollbar-slim",
+          )}
+        >
+          {children}
+        </div>
         {footer ? <footer className="border-t border-line px-5 py-3.5">{footer}</footer> : null}
       </div>
     </div>,

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink, Expand, Monitor, Smartphone, Tablet, X } from "lucide-react";
 import { createPortal } from "react-dom";
-import type { Template } from "@/types/template";
+import { getTemplate } from "@/data/templates";
 import { TemplateVisual } from "@/components/visuals/template-visual";
 import { cn } from "@/lib/utils";
 
@@ -15,11 +15,11 @@ const viewports: { id: Viewport; label: string; icon: typeof Monitor; width: str
   { id: "mobile", label: "Mobile", icon: Smartphone, width: "390px", hint: "390px" },
 ];
 
-export function TemplatePreview({ template }: { template: Template }) {
-  const frames = [
-    { id: "main", label: "Overview", caption: template.tagline, visual: template.visual },
-    ...template.screenshots,
-  ];
+export function TemplatePreview({ slug }: { slug: string }) {
+  const template = getTemplate(slug);
+  const frames = template
+    ? [{ id: "main", label: "Overview", caption: template.tagline, visual: template.visual }, ...template.screenshots]
+    : [];
   const [active, setActive] = useState(0);
   const [viewport, setViewport] = useState<Viewport>("desktop");
   const [lightbox, setLightbox] = useState(false);
@@ -42,6 +42,8 @@ export function TemplatePreview({ template }: { template: Template }) {
       document.removeEventListener("keydown", onKey);
     };
   }, [lightbox, next, prev]);
+
+  if (!template) return null;
 
   const current = frames[active];
   const frameWidth = viewports.find((v) => v.id === viewport)?.width ?? "100%";

@@ -11,7 +11,6 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import {
-  ArrowRight,
   Compass,
   CornerDownLeft,
   Heart,
@@ -28,6 +27,7 @@ import { categories } from "@/data/taxonomy";
 import { collections } from "@/data/collections";
 import { useTheme } from "@/components/providers/theme-provider";
 import { Kbd } from "@/components/ui/kbd";
+import { useModifierKey } from "@/lib/platform";
 import { cn, formatCount } from "@/lib/utils";
 
 interface CommandItem {
@@ -54,6 +54,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
   const [lastQuery, setLastQuery] = useState("");
   const router = useRouter();
   const { toggle: toggleTheme } = useTheme();
+  const modifier = useModifierKey();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -298,9 +299,9 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
                 <Kbd>↵</Kbd>
                 to select
               </span>
-              <span className="hidden items-center gap-1.5 sm:flex">
-                {items.length} result{items.length === 1 ? "" : "s"}
-                <ArrowRight className="size-3" aria-hidden />
+              <span className="hidden items-center gap-2 sm:flex">
+                <Kbd>{modifier} K</Kbd>
+                to close
               </span>
             </div>
           </div>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function CollectionsPage() {
-  const [lead, ...rest] = collections;
+  const [firstLead, secondLead, ...rest] = collections;
 
   return (
     <Container size="wide" className="py-10 sm:py-14">
@@ -21,15 +21,14 @@ export default function CollectionsPage() {
         description="Groupings put together by hand, not generated from tags. Each one answers a question you might actually arrive with — what does a good dark interface look like, what should an AI launch page do."
       />
 
-      <div className="mt-10 grid gap-5 lg:grid-cols-3">
-        <CollectionCard collection={lead} className="lg:col-span-2 lg:row-span-2" />
-        {rest.slice(0, 2).map((collection) => (
-          <CollectionCard key={collection.slug} collection={collection} size="compact" />
+      <div className="mt-10 grid gap-5 md:grid-cols-2">
+        {[firstLead, secondLead].map((collection) => (
+          <CollectionCard key={collection.slug} collection={collection} />
         ))}
       </div>
 
       <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {rest.slice(2).map((collection) => (
+        {rest.map((collection) => (
           <CollectionCard key={collection.slug} collection={collection} size="compact" />
         ))}
       </div>

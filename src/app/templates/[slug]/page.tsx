@@ -115,7 +115,7 @@ export default async function TemplatePage({ params }: PageProps<"/templates/[sl
           </div>
 
           <div className="lg:pt-2">
-            <TemplateActions template={template} />
+            <TemplateActions slug={template.slug} />
             <p className="mt-3 max-w-xs text-xs leading-5 text-faint">
               The prompt is copied as plain text. Paste it into Claude Code, Cursor or Codex and the
               agent builds the project from scratch.
@@ -124,7 +124,7 @@ export default async function TemplatePage({ params }: PageProps<"/templates/[sl
         </header>
 
         <div className="mt-10">
-          <TemplatePreview template={template} />
+          <TemplatePreview slug={template.slug} />
         </div>
 
         <div className="mt-14 grid gap-12 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-14">
@@ -144,7 +144,7 @@ export default async function TemplatePage({ params }: PageProps<"/templates/[sl
               </div>
             </section>
 
-            <PromptSection template={template} />
+            <PromptSection slug={template.slug} />
 
             <section>
               <h2 className="text-xl font-semibold tracking-[-0.025em]">Pages in this build</h2>

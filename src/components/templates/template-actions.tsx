@@ -4,16 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import { useStore } from "@/lib/client-store";
 import { agentStore } from "@/lib/preferences";
 import { Check, Copy, Download, Link2, Share2 } from "lucide-react";
-import type { AgentId, Template } from "@/types/template";
+import type { AgentId } from "@/types/template";
 import { agents } from "@/data/site";
 import { buildPrompt, promptFilename } from "@/data/prompts";
+import { getTemplate } from "@/data/templates";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { FavoriteButton } from "@/components/templates/favorite-button";
 import { useToast } from "@/components/providers/toast-provider";
 import { copyText, downloadText } from "@/lib/clipboard";
 
-export function TemplateActions({ template }: { template: Template }) {
+export function TemplateActions({ slug }: { slug: string }) {
+  const template = getTemplate(slug);
   const stored = useStore(agentStore, "claude-code");
   const agent: AgentId = agents.some((a) => a.id === stored) ? stored : "claude-code";
   const [copied, setCopied] = useState(false);
@@ -27,6 +29,8 @@ export function TemplateActions({ template }: { template: Template }) {
   }, []);
 
   const agentName = agents.find((a) => a.id === agent)?.name ?? "Claude Code";
+
+  if (!template) return null;
 
   const handleCopy = async () => {
     const ok = await copyText(buildPrompt(template, agent));

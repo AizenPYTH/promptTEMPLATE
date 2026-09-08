@@ -54,7 +54,19 @@ export type VisualKind =
   | "pricing"
   | "checkout"
   | "auth"
-  | "settings";
+  | "settings"
+  | "chat"
+  | "kanban"
+  | "terminal"
+  | "canvas"
+  | "grid"
+  | "gallery"
+  | "invoice"
+  | "map"
+  | "timeline"
+  | "report"
+  | "archive"
+  | "lookbook";
 
 export interface Author {
   name: string;
@@ -103,6 +115,12 @@ export interface Typography {
 export interface TemplateSpec {
   positioning: string;
   audience: string;
+  /** The art direction, in prose. What this build should feel like and why. */
+  designDirection: string;
+  /** Shape language, borders, elevation, imagery, iconography, density. */
+  visualLanguage: string[];
+  /** Grid, container widths, header behaviour, the composition of key pages. */
+  layout: string[];
   pages: PagePlan[];
   components: string[];
   palette: Palette;
@@ -111,8 +129,14 @@ export interface TemplateSpec {
   radius: string;
   motion: string[];
   interactions: string[];
+  /** Template-specific breakpoint behaviour, not generic advice. */
+  responsive: string[];
   content: string[];
+  /** Engineering requirements particular to this build. */
+  technical: string[];
   constraints: string[];
+  /** Explicit prohibitions — the fastest way to keep an agent on brief. */
+  doNot: string[];
   fileTree: string[];
 }
 

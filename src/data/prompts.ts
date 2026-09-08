@@ -6,15 +6,21 @@ import { categoryMap, styleMap, technologyMap } from "@/data/taxonomy";
  *
  * Every template carries a structured brief (`template.spec`). Rather than
  * storing three near-identical walls of text per template, we compile the
- * brief into an agent-specific prompt. Each agent gets the same substance in
- * the shape it works best with:
+ * brief into an agent-specific prompt. Each agent receives the same substance
+ * in the shape it works best with:
  *
- *   claude-code — a single narrative brief with a definition of done
- *   cursor      — an ordered, file-by-file implementation plan
- *   codex       — numbered requirements with explicit acceptance criteria
+ *   claude-code — a full design brief, section by section, ending in a
+ *                 definition of done
+ *   cursor      — an ordered, file-by-file implementation plan with
+ *                 verification steps
+ *   codex       — numbered requirements, constraints and acceptance criteria
+ *
+ * The output has to read like something a person wrote for another person.
+ * A prompt that reads as a configuration dump gets a result that looks like
+ * one, so every section carries a sentence of intent before its list.
  */
 
-const bullet = (items: readonly string[]) => items.map((i) => `- ${i}`).join("\n");
+const bullets = (items: readonly string[]) => items.map((item) => `- ${item}`).join("\n");
 const numbered = (items: readonly string[], start = 1) =>
   items.map((item, i) => `${i + start}. ${item}`).join("\n");
 
@@ -22,164 +28,268 @@ function techList(template: Template) {
   return template.technologies.map((t) => technologyMap.get(t)?.name ?? t).join(", ");
 }
 
-function routes(template: Template) {
+function routeLines(template: Template) {
   return template.spec.pages.map((p) => `- \`${p.route}\` — ${p.purpose}`).join("\n");
 }
 
-function designSystem(template: Template) {
-  const { palette, typography, spacing, radius } = template.spec;
-  return `Colour tokens (define these once as CSS custom properties, never hard-code a hex in a component):
+function colourSystem(template: Template) {
+  const { palette } = template.spec;
+  return `Define these once as CSS custom properties and reference them everywhere. No component may contain a raw hex value.
 
-  --background      ${palette.background}
-  --surface         ${palette.surface}
-  --border          ${palette.border}
-  --text            ${palette.text}
-  --text-muted      ${palette.muted}
-  --accent          ${palette.accent}
-  --accent-contrast ${palette.accentContrast}
+    --background        ${palette.background}
+    --surface           ${palette.surface}
+    --border            ${palette.border}
+    --text              ${palette.text}
+    --text-muted        ${palette.muted}
+    --accent            ${palette.accent}
+    --accent-contrast   ${palette.accentContrast}
 
-Typography:
-- Display: ${typography.display}
+Derive any hover, pressed, disabled and focus states from these seven values — mix with the background rather than introducing new hues. The accent is the scarcest resource on the page: if you find yourself using it a fourth time in one viewport, one of those uses is wrong.`;
+}
+
+function typographySection(template: Template) {
+  const { typography } = template.spec;
+  return `- Display: ${typography.display}
 - Body: ${typography.body}
 - Mono: ${typography.mono}
-- Type scale: ${typography.scale}
+- Scale: ${typography.scale}
 
-Spacing: ${spacing}
-Radius: ${radius}
-Elevation: use borders before shadows; at most two shadow levels in the whole build.`;
+Set the scale as tokens and use only those steps. Headings carry tighter tracking as they grow; body copy never goes below the size specified above, including on mobile. Numbers that sit in columns or update in place use tabular figures.`;
 }
 
-function sharedContext(template: Template) {
-  const category = categoryMap.get(template.category)?.name ?? template.category;
-  const style = styleMap.get(template.style)?.name ?? template.style;
-  return `Product: ${template.title} — ${template.tagline}
-Category: ${category}
-Visual direction: ${style}
-Positioning: ${template.spec.positioning}
-Primary audience: ${template.spec.audience}
-
-${template.longDescription}`;
-}
-
-const universalQuality = [
-  "TypeScript in strict mode. No `any`, no unchecked non-null assertions.",
-  "No placeholder copy. Every string is real, specific and written for this product.",
-  "All data is local and typed — one module per entity, imported by the UI, never inlined in a component.",
-  "Semantic HTML first. Landmarks, headings in order, labelled controls, alt text that says something.",
-  "Every interactive element is keyboard reachable with a visible focus ring.",
-  "Honour `prefers-reduced-motion`: entrance and looping animation must be disabled entirely.",
-  "No console errors or warnings. No unused imports. The lint and type-check commands must both pass clean.",
+const ENGINEERING_STANDARDS = [
+  "TypeScript in strict mode. No `any`, no non-null assertions to silence the compiler.",
+  "No placeholder copy anywhere. Every string is real, specific and written for this product — no lorem ipsum, no `Feature one`, no `Lorem`.",
+  "All data lives in typed modules under a data directory, imported by the UI. Never inline a record inside a component.",
+  "Semantic HTML first: landmarks, headings in order, labelled controls, alt text that carries meaning.",
+  "Every interactive element is reachable by keyboard and shows a visible focus ring.",
+  "Loading, empty and error states exist for every surface that renders a collection.",
+  "No dead controls. If it looks clickable, it does something.",
+  "The build, the type-checker and the linter all pass with zero errors and zero warnings.",
 ];
+
+const IMPLEMENTATION_RULES = [
+  "Build the design tokens before the first component, so nothing hard-codes a value it will need to unlearn.",
+  "Build the data layer second: types, then typed modules with realistic records. The UI is written against real content from the first render.",
+  "Build shared primitives (button, field, badge, dialog) before pages, so every screen composes from the same parts.",
+  "Then build pages in the order listed under PAGES — the first one sets the patterns the rest reuse.",
+  "Finish each page including its edge cases before starting the next. Do not leave a route stubbed to come back to.",
+  "Do a deliberate responsive pass per breakpoint rather than trusting flex to resolve it.",
+  "Finish with an accessibility pass: tab order, focus rings, labels, contrast, reduced motion.",
+];
+
+/* ------------------------------ Claude Code ------------------------------ */
 
 function claudeCodePrompt(template: Template): string {
   const s = template.spec;
-  return `You are a senior front-end engineer and product designer. You write production code, not demos: real components, real content, real states. You care about typography, spacing rhythm and keyboard access as much as you care about the build passing.
+  const category = categoryMap.get(template.category)?.name ?? template.category;
+  const style = styleMap.get(template.style)?.name ?? template.style;
 
-# Objective
+  return `# ROLE
 
-Build the ${template.title} website — ${template.tagline.toLowerCase()} — as a complete, runnable front-end project.
+You are a senior front-end engineer and product designer. You have shipped interfaces that people use every day, and it shows in the details: type that sits on a scale, spacing with a rhythm, states that all exist, and keyboard access that was designed rather than retrofitted. You write production code, not demonstrations.
 
-${sharedContext(template)}
+Work autonomously. Where this brief leaves a decision open, make the choice a careful designer would make, and note it in the README when you are done.
 
-# Stack
+# OBJECTIVE
 
-${techList(template)}. Strict TypeScript. No backend, no database, no authentication: every record is local mock data, typed and centralised.
+Build **${template.title}** — ${template.tagline.toLowerCase()} — as a complete, runnable front-end project.
 
-# Routes
+${template.description}
 
-${routes(template)}
+# PROJECT CONTEXT
 
-# Components to build
+${template.longDescription}
 
-${bullet(s.components)}
+- Category: ${category}
+- Positioning: ${s.positioning}
+- Primary audience: ${s.audience}
+- Visual direction: ${style}
 
-# Design system
+Everything is front-end. There is no backend, no database and no authentication: all records are local, typed mock data. Write them as though they came from a real system — realistic names, plausible numbers, believable edge cases.
 
-${designSystem(template)}
+# DESIGN DIRECTION
 
-# Responsive behaviour
+${s.designDirection}
 
-Design at 390px first, then verify 768px, 1024px, 1280px and 1440px. This is not a scaled-down desktop layout — navigation, filters, tables and any editing surface each need a deliberate mobile design. Nothing may scroll horizontally except containers that are explicitly meant to.
+# VISUAL LANGUAGE
 
-# Motion
+${bullets(s.visualLanguage)}
 
-${bullet(s.motion)}
+# LAYOUT
 
-Motion is functional: it explains a change of state. Nothing loops without a reason, nothing animates longer than 300ms unless it is a deliberate page-level transition.
+${bullets(s.layout)}
 
-# Interactions
+# PAGES
 
-${bullet(s.interactions)}
+Build every route below. Each is reachable from the primary navigation, and each is finished — not a placeholder with a heading.
 
-# Content
+${routeLines(template)}
 
-${bullet(s.content)}
+# COMPONENTS
 
-# Accessibility
+Build these as reusable, typed components rather than as markup repeated per page:
 
-- Colour contrast of at least 4.5:1 for body text and 3:1 for large text and UI boundaries.
-- Colour is never the only carrier of meaning — pair it with a glyph, a label or a pattern.
-- Dialogs trap focus, close on Escape and return focus to the element that opened them.
-- Live regions announce asynchronous changes such as filter counts and form errors.
-- The whole interface is operable with a keyboard alone, in a sensible tab order.
+${bullets(s.components)}
 
-# Constraints
+# TYPOGRAPHY
 
-${bullet(s.constraints)}
+${typographySection(template)}
 
-# Suggested file structure
+# COLOR SYSTEM
+
+${colourSystem(template)}
+
+# SPACING
+
+${s.spacing}
+
+Radius: ${s.radius}
+
+Elevation: reach for a border before a shadow. Two shadow levels for the whole build is the ceiling, and most surfaces should need neither.
+
+# RESPONSIVE BEHAVIOR
+
+Design at 390px first, then work up through 768px, 1024px, 1280px and 1440px. Mobile is a designed layout, not a narrowed desktop one. Specifically:
+
+${bullets(s.responsive)}
+
+Nothing may scroll horizontally except containers explicitly designed to — and those must show that they scroll.
+
+# INTERACTIONS
+
+${bullets(s.interactions)}
+
+# ANIMATIONS
+
+Motion is functional: it explains a change of state or the origin of a new surface. Nothing loops without a reason, and nothing exceeds 300ms unless it is a deliberate page-level transition.
+
+${bullets(s.motion)}
+
+Every animation above is disabled under \`prefers-reduced-motion: reduce\` — not shortened, disabled, with the end state rendered immediately.
+
+# ACCESSIBILITY
+
+- WCAG 2.2 AA: at least 4.5:1 for body text, 3:1 for large text and interface boundaries.
+- Colour is never the only carrier of meaning. Pair it with a glyph, a label or a pattern.
+- Dialogs trap focus, close on Escape, and return focus to the element that opened them.
+- Asynchronous changes — result counts, form errors, copy confirmations — are announced through a live region.
+- The whole interface is operable by keyboard alone in a sensible tab order.
+- Respect \`prefers-reduced-motion\` and \`prefers-color-scheme\` where a theme exists.
+
+# CONTENT
+
+The copy is part of the build, not a placeholder to fill later:
+
+${bullets(s.content)}
+
+# TECHNICAL REQUIREMENTS
+
+Stack: ${techList(template)}, with strict TypeScript.
+
+${bullets(s.technical)}
+
+${bullets(ENGINEERING_STANDARDS)}
+
+# FILE STRUCTURE
 
 \`\`\`
 ${s.fileTree.join("\n")}
 \`\`\`
 
-# Engineering quality bar
+# IMPLEMENTATION RULES
 
-${bullet(universalQuality)}
+${numbered(IMPLEMENTATION_RULES)}
 
-# Definition of done
+# DO NOT
 
-1. The project installs and runs with a single command, with no manual setup steps.
-2. Every route listed above exists and is reachable from the navigation.
-3. Every interaction listed above works — no dead buttons, no placeholder handlers.
-4. Loading, empty and error states exist for anything that renders a collection.
-5. The build and the linter both pass with zero errors and zero warnings.
-6. A short README explains the structure and how to change the content.
+${bullets(s.doNot)}
 
-Work through the whole build before reporting back. When a decision is not specified above, choose the option a careful designer would choose and note it in the README.`;
+Also, across the whole build:
+
+${bullets(s.constraints)}
+
+# DEFINITION OF DONE
+
+1. The project installs and runs with a single command, with no manual setup.
+2. Every route under PAGES exists, is linked from the navigation, and is finished.
+3. Every interaction under INTERACTIONS works. There are no non-functional controls.
+4. Loading, empty and error states exist for every list, grid or table.
+5. The layout is correct at 390px, 768px, 1024px, 1280px and 1440px, with no horizontal page scroll.
+6. A keyboard-only walkthrough of every route succeeds, with a visible focus ring at each stop.
+7. With \`prefers-reduced-motion: reduce\`, no entrance or looping animation plays.
+8. Type-check, lint and build all pass with zero errors and zero warnings.
+9. A README explains the structure, the design tokens, and how to change the content.
+
+Build the whole thing before reporting back. When you finish, list the decisions you made that this brief left open.`;
 }
+
+/* --------------------------------- Cursor -------------------------------- */
 
 function cursorPrompt(template: Template): string {
   const s = template.spec;
+  const category = categoryMap.get(template.category)?.name ?? template.category;
+
   const steps = [
-    `Scaffold the project with ${techList(template)} and strict TypeScript. Configure path aliases and the lint script before writing any UI.`,
-    `Create the design tokens as CSS custom properties, then map them to utility classes. Nothing later in the build may hard-code a colour.`,
-    `Define the data layer: types first, then one typed module per entity. Populate it with realistic records — this is the content the UI will render.`,
-    `Build the layout shell: ${s.components[0]}, navigation, and the page container with its responsive gutters.`,
-    `Build the shared primitives (buttons, fields, badges, dialog) so every later screen composes from the same parts.`,
-    ...s.pages.map((p) => `Implement \`${p.route}\`: ${p.purpose}`),
-    `Wire the interactions: ${s.interactions.join("; ")}.`,
-    `Add loading, empty and error states for every collection surface.`,
-    `Responsive pass at 390px, 768px, 1024px and 1440px. Fix each breakpoint deliberately rather than letting flexbox decide.`,
-    `Accessibility pass: focus order, focus rings, labels, contrast, reduced motion.`,
-    `Run the type-checker and linter, fix everything they report, then re-read your own diff for anything you would flag in review.`,
+    `**Scaffold and configure.** Set up ${techList(template)} with strict TypeScript, path aliases and the lint script. Do this before writing any UI — configuration changes are cheap now and expensive later.`,
+    `**Design tokens.** Create the colour, type, spacing and radius tokens from the DESIGN SYSTEM section as CSS custom properties, then map them to utility classes. From this step onward, no component contains a raw value.`,
+    `**Data layer.** Define the types, then one typed module per entity, populated with realistic records. Write the content now: every screen after this is built against real copy.`,
+    `**Layout shell.** Build the page shell described under LAYOUT — ${s.layout[0]}. Include the navigation and the responsive container behaviour.`,
+    `**Shared primitives.** Build the button, field, badge and dialog primitives so every later screen composes from the same parts. Include focus and disabled states now, not later.`,
+    ...s.pages.map(
+      (page, i) =>
+        `**Page ${i + 1}: \`${page.route}\`.** ${page.purpose} Finish it completely — including its empty and loading states — before moving on.`,
+    ),
+    `**Components pass.** Extract and finish the named components: ${s.components.join("; ")}.`,
+    `**Interactions pass.** Wire the behaviour: ${s.interactions.join("; ")}.`,
+    `**Motion pass.** Add only the animations listed under ANIMATIONS, and gate every one behind \`prefers-reduced-motion\`.`,
+    `**Responsive pass.** Work each breakpoint deliberately — 390px, 768px, 1024px, 1280px, 1440px — applying the rules under RESPONSIVE.`,
+    `**Accessibility pass.** Tab order, focus rings, labels, contrast, dialog focus traps, live regions for async changes.`,
+    `**Verification.** Run the type-checker and the linter, fix everything they report, then re-read your own diff as if you were reviewing someone else's.`,
   ];
 
   return `# ${template.title} — implementation plan
 
-You are working in this repository as a senior front-end engineer. Follow the plan in order. Complete each step fully — including its edge cases — before moving on. Do not stub anything you intend to come back to.
+You are working in this repository as a senior front-end engineer. Follow the plan in order. Finish each step completely, including its edge cases, before starting the next. Do not stub anything with the intention of returning to it.
 
 ## What we are building
 
-${sharedContext(template)}
+**${template.title}** — ${template.tagline.toLowerCase()}. ${template.description}
 
-## Design system (apply from step 2 onward)
+${template.longDescription}
 
-${designSystem(template)}
+- Category: ${category}
+- Positioning: ${s.positioning}
+- Audience: ${s.audience}
+- Stack: ${techList(template)}, strict TypeScript, no backend — all data is local and typed.
 
-## Step-by-step plan
+## Design direction
 
-${numbered(steps)}
+${s.designDirection}
+
+**Visual language**
+
+${bullets(s.visualLanguage)}
+
+**Layout**
+
+${bullets(s.layout)}
+
+## Design system
+
+### Colour
+
+${colourSystem(template)}
+
+### Typography
+
+${typographySection(template)}
+
+### Spacing and radius
+
+${s.spacing}
+
+Radius: ${s.radius}
 
 ## Files you will create
 
@@ -187,80 +297,177 @@ ${numbered(steps)}
 ${s.fileTree.join("\n")}
 \`\`\`
 
+## Implementation order
+
+${numbered(steps)}
+
 ## Components
 
-${bullet(s.components)}
+${bullets(s.components)}
 
-## Motion rules
+## Interactions
 
-${bullet(s.motion)}
+${bullets(s.interactions)}
+
+## Animations
+
+${bullets(s.motion)}
+
+All motion is disabled under \`prefers-reduced-motion: reduce\`.
+
+## Responsive
+
+${bullets(s.responsive)}
 
 ## Content rules
 
-${bullet(s.content)}
+${bullets(s.content)}
 
-## Hard constraints
+## Technical requirements
 
-${bullet(s.constraints)}
+${bullets(s.technical)}
 
-## Non-negotiables
+${bullets(ENGINEERING_STANDARDS)}
 
-${bullet(universalQuality)}
+## Do not
 
-## Before you finish
+${bullets(s.doNot)}
 
-Re-run the build and the linter. Open every route. Tab through each page from the top and confirm you can reach and operate everything without a mouse. Resize to 390px and confirm nothing overflows. Only then summarise what you built and which decisions you made that the plan left open.`;
+${bullets(s.constraints)}
+
+## Verification before you report back
+
+- [ ] Every route in the plan renders and is linked from the navigation.
+- [ ] Every interaction listed works; no control is inert.
+- [ ] Loading, empty and error states exist for each collection surface.
+- [ ] Open each page at 390px and confirm nothing overflows horizontally.
+- [ ] Tab through each page from the top: everything reachable, focus always visible.
+- [ ] With reduced motion enabled, no entrance or looping animation plays.
+- [ ] \`lint\` and \`build\` both pass with zero errors and zero warnings.
+
+Then summarise what you built and which open decisions you made.`;
 }
+
+/* --------------------------------- Codex --------------------------------- */
 
 function codexPrompt(template: Template): string {
   const s = template.spec;
-  const requirements = [
-    `**Stack.** ${techList(template)}, strict TypeScript, no backend and no third-party data source. All records are local, typed modules.`,
-    `**Routes.** Implement exactly these routes, each reachable from the primary navigation:\n${routes(template)}`,
-    `**Components.** Implement the following as reusable, typed components:\n${bullet(s.components)}`,
-    `**Design tokens.** Use these values and no others:\n\n${designSystem(template)}`,
-    `**Responsive.** Verified layouts at 390px, 768px, 1024px, 1280px and 1440px. Mobile is designed, not derived.`,
-    `**Motion.**\n${bullet(s.motion)}`,
-    `**Interactions.**\n${bullet(s.interactions)}`,
-    `**Content.**\n${bullet(s.content)}`,
-    `**Accessibility.** WCAG 2.2 AA: contrast, focus management, keyboard operability, labelled controls, live regions for async changes, and full \`prefers-reduced-motion\` support.`,
-    `**Constraints.**\n${bullet(s.constraints)}`,
+  const category = categoryMap.get(template.category)?.name ?? template.category;
+
+  const requirements: { title: string; body: string }[] = [
+    {
+      title: "Stack and data",
+      body: `${techList(template)} with strict TypeScript. No backend, no database, no authentication, no third-party data source. All records are local typed modules containing realistic content.`,
+    },
+    {
+      title: "Design direction",
+      body: `${s.designDirection}\n\nVisual language:\n\n${bullets(s.visualLanguage)}`,
+    },
+    {
+      title: "Layout",
+      body: bullets(s.layout),
+    },
+    {
+      title: "Routes",
+      body: `Implement exactly these routes, each reachable from the primary navigation and each complete:\n\n${routeLines(template)}`,
+    },
+    {
+      title: "Components",
+      body: `Implement the following as reusable, typed components:\n\n${bullets(s.components)}`,
+    },
+    {
+      title: "Colour system",
+      body: colourSystem(template),
+    },
+    {
+      title: "Typography",
+      body: typographySection(template),
+    },
+    {
+      title: "Spacing and radius",
+      body: `${s.spacing}\n\nRadius: ${s.radius}\n\nPrefer borders to shadows; two shadow levels maximum across the build.`,
+    },
+    {
+      title: "Responsive behaviour",
+      body: `Verified layouts at 390px, 768px, 1024px, 1280px and 1440px. Mobile is designed, not derived.\n\n${bullets(s.responsive)}`,
+    },
+    {
+      title: "Interactions",
+      body: bullets(s.interactions),
+    },
+    {
+      title: "Animation",
+      body: `${bullets(s.motion)}\n\nAll of the above are disabled entirely under \`prefers-reduced-motion: reduce\`, rendering the end state immediately.`,
+    },
+    {
+      title: "Content",
+      body: bullets(s.content),
+    },
+    {
+      title: "Accessibility",
+      body: `WCAG 2.2 AA. Contrast of at least 4.5:1 for body text and 3:1 for large text and interface boundaries. Colour is never the sole carrier of meaning. Dialogs trap focus, close on Escape and restore focus. Async changes are announced through live regions. Full keyboard operability in a sensible tab order.`,
+    },
+    {
+      title: "Technical",
+      body: `${bullets(s.technical)}\n\n${bullets(ENGINEERING_STANDARDS)}`,
+    },
+    {
+      title: "Constraints",
+      body: `The following are hard constraints, not preferences:\n\n${bullets(s.constraints)}`,
+    },
+    {
+      title: "Prohibited",
+      body: bullets(s.doNot),
+    },
   ];
 
-  return `# Task: build ${template.title}
+  return `# TASK
 
-## Summary
+Build **${template.title}** — ${template.tagline.toLowerCase()} — as a complete front-end project.
 
-${sharedContext(template)}
+## SUMMARY
 
-## Requirements
+${template.description}
 
-${requirements.map((r, i) => `### R${i + 1}\n\n${r}`).join("\n\n")}
+${template.longDescription}
 
-## File layout
+- Category: ${category}
+- Positioning: ${s.positioning}
+- Audience: ${s.audience}
+
+## REQUIREMENTS
+
+${requirements.map((r, i) => `### R${i + 1} — ${r.title}\n\n${r.body}`).join("\n\n")}
+
+## FILE LAYOUT
 
 \`\`\`
 ${s.fileTree.join("\n")}
 \`\`\`
 
-## Acceptance criteria
+## IMPLEMENTATION ORDER
 
-- [ ] \`install\` then \`dev\` runs the project with no manual configuration.
-- [ ] Every route in R2 renders and is linked from the navigation.
-- [ ] Every interaction in R7 is implemented; there are no non-functional controls.
+${numbered(IMPLEMENTATION_RULES)}
+
+## ACCEPTANCE CRITERIA
+
+- [ ] Install and dev commands run the project with no manual configuration.
+- [ ] Every route in R4 renders, is linked from the navigation, and is complete.
+- [ ] Every component in R5 exists as a reusable typed component.
+- [ ] Colour, type, spacing and radius match R6 to R8 exactly; no raw values in components.
+- [ ] Every interaction in R10 is implemented; there are no inert controls.
 - [ ] Loading, empty and error states exist for every list, grid or table.
-- [ ] Type-check passes with zero errors under strict mode.
-- [ ] Lint passes with zero errors and zero warnings.
-- [ ] Keyboard-only walkthrough of every route succeeds, with a visible focus ring at each stop.
-- [ ] No layout overflow at 390px; no horizontal page scroll at any breakpoint.
+- [ ] Layouts verified at 390px, 768px, 1024px, 1280px and 1440px with no horizontal page scroll.
+- [ ] Keyboard-only walkthrough of every route succeeds with a visible focus indicator at each stop.
 - [ ] With \`prefers-reduced-motion: reduce\`, no entrance or looping animation plays.
-- [ ] README documents the structure and how to edit the content.
+- [ ] Type-check passes under strict mode with zero errors.
+- [ ] Lint passes with zero errors and zero warnings.
+- [ ] Nothing under R16 appears in the build.
+- [ ] README documents the structure and how to change the content.
 
-## Engineering standards
+## VERIFICATION
 
-${bullet(universalQuality)}
-
-Report which requirements are complete and flag any assumption you had to make.`;
+Before reporting completion, run the type-checker, the linter and the production build, and open every route at 390px and 1440px. Report which acceptance criteria are met and flag any assumption you had to make.`;
 }
 
 const builders: Record<AgentId, (t: Template) => string> = {
@@ -275,5 +482,18 @@ export function buildPrompt(template: Template, agent: AgentId): string {
 }
 
 export function promptFilename(template: Template, agent: AgentId): string {
-  return `${template.slug}-${agent}-prompt.txt`;
+  return `${template.slug}-${agent}.txt`;
+}
+
+/**
+ * Rough size figures for the viewer. Token count is an estimate — roughly four
+ * characters per token for English prose — and is labelled as such in the UI.
+ */
+export function promptStats(prompt: string) {
+  return {
+    characters: prompt.length,
+    words: prompt.trim().split(/\s+/).length,
+    lines: prompt.split("\n").length,
+    tokens: Math.round(prompt.length / 4),
+  };
 }

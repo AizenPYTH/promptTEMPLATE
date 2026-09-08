@@ -13,26 +13,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-const steps = [
+const loop = [
   {
     n: "01",
-    title: "Find a design worth building",
-    body: "Browse by category, style or technology. Every template is a complete idea — not a hero section with three cards underneath it.",
+    title: "Discover",
+    body: "Browse by category, style or technology. Every template is a complete idea — not a hero section with three cards underneath it — and the detail page tells you what it is made of before you copy anything.",
   },
   {
     n: "02",
-    title: "Read what it is actually made of",
-    body: "Each template page lists its routes, its palette, its type scale and the constraints its designer worked under. You know what you are getting before you copy anything.",
+    title: "Copy",
+    body: "Take the prompt for the agent you already use: Claude Code, Cursor or Codex. It is the full brief — art direction, routes, components, tokens, responsive rules, interactions and an explicit list of what not to do.",
   },
   {
     n: "03",
-    title: "Copy the prompt for your agent",
-    body: "Claude Code, Cursor or Codex — the same brief, shaped for how each tool works. Copy it or download it as a text file.",
-  },
-  {
-    n: "04",
-    title: "Build, then make it yours",
-    body: "The agent produces ordinary code in a stack you already know. Change the palette, cut the sections you do not need, wire it to your own data.",
+    title: "Build",
+    body: "Paste it in and let the agent do the typing. What comes back is ordinary code in a stack you know, so you change the palette, cut the sections you do not need and wire it to your own data.",
   },
 ];
 
@@ -43,7 +38,7 @@ export default function AboutPage() {
         <Container size="narrow" className="py-14 sm:py-20">
           <p className="text-2xs font-medium uppercase tracking-[0.14em] text-faint">About</p>
           <h1 className="mt-4 text-3xl font-semibold leading-[1.15] tracking-[-0.035em] sm:text-[2.6rem]">
-            Screenshots inspire. Prompts build.
+            Instead of searching for code, start from a design you already love.
           </h1>
           <p className="mt-6 text-[17px] leading-8 text-muted">
             There is no shortage of places to look at beautiful websites. Design galleries are full of
@@ -62,7 +57,7 @@ export default function AboutPage() {
 
       <section className="border-b border-line">
         <Container size="narrow" className="py-14">
-          <h2 className="text-xl font-semibold tracking-[-0.025em]">Why the prompt is the product</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.025em]">Screenshots inspire. Prompts build.</h2>
           <div className="mt-6 space-y-5 text-[15px] leading-7 text-muted">
             <p>
               A template you download is frozen. It was built for someone else&apos;s content, someone
@@ -87,9 +82,12 @@ export default function AboutPage() {
 
       <section className="border-b border-line">
         <Container size="narrow" className="py-14">
-          <h2 className="text-xl font-semibold tracking-[-0.025em]">How to use a template</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.025em]">Discover, copy, build</h2>
+          <p className="mt-3 text-[15px] leading-7 text-muted">
+            The whole product is one loop, and it takes about ninety seconds.
+          </p>
           <ol className="mt-8 space-y-8">
-            {steps.map((step) => (
+            {loop.map((step) => (
               <li key={step.n} className="flex gap-5">
                 <span className="font-mono text-[13px] text-accent">{step.n}</span>
                 <div>

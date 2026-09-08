@@ -3,6 +3,7 @@ import { ArrowUpRight, Copy } from "lucide-react";
 import type { Template } from "@/types/template";
 import { TemplateVisual } from "@/components/visuals/template-visual";
 import { FavoriteButton } from "@/components/templates/favorite-button";
+import { CardCopyButton } from "@/components/templates/card-copy-button";
 import { Badge } from "@/components/ui/badge";
 import { Rating } from "@/components/ui/rating";
 import { categoryMap, technologyMap } from "@/data/taxonomy";
@@ -133,10 +134,13 @@ export function TemplateCard({
         <div className="absolute right-3 top-3 z-10 opacity-0 transition-opacity duration-150 focus-within:opacity-100 group-hover:opacity-100 max-md:opacity-100">
           <FavoriteButton slug={template.slug} title={template.title} />
         </div>
-        <span className="pointer-events-none absolute bottom-3 right-3 z-10 inline-flex translate-y-1 items-center gap-1.5 rounded-md border border-line bg-surface px-2.5 py-1.5 text-xs font-medium opacity-0 shadow-soft transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-          View template
-          <ArrowUpRight className="size-3.5" aria-hidden />
-        </span>
+        <div className="absolute inset-x-3 bottom-3 z-10 flex translate-y-1 items-center justify-between gap-2 opacity-0 transition-all duration-200 focus-within:translate-y-0 focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100">
+          <span className="pointer-events-none inline-flex h-7 items-center gap-1.5 rounded-md border border-line bg-[color-mix(in_srgb,var(--surface)_92%,transparent)] px-2 text-2xs font-medium shadow-soft backdrop-blur-sm">
+            View template
+            <ArrowUpRight className="size-3" aria-hidden />
+          </span>
+          <CardCopyButton slug={template.slug} title={template.title} />
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col p-4">

@@ -7,7 +7,7 @@ import { pluralise } from "@/lib/utils";
 
 export function CategoryStrip() {
   return (
-    <section className="py-16 sm:py-20">
+    <section className="border-t border-line py-16 sm:py-20">
       <Container size="wide">
         <SectionHeading
           title="Browse by what you're building"

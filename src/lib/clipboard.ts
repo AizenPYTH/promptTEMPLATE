@@ -39,23 +39,3 @@ export function downloadText(filename: string, contents: string): void {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 }
-
-export interface ShareResult {
-  method: "share" | "clipboard" | "failed";
-}
-
-export async function shareUrl(title: string, text: string, url: string): Promise<ShareResult> {
-  if (typeof navigator !== "undefined" && "share" in navigator) {
-    try {
-      await navigator.share({ title, text, url });
-      return { method: "share" };
-    } catch (error) {
-      // AbortError means the user dismissed the sheet — not a failure to report.
-      if (error instanceof DOMException && error.name === "AbortError") {
-        return { method: "share" };
-      }
-    }
-  }
-  const copied = await copyText(url);
-  return { method: copied ? "clipboard" : "failed" };
-}

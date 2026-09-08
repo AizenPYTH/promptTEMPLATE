@@ -12,6 +12,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { useCommandPalette } from "@/components/search/command-palette";
 import { useFavorites } from "@/components/providers/favorites-provider";
 import { useTheme } from "@/components/providers/theme-provider";
+import { useModifierKey } from "@/lib/platform";
 import { cn } from "@/lib/utils";
 
 const scrollStore = createScrollStore(8);
@@ -24,6 +25,7 @@ export function Navbar() {
   const { open: openPalette } = useCommandPalette();
   const { favorites, ready } = useFavorites();
   const { theme, toggle } = useTheme();
+  const modifier = useModifierKey();
 
   // Close the mobile menu on navigation, during render rather than after it.
   if (lastPath !== pathname) {
@@ -84,7 +86,7 @@ export function Navbar() {
           >
             <Search className="size-3.5" aria-hidden />
             <span className="flex-1 text-left">Search templates…</span>
-            <Kbd>⌘K</Kbd>
+            <Kbd>{modifier} K</Kbd>
           </button>
 
           <button

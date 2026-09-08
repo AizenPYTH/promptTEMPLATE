@@ -20,7 +20,7 @@ does nothing with it. Everything you can click actually works.
 | Language | TypeScript, `strict` mode |
 | Styling | Tailwind CSS v4 with CSS custom properties as design tokens |
 | Icons | lucide-react |
-| Imagery | Hand-drawn inline SVG scenes — no image files, no external requests |
+| Imagery | 24 hand-drawn inline SVG scenes — no image files, no external requests |
 | Persistence | `localStorage` for favourites, theme, layout and preferred agent |
 
 Runtime dependencies: `next`, `react`, `react-dom`, `lucide-react`. That is the whole list.
@@ -60,7 +60,7 @@ src/
 │   ├── prompt/                 # prompt viewer + prompt section
 │   ├── search/                 # command palette, search results
 │   ├── collections/  home/  pricing/  forms/  ui/
-│   ├── visuals/                # the SVG scene system
+│   ├── visuals/                # primitives + scenes-core + scenes-extra + registry
 │   └── providers/              # theme, toasts, favourites
 ├── data/                       # the entire content layer
 │   ├── site.ts                 # branding, navigation, footer, agents
@@ -75,15 +75,21 @@ src/
 
 ## How the prompts work
 
-Each template carries a structured brief in `template.spec`: routes, components, palette,
-typography, spacing, radius, motion rules, interactions, content rules, constraints and a
+The prompt is the product, so it gets the most structure. Each template carries a
+structured brief in `template.spec`: positioning, audience, art direction, visual language,
+layout, routes, components, palette, typography, spacing, radius, motion, interactions,
+responsive rules, content rules, technical requirements, constraints, prohibitions and a
 file tree. `src/data/prompts.ts` compiles that brief into three agent-specific prompts:
 
 | Agent | Shape |
 | --- | --- |
-| Claude Code | one narrative brief ending in a definition of done |
-| Cursor | an ordered, file-by-file implementation plan |
-| Codex | numbered requirements with explicit acceptance criteria |
+| Claude Code | a full design brief in 21 sections — ROLE, OBJECTIVE, PROJECT CONTEXT, DESIGN DIRECTION, VISUAL LANGUAGE, LAYOUT, PAGES, COMPONENTS, TYPOGRAPHY, COLOR SYSTEM, SPACING, RESPONSIVE BEHAVIOR, INTERACTIONS, ANIMATIONS, ACCESSIBILITY, CONTENT, TECHNICAL REQUIREMENTS, FILE STRUCTURE, IMPLEMENTATION RULES, DO NOT, DEFINITION OF DONE |
+| Cursor | an ordered, file-by-file implementation plan with a verification checklist |
+| Codex | numbered requirements (R1…R16) with explicit acceptance criteria |
+
+Every prompt runs to roughly 10,000–12,000 characters (about 2,400–3,000 tokens) and all 69
+are distinct — the art direction, the layout rules and the prohibitions are written per
+template, not templated with the name swapped.
 
 Storing the brief once and compiling it means the three variants can never drift apart, and
 adding a fourth agent is a single function.
@@ -111,10 +117,13 @@ Two fields decide how a template looks without any image work:
 
 - `accent` — a hex colour used throughout its previews and detail page.
 - `visual` / `screenshots[].visual` — one of the scene kinds in
-  `src/components/visuals/template-visual.tsx` (`landing`, `dashboard`, `analytics`,
-  `commerce`, `portfolio`, `editorial`, `mobile`, `docs`, `pricing`, `checkout`, `auth`,
-  `settings`). Scenes are varied deterministically by the template slug, so no two templates
-  render identically.
+  the scene registry in `src/components/visuals/template-visual.tsx`. There are 24:
+  `landing`, `dashboard`, `analytics`, `commerce`, `portfolio`, `editorial`, `mobile`,
+  `docs`, `pricing`, `checkout`, `auth`, `settings`, `chat`, `kanban`, `terminal`, `canvas`,
+  `grid`, `gallery`, `invoice`, `map`, `timeline`, `report`, `archive` and `lookbook`. Each
+  is a different composition rather than a recoloured dashboard, and every scene is varied
+  deterministically by the template slug — so a template is recognisable by its silhouette
+  at thumbnail size.
 
 ### Changing the prompts
 
@@ -161,11 +170,18 @@ first paint, so there is no flash.
   shareable and the back button behaves.
 - **Search** — client-side across titles, descriptions, categories, tags, technologies and
   authors, with relevance ranking, debounce, recent searches and a real empty state.
-- **Command palette** — `⌘K` / `Ctrl+K` anywhere, with template, category and collection
-  results plus navigation and theme actions, fully keyboard driven.
+- **Command palette** — `⌘K` on Apple platforms, `Ctrl K` everywhere else (the hint shown in
+  the navbar follows the platform), with template, category and collection results plus
+  navigation and theme actions, fully keyboard driven.
 - **Template detail** — device-switching preview (desktop / tablet / mobile), screenshot
   gallery with a keyboard-operable lightbox, the full design system, the page plan, and the
-  prompt section with per-agent tabs, copy, download and full-screen.
+  prompt section.
+- **Prompt viewer** — editor-style agent tabs, character and token counts, line numbers, a
+  wrap / no-wrap toggle, copy with an explicit confirmation, `.txt` download named
+  `<slug>-<agent>.txt`, and a true full-screen mode with its own fixed header.
+- **Copy from anywhere** — the prompt can be copied from a card on hover, from the homepage
+  demonstration, from the template header or from the viewer itself; all four use the same
+  compiled string and the same agent preference.
 - **Favourites** — `localStorage`, no account, with undo toasts and cross-tab sync.
 - **Accessibility** — semantic landmarks, a skip link, focus traps and focus restoration in
   dialogs, `aria-live` result counts, visible focus rings, and full `prefers-reduced-motion`
@@ -173,13 +189,25 @@ first paint, so there is no flash.
 
 ## Verified
 
-`npm run build` and `npm run lint` both pass with zero errors and zero warnings, TypeScript
-is clean under `strict`, and an automated pass over the running site checks: 51 routes
-crawled with no broken links; no page with a missing title, description, canonical or
-`og:title`; no unlabelled control or image; no horizontal overflow at 390px or 768px; and no
-console errors. The interaction suite covers the command palette, prompt copy and download,
-prompt tabs, favourites persistence, URL filters, back-button behaviour, search states, theme
-persistence, lightbox keyboard control, form validation and the 404.
+`npm run build` and `npm run lint` both pass with zero errors and zero warnings, and
+TypeScript is clean under `strict`. An automated pass over the running site checks:
+
+- 51 routes crawled with no broken links, and every one of the 49 sitemap URLs has exactly
+  one `<h1>`, a title, a description, a canonical and an `og:title`.
+- No unlabelled control, image or form field on any page.
+- No horizontal overflow at 390px or 768px on any route.
+- No console errors anywhere except the expected 404 request on the 404 route.
+- 40 interaction checks pass: command palette, prompt copy and download, prompt section
+  completeness (all 21 sections present, ~10k characters, template-specific), agent tabs and
+  their sync with the header actions, wrap toggle, full-screen prompt, copy from a card, the
+  homepage demonstration, favourites persistence, URL filters, back-button behaviour, search
+  states, theme persistence, lightbox keyboard control, form validation, the 404 and the skip
+  link.
+
+Page weight, measured against the production build: 13KB (explorer), 38KB (template detail),
+43KB (collections) and 60KB (homepage) of gzipped HTML. The inline SVG scenes are verbose but
+extremely repetitive, so they compress about eight to one. There are four runtime
+dependencies.
 
 ## Adding a backend later
 

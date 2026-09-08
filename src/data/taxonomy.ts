@@ -9,7 +9,7 @@ export const categories: Category[] = [
     description:
       "Conversion-focused marketing sites for software companies: hero, product tour, pricing, social proof and a documentation-grade footer.",
     accent: "#5b4ff0",
-    visual: "landing",
+    visual: "pricing",
   },
   {
     id: "ecommerce",
@@ -29,7 +29,7 @@ export const categories: Category[] = [
     description:
       "Personal sites where the work is the interface. Restrained typography, generous whitespace and case studies that read like essays.",
     accent: "#3f8f6f",
-    visual: "portfolio",
+    visual: "gallery",
   },
   {
     id: "agency",
@@ -39,7 +39,7 @@ export const categories: Category[] = [
     description:
       "Studio sites with an editorial backbone: manifesto hero, selected work, capabilities, team and a contact page that reads like an invitation.",
     accent: "#b8583f",
-    visual: "editorial",
+    visual: "archive",
   },
   {
     id: "dashboard",
@@ -79,7 +79,7 @@ export const categories: Category[] = [
     description:
       "Interfaces for AI products: streaming chat surfaces, model playgrounds, evaluation dashboards and launch pages for research labs.",
     accent: "#6a5cf0",
-    visual: "docs",
+    visual: "chat",
   },
   {
     id: "fintech",
@@ -89,7 +89,7 @@ export const categories: Category[] = [
     description:
       "Financial interfaces that have to look trustworthy from the first pixel: balances, ledgers, transfers and compliance-aware detail.",
     accent: "#1f7a63",
-    visual: "checkout",
+    visual: "invoice",
   },
   {
     id: "developer-tools",
@@ -99,7 +99,7 @@ export const categories: Category[] = [
     description:
       "Sites for products that developers evaluate in a terminal: documentation, quickstarts, API references and honest changelogs.",
     accent: "#4a5568",
-    visual: "docs",
+    visual: "terminal",
   },
 ];
 

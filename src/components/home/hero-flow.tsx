@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Check, Copy, Layers, Sparkles, Terminal, Wand2 } from "lucide-react";
-import type { Template } from "@/types/template";
+import type { AgentId } from "@/types/template";
+import { getTemplate } from "@/data/templates";
+import { buildPrompt } from "@/data/prompts";
+import { agentStore } from "@/lib/preferences";
+import { useStore } from "@/lib/client-store";
 import { TemplateVisual } from "@/components/visuals/template-visual";
 import { copyText } from "@/lib/clipboard";
 import { useToast } from "@/components/providers/toast-provider";
@@ -46,7 +50,9 @@ const agentLines = [
   "✓ Build complete in 6.2s",
 ] as const;
 
-export function HeroFlow({ template, samplePrompt }: { template: Template; samplePrompt: string }) {
+export function HeroFlow({ slug }: { slug: string }) {
+  const template = getTemplate(slug)!;
+  const storedAgent = useStore(agentStore, "claude-code");
   const [step, setStep] = useState(0);
   const [paused, setPaused] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -73,7 +79,7 @@ export function HeroFlow({ template, samplePrompt }: { template: Template; sampl
   }, []);
 
   const onCopy = async () => {
-    const ok = await copyText(samplePrompt);
+    const ok = await copyText(buildPrompt(template, storedAgent as AgentId));
     setCopied(ok);
     toast({
       title: ok ? "Prompt copied" : "Could not copy",
