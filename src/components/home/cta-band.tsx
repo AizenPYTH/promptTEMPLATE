@@ -6,7 +6,7 @@ export function CtaBand() {
   return (
     <section className="border-t border-line">
       <Container size="wide" className="py-16 sm:py-20">
-        <div className="relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-12 text-center sm:px-12 sm:py-16">
+        <div className="relative overflow-hidden rounded-panel border border-line bg-surface-2 px-6 py-12 text-center sm:px-12 sm:py-16">
           <div className="pointer-events-none absolute inset-0 grid-backdrop [mask-image:radial-gradient(ellipse_60%_70%_at_50%_50%,black,transparent)]" aria-hidden />
           <div
             className="pointer-events-none absolute left-1/2 top-full size-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.16] blur-[100px]"

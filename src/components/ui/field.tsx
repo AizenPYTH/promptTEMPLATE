@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 const control =
-  "w-full rounded-md border border-line bg-surface px-3 text-sm text-ink placeholder:text-faint transition-colors hover:border-line-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)] disabled:opacity-60";
+  "w-full rounded-control border border-line bg-surface-2 px-3 text-sm text-ink placeholder:text-soft transition-colors hover:border-line-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)] disabled:opacity-60";
 
 export function Label({
   htmlFor,
@@ -17,7 +17,7 @@ export function Label({
       <label htmlFor={htmlFor} className="text-[13px] font-medium">
         {children}
       </label>
-      {hint ? <span className="text-xs text-faint">{hint}</span> : null}
+      {hint ? <span className="text-xs text-soft">{hint}</span> : null}
     </div>
   );
 }
@@ -69,14 +69,14 @@ export function Checkbox({
   return (
     <label
       htmlFor={id}
-      className="group flex cursor-pointer items-center gap-2.5 rounded-md py-1.5 pl-0.5 pr-1 text-[13px] transition-colors hover:text-ink"
+      className="group flex cursor-pointer items-center gap-2.5 rounded-control py-1.5 pl-0.5 pr-1 text-[13px] transition-colors hover:text-ink"
     >
       <input
         id={id}
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="peer size-4 shrink-0 cursor-pointer appearance-none rounded-xs border border-line-strong bg-surface transition-colors checked:border-accent checked:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+        className="peer size-4 shrink-0 cursor-pointer appearance-none rounded-control border border-line-strong bg-surface-2 transition-colors checked:border-accent checked:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
       />
       <svg
         viewBox="0 0 16 16"
@@ -87,7 +87,7 @@ export function Checkbox({
       </svg>
       <span className={cn("flex-1 truncate", checked ? "text-ink" : "text-muted")}>{label}</span>
       {typeof count === "number" ? (
-        <span className="tabular-nums text-2xs text-faint">{count}</span>
+        <span className="tabular-nums text-label text-soft">{count}</span>
       ) : null}
     </label>
   );

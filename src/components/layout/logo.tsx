@@ -27,7 +27,7 @@ export function Logo({ className, href = "/" }: { className?: string; href?: str
     <Link
       href={href}
       className={cn(
-        "group inline-flex items-center gap-2 rounded-md text-[15px] font-semibold tracking-[-0.02em]",
+        "group inline-flex items-center gap-2 rounded-control text-[15px] font-semibold tracking-[-0.02em]",
         className,
       )}
       aria-label={`${site.name} — home`}

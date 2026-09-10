@@ -42,7 +42,7 @@ export default function SubmitPage() {
         </div>
 
         <aside className="lg:pt-1">
-          <h2 className="text-2xs font-medium uppercase tracking-[0.12em] text-faint">What we look for</h2>
+          <h2 className="text-label font-medium uppercase tracking-[0.12em] text-soft">What we look for</h2>
           <ul className="mt-4 space-y-5">
             {criteria.map((item) => (
               <li key={item.title}>

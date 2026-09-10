@@ -6,7 +6,7 @@ import { catalogTotals } from "@/lib/catalog";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-line bg-surface/40">
+    <footer className="mt-24 border-t border-line bg-surface-2/40">
       <Container size="wide" className="py-14">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="max-w-xs">
@@ -15,13 +15,13 @@ export function Footer() {
               {site.name}
             </div>
             <p className="mt-3 text-[13px] leading-6 text-muted">{site.tagline}</p>
-            <p className="mt-4 text-xs text-faint">
+            <p className="mt-4 text-xs text-soft">
               {catalogTotals.templates} templates · {catalogTotals.creators} creators · {catalogTotals.collections} collections
             </p>
           </div>
           {site.footer.map((column) => (
             <div key={column.title}>
-              <h3 className="text-2xs font-medium uppercase tracking-[0.12em] text-faint">{column.title}</h3>
+              <h3 className="text-label font-medium uppercase tracking-[0.12em] text-soft">{column.title}</h3>
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link.label}>
@@ -37,7 +37,7 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 text-xs text-soft sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {site.founded}–2026 {site.name}. A front-end demonstration — no accounts, no payments, no tracking.
           </p>

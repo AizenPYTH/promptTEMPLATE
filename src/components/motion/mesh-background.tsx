@@ -1,13 +1,20 @@
 import { cn } from "@/lib/utils";
 
 /**
- * The ambient layer everything else sits on: three coloured blobs drifting on
- * long, unsynchronised loops. Glass only reads as glass when there is something
- * worth blurring behind it, and this is that something.
+ * Effect 4: three blobs drifting on unsynchronised loops. Glass only reads as
+ * glass when there is something worth blurring behind it, and this is that
+ * something — so the sizes and loop lengths come straight from the handoff
+ * (teal 26s, violet 34s, amber 41s) rather than being tuned by eye.
  *
- * Purely decorative, so it is hidden from assistive technology and removed
- * outright under prefers-reduced-motion.
+ * Decorative, so it is hidden from assistive technology and removed outright
+ * under prefers-reduced-motion.
  */
+const BLOBS = [
+  { token: "--mesh-a", className: "-left-[12%] -top-[38%] size-[62vw] max-w-[880px]", animation: "mesh-a 26s var(--ease-inout) infinite", blur: 120 },
+  { token: "--mesh-b", className: "-right-[10%] -top-[22%] size-[52vw] max-w-[720px]", animation: "mesh-b 34s var(--ease-inout) infinite", blur: 120 },
+  { token: "--mesh-c", className: "bottom-[-34%] left-[24%] size-[48vw] max-w-[660px]", animation: "mesh-c 41s var(--ease-inout) infinite", blur: 130 },
+];
+
 export function MeshBackground({
   className,
   intensity = "default",
@@ -15,26 +22,22 @@ export function MeshBackground({
   className?: string;
   intensity?: "default" | "soft" | "vivid";
 }) {
-  const scale = intensity === "vivid" ? 1.25 : intensity === "soft" ? 0.6 : 1;
+  const scale = intensity === "vivid" ? 1 : intensity === "soft" ? 0.45 : 0.7;
 
   return (
-    <div
-      aria-hidden
-      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
-      style={{ opacity: `calc(var(--mesh-opacity) * ${scale})` }}
-    >
-      <span
-        className="mesh-layer absolute -left-[15%] -top-[35%] size-[70%] rounded-full blur-[110px] animate-[drift-a_26s_ease-in-out_infinite]"
-        style={{ background: "var(--mesh-1)" }}
-      />
-      <span
-        className="mesh-layer absolute -right-[10%] -top-[20%] size-[60%] rounded-full blur-[120px] animate-[drift-b_32s_ease-in-out_infinite]"
-        style={{ background: "var(--mesh-2)" }}
-      />
-      <span
-        className="mesh-layer absolute bottom-[-30%] left-[25%] size-[55%] rounded-full blur-[130px] animate-[drift-c_38s_ease-in-out_infinite]"
-        style={{ background: "var(--mesh-3)" }}
-      />
+    <div aria-hidden className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}>
+      {BLOBS.map((blob) => (
+        <span
+          key={blob.token}
+          className={cn("mesh-blob absolute rounded-full", blob.className)}
+          style={{
+            background: `var(${blob.token})`,
+            filter: `blur(${blob.blur}px)`,
+            opacity: scale,
+            animation: blob.animation,
+          }}
+        />
+      ))}
     </div>
   );
 }

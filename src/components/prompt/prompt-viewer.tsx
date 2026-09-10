@@ -41,7 +41,7 @@ const lineClasses: Record<LineKind, string> = {
   bullet: "text-ink/80",
   numbered: "text-ink/80",
   token: "text-positive",
-  fence: "text-faint",
+  fence: "text-soft",
   checkbox: "text-muted",
   text: "text-ink/75",
 };
@@ -66,8 +66,8 @@ function ToolbarButton({
       aria-pressed={active}
       title={label}
       className={cn(
-        "flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-2 text-2xs font-medium transition-colors",
-        active ? "bg-surface-3 text-ink" : "text-faint hover:bg-surface-3 hover:text-muted",
+        "flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-control px-2 text-label font-medium transition-colors",
+        active ? "bg-surface-3 text-ink" : "text-soft hover:bg-surface-3 hover:text-muted",
       )}
     >
       {children}
@@ -110,21 +110,21 @@ export function PromptViewer({
   return (
     <div
       className={cn(
-        "flex flex-col overflow-hidden rounded-xl border border-line bg-surface",
+        "flex flex-col overflow-hidden rounded-panel border border-line bg-surface-2",
         fullHeight && "h-full rounded-none border-0",
         className,
       )}
     >
-      {tabs ? <div className="border-b border-line bg-surface-2 px-2 pt-2">{tabs}</div> : null}
+      {tabs ? <div className="border-b border-line bg-surface-3 px-2 pt-2">{tabs}</div> : null}
 
-      <div className="flex items-center gap-2 border-b border-line bg-surface-2 px-3 py-2">
+      <div className="flex items-center gap-2 border-b border-line bg-surface-3 px-3 py-2">
         <span className={cn("hidden min-w-0 items-center gap-2", fullHeight ? "lg:flex" : "sm:flex")}>
-          <span className="truncate font-mono text-2xs text-muted">{filename}</span>
-          <span className="text-faint" aria-hidden>
+          <span className="truncate font-mono text-label text-muted">{filename}</span>
+          <span className="text-soft" aria-hidden>
             ·
           </span>
         </span>
-        <span className="shrink-0 whitespace-nowrap font-mono text-2xs text-faint tabular-nums">
+        <span className="shrink-0 whitespace-nowrap font-mono text-label text-soft tabular-nums">
           <span className="sm:hidden">{(stats.characters / 1000).toFixed(1)}k chars</span>
           <span className="hidden sm:inline">
             {stats.characters.toLocaleString("en-GB")} characters · ~{stats.tokens.toLocaleString("en-GB")} tokens
@@ -148,7 +148,7 @@ export function PromptViewer({
             <button
               type="button"
               onClick={onDownload}
-              className="inline-flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md border border-line bg-surface px-2 text-2xs font-medium text-muted transition-colors hover:border-line-strong hover:text-ink"
+              className="inline-flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-control border border-line bg-surface-2 px-2 text-label font-medium text-muted transition-colors hover:border-line-strong hover:text-ink"
             >
               <Download className="size-3" aria-hidden />
               <span className="hidden sm:inline">Download</span>
@@ -160,7 +160,7 @@ export function PromptViewer({
               type="button"
               onClick={onCopy}
               className={cn(
-                "inline-flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 text-2xs font-semibold transition-colors",
+                "inline-flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-control px-2.5 text-label font-semibold transition-colors",
                 copied
                   ? "bg-accent-soft text-accent ring-1 ring-inset ring-[var(--accent-line)]"
                   : "bg-accent text-accent-ink hover:bg-accent-hover",
@@ -192,7 +192,7 @@ export function PromptViewer({
               <div key={index} className="flex gap-3">
                 {showNumbers ? (
                   <span
-                    className="w-7 shrink-0 select-none text-right text-faint/50 tabular-nums"
+                    className="w-7 shrink-0 select-none text-right text-soft/50 tabular-nums"
                     aria-hidden
                   >
                     {index + 1}
@@ -215,19 +215,19 @@ export function PromptViewer({
 
         {truncated ? (
           <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface via-surface/80 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface-2 via-surface-2/80 to-transparent"
             aria-hidden
           />
         ) : null}
       </div>
 
       {lines.length > COLLAPSED_LINES && !fullHeight ? (
-        <div className="border-t border-line bg-surface-2 px-3 py-2">
+        <div className="border-t border-line bg-surface-3 px-3 py-2">
           <button
             type="button"
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
-            className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-muted transition-colors hover:text-ink"
+            className="inline-flex items-center gap-1.5 rounded-control px-2 py-1 text-xs font-medium text-muted transition-colors hover:text-ink"
           >
             {expanded ? (
               <ChevronUp className="size-3.5" aria-hidden />

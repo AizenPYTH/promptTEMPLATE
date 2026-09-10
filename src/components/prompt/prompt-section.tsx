@@ -70,7 +70,7 @@ export function PromptSection({ slug }: { slug: string }) {
             className={cn(
               "relative -mb-px rounded-t-md border border-b-0 px-3 py-1.5 text-[13px] font-medium transition-colors",
               active
-                ? "border-line bg-surface text-ink"
+                ? "border-line bg-surface-2 text-ink"
                 : "border-transparent text-muted hover:bg-surface-3 hover:text-ink",
             )}
           >
@@ -84,7 +84,7 @@ export function PromptSection({ slug }: { slug: string }) {
   return (
     <section id="prompt" className="scroll-mt-24">
       <div className="mb-5 max-w-2xl">
-        <span className="inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-soft px-2.5 py-1 text-2xs font-medium uppercase tracking-[0.1em] text-accent">
+        <span className="inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-soft px-2.5 py-1 text-label font-medium uppercase tracking-[0.1em] text-accent">
           <Terminal className="size-3" aria-hidden />
           Build it with AI
         </span>
@@ -108,7 +108,7 @@ export function PromptSection({ slug }: { slug: string }) {
         onExpand={() => setFullscreen(true)}
       />
 
-      <p className="mt-2.5 text-xs text-faint">{agentMeta.description}</p>
+      <p className="mt-2.5 text-xs text-soft">{agentMeta.description}</p>
 
       <Modal
         open={fullscreen}
@@ -116,10 +116,10 @@ export function PromptSection({ slug }: { slug: string }) {
         title={`${template.title} — ${agentMeta.name} prompt`}
         size="screen"
         header={
-          <header className="flex shrink-0 items-center gap-3 border-b border-line bg-surface-2 px-4 py-3">
+          <header className="flex shrink-0 items-center gap-3 border-b border-line bg-surface-3 px-4 py-3">
             <div className="min-w-0">
               <h2 className="truncate text-sm font-semibold">{template.title}</h2>
-              <p className="truncate text-2xs text-faint">
+              <p className="truncate text-label text-soft">
                 {agentMeta.name} · {stats.characters.toLocaleString("en-GB")} characters · ~
                 {stats.tokens.toLocaleString("en-GB")} tokens
               </p>
@@ -128,7 +128,7 @@ export function PromptSection({ slug }: { slug: string }) {
               <button
                 type="button"
                 onClick={handleDownload}
-                className="inline-flex h-8 items-center gap-1.5 rounded-md border border-line bg-surface px-2.5 text-xs font-medium text-muted transition-colors hover:border-line-strong hover:text-ink"
+                className="inline-flex h-8 items-center gap-1.5 rounded-control border border-line bg-surface-2 px-2.5 text-xs font-medium text-muted transition-colors hover:border-line-strong hover:text-ink"
               >
                 <Download className="size-3.5" aria-hidden />
                 <span className="hidden sm:inline">Download</span>
@@ -137,7 +137,7 @@ export function PromptSection({ slug }: { slug: string }) {
                 type="button"
                 onClick={handleCopy}
                 className={cn(
-                  "inline-flex h-8 items-center gap-1.5 rounded-md px-3 text-xs font-semibold transition-colors",
+                  "inline-flex h-8 items-center gap-1.5 rounded-control px-3 text-xs font-semibold transition-colors",
                   copied
                     ? "bg-accent-soft text-accent ring-1 ring-inset ring-[var(--accent-line)]"
                     : "bg-accent text-accent-ink hover:bg-accent-hover",
@@ -150,7 +150,7 @@ export function PromptSection({ slug }: { slug: string }) {
                 type="button"
                 onClick={() => setFullscreen(false)}
                 aria-label="Close the full screen prompt"
-                className="flex size-8 items-center justify-center rounded-md text-faint transition-colors hover:bg-surface-3 hover:text-ink"
+                className="flex size-8 items-center justify-center rounded-control text-soft transition-colors hover:bg-surface-3 hover:text-ink"
               >
                 <X className="size-4" aria-hidden />
               </button>

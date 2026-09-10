@@ -97,14 +97,14 @@ export function TemplateActions({ slug }: { slug: string }) {
         description="Anyone with the link can view the template and copy its prompt."
       >
         <div className="p-5">
-          <div className="flex items-center gap-2 rounded-md border border-line bg-surface-2 p-2">
-            <Link2 className="ml-1 size-4 shrink-0 text-faint" aria-hidden />
+          <div className="flex items-center gap-2 rounded-control border border-line bg-surface-3 p-2">
+            <Link2 className="ml-1 size-4 shrink-0 text-soft" aria-hidden />
             <span className="min-w-0 flex-1 truncate font-mono text-xs text-muted">{shareUrlValue}</span>
             <Button size="sm" onClick={copyLink}>
               Copy link
             </Button>
           </div>
-          <p className="mt-3 text-xs text-faint">
+          <p className="mt-3 text-xs text-soft">
             Sharing uses your device&apos;s share sheet when one is available; otherwise the link is copied here.
           </p>
         </div>

@@ -7,7 +7,7 @@ import { TemplateGrid } from "@/components/templates/template-grid";
 export default function NotFound() {
   return (
     <Container size="wide" className="py-16 sm:py-24">
-      <div className="relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-16 text-center sm:px-12 sm:py-20">
+      <div className="relative overflow-hidden rounded-panel border border-line bg-surface-2 px-6 py-16 text-center sm:px-12 sm:py-20">
         <div className="pointer-events-none absolute inset-0 grid-backdrop [mask-image:radial-gradient(ellipse_60%_70%_at_50%_40%,black,transparent)]" aria-hidden />
         <div className="relative mx-auto max-w-lg">
           <p className="font-mono text-[13px] text-accent">404</p>
@@ -26,9 +26,9 @@ export default function NotFound() {
               Browse templates
             </ButtonLink>
           </div>
-          <p className="mt-6 text-xs text-faint">
-            Or press <kbd className="rounded-xs border border-line bg-surface-2 px-1 font-sans">Ctrl K</kbd>{" "}
-            (<kbd className="rounded-xs border border-line bg-surface-2 px-1 font-sans">⌘ K</kbd> on a Mac) to
+          <p className="mt-6 text-xs text-soft">
+            Or press <kbd className="rounded-control border border-line bg-surface-3 px-1 font-sans">Ctrl K</kbd>{" "}
+            (<kbd className="rounded-control border border-line bg-surface-3 px-1 font-sans">⌘ K</kbd> on a Mac) to
             search from anywhere.
           </p>
         </div>
@@ -40,7 +40,7 @@ export default function NotFound() {
         <div className="mt-6">
           <TemplateGrid templates={featuredTemplates(3)} />
         </div>
-        <p className="mt-8 text-xs text-faint">
+        <p className="mt-8 text-xs text-soft">
           Still stuck?{" "}
           <Link href="/about" className="text-accent underline-offset-2 hover:underline">
             Read about how Promptly works

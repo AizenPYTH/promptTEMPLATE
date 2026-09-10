@@ -229,11 +229,11 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
             role="dialog"
             aria-modal="true"
             aria-label="Command palette"
-            className="relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-float animate-scale-in"
+            className="relative flex max-h-[70vh] w-full max-w-xl flex-col overflow-hidden rounded-panel border border-line bg-surface-2 shadow-e3 animate-scale-in"
             onKeyDown={onKeyDown}
           >
             <div className="flex items-center gap-3 border-b border-line px-4">
-              <Search className="size-4 shrink-0 text-faint" aria-hidden />
+              <Search className="size-4 shrink-0 text-soft" aria-hidden />
               <input
                 ref={inputRef}
                 value={query}
@@ -241,7 +241,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
                 placeholder="Search templates, categories, actions…"
                 aria-label="Search templates, categories and actions"
                 aria-controls="command-results"
-                className="h-13 w-full bg-transparent py-4 text-[15px] outline-none placeholder:text-faint"
+                className="h-13 w-full bg-transparent py-4 text-[15px] outline-none placeholder:text-soft"
               />
               <Kbd className="hidden sm:inline-flex">Esc</Kbd>
             </div>
@@ -257,7 +257,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
               ) : (
                 grouped.map(([group, entries]) => (
                   <div key={group} className="mb-1 last:mb-0">
-                    <div className="px-3 py-1.5 text-2xs font-medium uppercase tracking-[0.12em] text-faint">
+                    <div className="px-3 py-1.5 text-label font-medium uppercase tracking-[0.12em] text-soft">
                       {group}
                     </div>
                     {entries.map(({ item, index }) => {
@@ -272,16 +272,16 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
                           onMouseMove={() => setActive(index)}
                           onClick={item.run}
                           className={cn(
-                            "flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm transition-colors",
-                            index === active ? "bg-surface-2 text-ink" : "text-muted",
+                            "flex w-full items-center gap-3 rounded-control px-3 py-2 text-left text-sm transition-colors",
+                            index === active ? "bg-surface-3 text-ink" : "text-muted",
                           )}
                         >
-                          <Icon className="size-4 shrink-0 text-faint" aria-hidden />
+                          <Icon className="size-4 shrink-0 text-soft" aria-hidden />
                           <span className="min-w-0 flex-1 truncate">{item.label}</span>
                           {item.hint ? (
-                            <span className="hidden max-w-[46%] truncate text-xs text-faint sm:block">{item.hint}</span>
+                            <span className="hidden max-w-[46%] truncate text-xs text-soft sm:block">{item.hint}</span>
                           ) : null}
-                          {index === active ? <CornerDownLeft className="size-3.5 shrink-0 text-faint" aria-hidden /> : null}
+                          {index === active ? <CornerDownLeft className="size-3.5 shrink-0 text-soft" aria-hidden /> : null}
                         </button>
                       );
                     })}
@@ -289,7 +289,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
                 ))
               )}
             </div>
-            <div className="flex items-center justify-between gap-4 border-t border-line px-4 py-2.5 text-2xs text-faint">
+            <div className="flex items-center justify-between gap-4 border-t border-line px-4 py-2.5 text-label text-soft">
               <span className="flex items-center gap-2">
                 <Kbd>↑</Kbd>
                 <Kbd>↓</Kbd>

@@ -41,44 +41,23 @@ export type TechnologyId =
 
 export type AgentId = "claude-code" | "cursor" | "codex";
 
-/** Abstract UI scenes rendered as inline SVG — no external image dependency. */
-export type VisualKind =
+/** The ten live preview archetypes. One per template — no archetype is reused. */
+export type ArchetypeId =
   | "landing"
   | "dashboard"
-  | "analytics"
-  | "commerce"
   | "portfolio"
-  | "editorial"
-  | "mobile"
+  | "commerce"
+  | "data-grid"
+  | "board"
   | "docs"
-  | "pricing"
-  | "checkout"
-  | "auth"
-  | "settings"
-  | "chat"
-  | "kanban"
-  | "terminal"
   | "canvas"
-  | "grid"
-  | "gallery"
-  | "invoice"
-  | "map"
-  | "timeline"
-  | "report"
-  | "archive"
-  | "lookbook";
+  | "launch"
+  | "editorial";
 
 export interface Author {
   name: string;
   handle: string;
   role: string;
-}
-
-export interface Screenshot {
-  id: string;
-  label: string;
-  caption: string;
-  visual: VisualKind;
 }
 
 export interface Feature {
@@ -161,8 +140,8 @@ export interface Template {
   isNew: boolean;
   popular: boolean;
   accent: string;
-  visual: VisualKind;
-  screenshots: Screenshot[];
+  /** Which live preview renders this template. */
+  archetype: ArchetypeId;
   demoUrl: string | null;
   features: Feature[];
   spec: TemplateSpec;
@@ -176,7 +155,7 @@ export interface Category {
   short: string;
   description: string;
   accent: string;
-  visual: VisualKind;
+  archetype: ArchetypeId;
 }
 
 export interface Style {
@@ -198,7 +177,7 @@ export interface Collection {
   description: string;
   curator: string;
   accent: string;
-  visual: VisualKind;
+  archetype: ArchetypeId;
   templateSlugs: string[];
 }
 

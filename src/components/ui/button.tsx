@@ -6,14 +6,14 @@ type Variant = "primary" | "secondary" | "ghost" | "outline" | "danger";
 type Size = "sm" | "md" | "lg" | "icon";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md font-medium whitespace-nowrap transition-[background-color,border-color,color,transform] duration-150 active:translate-y-px disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-control font-medium whitespace-nowrap transition-[background-color,border-color,color,transform] duration-150 active:translate-y-px disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-accent text-accent-ink hover:bg-accent-hover shadow-soft",
-  secondary: "bg-surface-2 text-ink border border-line hover:bg-surface-3 hover:border-line-strong",
-  outline: "border border-line text-ink hover:bg-surface-2 hover:border-line-strong",
-  ghost: "text-muted hover:bg-surface-2 hover:text-ink",
-  danger: "border border-line text-ink hover:bg-surface-2 hover:text-warning",
+  primary: "bg-accent text-accent-ink hover:bg-accent-hover shadow-e1",
+  secondary: "bg-surface-3 text-ink border border-line hover:bg-surface-3 hover:border-line-strong",
+  outline: "border border-line text-ink hover:bg-surface-3 hover:border-line-strong",
+  ghost: "text-muted hover:bg-surface-3 hover:text-ink",
+  danger: "border border-line text-ink hover:bg-surface-3 hover:text-warning",
 };
 
 const sizes: Record<Size, string> = {

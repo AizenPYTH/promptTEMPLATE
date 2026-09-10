@@ -36,7 +36,7 @@ export default function AboutPage() {
     <>
       <section className="border-b border-line">
         <Container size="narrow" className="py-14 sm:py-20">
-          <p className="text-2xs font-medium uppercase tracking-[0.14em] text-faint">About</p>
+          <p className="text-label font-medium uppercase tracking-[0.14em] text-soft">About</p>
           <h1 className="mt-4 text-3xl font-semibold leading-[1.15] tracking-[-0.035em] sm:text-[2.6rem]">
             Instead of searching for code, start from a design you already love.
           </h1>

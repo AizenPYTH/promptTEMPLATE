@@ -6,7 +6,7 @@ import { collections, collectionMap } from "@/data/collections";
 import { getTemplates } from "@/data/templates";
 import { Container } from "@/components/layout/container";
 import { TemplateGrid } from "@/components/templates/template-grid";
-import { TemplateVisual } from "@/components/visuals/template-visual";
+import { ArchetypeCover } from "@/components/preview/archetype-visual";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
@@ -54,37 +54,36 @@ export default async function CollectionPage({ params }: PageProps<"/collections
               <li>
                 <Link href="/" className="transition-colors hover:text-ink">Home</Link>
               </li>
-              <ChevronRight className="size-3 text-faint" aria-hidden />
+              <ChevronRight className="size-3 text-soft" aria-hidden />
               <li>
                 <Link href="/collections" className="transition-colors hover:text-ink">Collections</Link>
               </li>
-              <ChevronRight className="size-3 text-faint" aria-hidden />
+              <ChevronRight className="size-3 text-soft" aria-hidden />
               <li aria-current="page" className="text-ink">{collection.title}</li>
             </ol>
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,460px)] lg:items-center">
             <div className="max-w-xl">
-              <span className="inline-flex items-center gap-2 text-2xs font-medium uppercase tracking-[0.14em] text-faint">
+              <span className="inline-flex items-center gap-2 text-label font-medium uppercase tracking-[0.14em] text-soft">
                 <Layers className="size-3.5" aria-hidden />
                 Collection
               </span>
               <h1 className="mt-3 text-3xl font-semibold tracking-[-0.035em] sm:text-4xl">{collection.title}</h1>
               <p className="mt-2 text-lg text-muted">{collection.subtitle}</p>
               <p className="mt-4 text-[15px] leading-7 text-muted">{collection.description}</p>
-              <p className="mt-6 flex items-center gap-3 border-t border-line pt-5 text-[13px] text-faint">
+              <p className="mt-6 flex items-center gap-3 border-t border-line pt-5 text-[13px] text-soft">
                 <span>{pluralise(list.length, "template")}</span>
                 <span aria-hidden>·</span>
                 <span>Curated by {collection.curator}</span>
               </p>
             </div>
 
-            <div className="overflow-hidden rounded-xl border border-line bg-surface shadow-card">
-              <TemplateVisual
-                kind={collection.visual}
+            <div className="overflow-hidden rounded-panel border border-line bg-surface-2 shadow-e2">
+              <ArchetypeCover
+                archetype={collection.archetype}
                 accent={collection.accent}
-                seed={`collection-hero-${collection.slug}`}
-                label={`${collection.title} cover`}
+                label={collection.title}
                 className="aspect-[16/10] w-full"
               />
             </div>

@@ -1,107 +1,43 @@
 import type { Collection } from "@/types/template";
 
-/** Editorial groupings, curated by hand rather than generated from tags. */
+/**
+ * Editorial groupings, written by hand. Three of them, covering all ten
+ * templates between them — a catalogue this size does not support eight
+ * collections without padding them.
+ */
 export const collections: Collection[] = [
   {
-    slug: "best-saas",
-    title: "Best SaaS templates",
-    subtitle: "Sites that sell software without shouting",
-    description:
-      "Six marketing sites where the product does the persuading: real interface surfaces, comparison-first pricing and security pages written for the person who actually signs.",
-    curator: "Promptly editorial",
-    accent: "#5b4ff0",
-    visual: "landing",
-    templateSlugs: [
-      "finora-finance-saas",
-      "looma-saas-landing",
-      "cadence-project-management",
-      "launchpad-startup-landing",
-      "cove-app-landing",
-    ],
-  },
-  {
-    slug: "ai-startups",
-    title: "AI startup websites",
-    subtitle: "Launch pages for models and the tools around them",
-    description:
-      "Interfaces built for the first minute after a launch post: streaming demos, honest benchmarks, model cards and waitlists that confirm without a redirect.",
-    curator: "Ada Okonkwo",
-    accent: "#7c6dff",
-    visual: "chat",
-    templateSlugs: ["nova-ai", "vertex-ai-infrastructure", "nexus-developer-tools", "flux-automation"],
-  },
-  {
-    slug: "minimal-portfolios",
-    title: "Minimal portfolios",
-    subtitle: "Personal sites where the work is the interface",
-    description:
-      "Restrained personal sites for designers, photographers and engineers. Almost no chrome, extremely deliberate typography, and content that carries itself.",
-    curator: "Elias Berg",
-    accent: "#4a5568",
-    visual: "gallery",
-    templateSlugs: ["mono-developer-portfolio", "studio-27-portfolio", "frame-design-studio", "lumio-creative-agency"],
-  },
-  {
     slug: "dark-interfaces",
-    title: "Dark mode interfaces",
+    title: "Dark interfaces",
     subtitle: "Near-black canvases with exactly one accent",
     description:
-      "Dark themes that survive daily use: controlled contrast, a single luminous accent and surfaces that stay legible when the room lights come on.",
+      "Four products that live on a dark ground and survive daily use: controlled contrast, a single luminous accent, and surfaces that stay legible when the room lights come on. A launch page, a dashboard, an issue tracker and an automation canvas — four very different jobs, one discipline.",
     curator: "Nina Kovač",
-    accent: "#22b8a6",
-    visual: "kanban",
-    templateSlugs: [
-      "cadence-project-management",
-      "orbit-analytics",
-      "vault-banking",
-      "nova-ai",
-      "halo-fitness-app",
-      "flux-automation",
-    ],
+    accent: "#7c6dff",
+    archetype: "board",
+    templateSlugs: ["nova-ai", "orbit-analytics", "cadence-project-management", "flux-automation"],
   },
   {
-    slug: "best-landing-pages",
-    title: "Best landing pages",
-    subtitle: "One page, one decision",
+    slug: "editorial-and-image-led",
+    title: "Editorial and image-led",
+    subtitle: "Where the type and the pictures do the work",
     description:
-      "Single-page sites where every section earns its scroll. Feature switchers instead of feature stacks, and CTAs placed where the objection has just been answered.",
-    curator: "Promptly editorial",
-    accent: "#f0603c",
-    visual: "lookbook",
-    templateSlugs: ["looma-saas-landing", "launchpad-startup-landing", "nova-ai", "cove-app-landing"],
+      "Sites with almost no interface. A photographic portfolio browsed horizontally, a luxury house paced at one idea per screen, and a developer's site that is one column and a monospace spine. All three are harder than they look: with the chrome removed, nothing hides a weak decision.",
+    curator: "Claire Dumont",
+    accent: "#b4423f",
+    archetype: "editorial",
+    templateSlugs: ["studio-27-portfolio", "zenith-luxury-brand", "mono-developer-portfolio"],
   },
   {
-    slug: "developer-tools",
-    title: "Tools for developers",
-    subtitle: "Docs, grids, canvases and consoles",
+    slug: "money-and-merchandise",
+    title: "Money and merchandise",
+    subtitle: "Interfaces that have to be trusted before they are liked",
     description:
-      "Products engineers evaluate with a keyboard. Documentation that answers real questions, a data grid worth not building yourself, and an automation canvas whose logs debug themselves.",
-    curator: "Ravi Menon",
-    accent: "#2ea8c9",
-    visual: "canvas",
-    templateSlugs: ["nexus-developer-tools", "gridly-data-grid", "flux-automation", "cadence-project-management"],
-  },
-  {
-    slug: "commerce-systems",
-    title: "Commerce, front to back",
-    subtitle: "Storefront, checkout and the console behind it",
-    description:
-      "The full retail surface: an editorial storefront, a booking flow that survives comparison shopping, and the operations console where the orders actually get handled.",
+      "A storefront for objects worth photographing properly, a finance platform whose numbers hold still while you read them, and a launch page built for the day the traffic is a spike rather than a trickle. Three places where a design mistake costs money directly.",
     curator: "Sofia Marchetti",
     accent: "#8a6d3b",
-    visual: "commerce",
-    templateSlugs: ["arcadia-ecommerce", "atlas-travel", "commerceos-admin", "ledger-invoicing"],
-  },
-  {
-    slug: "data-heavy",
-    title: "Data-heavy interfaces",
-    subtitle: "Density done deliberately",
-    description:
-      "Screens that hold thousands of rows without becoming unreadable. Frozen columns, comparison-aware ranges, cohort grids and charts with table fallbacks.",
-    curator: "Promptly editorial",
-    accent: "#2f9e59",
-    visual: "grid",
-    templateSlugs: ["gridly-data-grid", "orbit-analytics", "commerceos-admin", "pulse-health-dashboard", "vault-banking"],
+    archetype: "commerce",
+    templateSlugs: ["arcadia-ecommerce", "finora-finance-saas", "launchpad-startup-landing"],
   },
 ];
 

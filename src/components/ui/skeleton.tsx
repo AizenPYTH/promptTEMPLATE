@@ -4,7 +4,7 @@ export function Skeleton({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "rounded-md bg-surface-2 bg-[linear-gradient(90deg,transparent,var(--surface-3),transparent)] bg-[length:200%_100%] animate-shimmer",
+        "rounded-control bg-surface-3 bg-[linear-gradient(90deg,transparent,var(--surface-3),transparent)] bg-[length:200%_100%] animate-shimmer",
         className,
       )}
       aria-hidden
@@ -14,7 +14,7 @@ export function Skeleton({ className }: { className?: string }) {
 
 export function TemplateCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-lg border border-line bg-surface">
+    <div className="overflow-hidden rounded-card border border-line bg-surface-2">
       <Skeleton className="aspect-[16/10] rounded-none" />
       <div className="space-y-2.5 p-4">
         <div className="flex items-center justify-between gap-3">

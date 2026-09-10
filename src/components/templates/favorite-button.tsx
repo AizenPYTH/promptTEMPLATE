@@ -43,10 +43,10 @@ export function FavoriteButton({
         onClick={onClick}
         aria-pressed={active}
         className={cn(
-          "inline-flex h-9.5 items-center justify-center gap-2 rounded-md border px-4 text-sm font-medium transition-colors",
+          "inline-flex h-9.5 items-center justify-center gap-2 rounded-control border px-4 text-sm font-medium transition-colors",
           active
             ? "border-accent-line bg-accent-soft text-accent"
-            : "border-line text-ink hover:bg-surface-2 hover:border-line-strong",
+            : "border-line text-ink hover:bg-surface-3 hover:border-line-strong",
           className,
         )}
       >
@@ -63,10 +63,10 @@ export function FavoriteButton({
       aria-label={active ? `Remove ${title} from favorites` : `Add ${title} to favorites`}
       aria-pressed={active}
       className={cn(
-        "flex items-center justify-center rounded-md transition-all duration-150 active:scale-90",
+        "flex items-center justify-center rounded-control transition-all duration-150 active:scale-90",
         variant === "floating"
           ? "size-8 border border-line bg-[color-mix(in_srgb,var(--surface)_88%,transparent)] backdrop-blur-sm hover:border-line-strong"
-          : "size-8 hover:bg-surface-2",
+          : "size-8 hover:bg-surface-3",
         active ? "text-accent" : "text-muted hover:text-ink",
         className,
       )}

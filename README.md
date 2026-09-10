@@ -1,9 +1,9 @@
 # Promptly
 
-A front-end platform for discovering website templates and copying the exact prompt that
-recreates each one with a coding agent — Claude Code, Cursor or Codex.
+The design gallery that hands you the prompt. Browse ten finished website designs, open one,
+look at it running, then copy the prompt that rebuilds it in Claude Code, Cursor or Codex.
 
-> **Find the design. Copy the prompt. Build it with AI.**
+> **Discover → Preview → Copy → Build**
 
 Promptly is a **front-end only** project. There is no backend, no database, no
 authentication and no payment provider. Every record is a typed local module, favourites
@@ -18,9 +18,10 @@ does nothing with it. Everything you can click actually works.
 | --- | --- |
 | Framework | Next.js 16 (App Router, React 19, Turbopack) |
 | Language | TypeScript, `strict` mode |
-| Styling | Tailwind CSS v4 with CSS custom properties as design tokens |
+| Styling | Tailwind CSS v4, design tokens from the design handoff |
 | Icons | lucide-react |
-| Imagery | 24 hand-drawn inline SVG scenes — no image files, no external requests |
+| Type | Familjen Grotesk (display), IBM Plex Sans, IBM Plex Mono |
+| Imagery | None. Every preview is the template itself, rendered live in HTML |
 | Persistence | `localStorage` for favourites, theme, layout and preferred agent |
 
 Runtime dependencies: `next`, `react`, `react-dom`, `lucide-react`. That is the whole list.
@@ -60,11 +61,12 @@ src/
 │   ├── prompt/                 # prompt viewer + prompt section
 │   ├── search/                 # command palette, search results
 │   ├── collections/  home/  pricing/  forms/  ui/
-│   ├── visuals/                # primitives + scenes-core + scenes-extra + registry
+│   ├── preview/                # the ten live archetypes + the scaling frame
+│   ├── motion/                 # mesh, reveal, split-text, magnetic
 │   └── providers/              # theme, toasts, favourites
 ├── data/                       # the entire content layer
 │   ├── site.ts                 # branding, navigation, footer, agents
-│   ├── templates.ts            # the catalogue (23 records)
+│   ├── templates.ts            # the catalogue (10 records)
 │   ├── taxonomy.ts             # categories, styles, technologies
 │   ├── collections.ts          # editorial groupings
 │   ├── changelog.ts
@@ -113,17 +115,18 @@ collections, sitemap, counts and the prompt compiler all read from that array.
 }
 ```
 
-Two fields decide how a template looks without any image work:
+Two fields decide how a template looks, and neither involves an image:
 
-- `accent` — a hex colour used throughout its previews and detail page.
-- `visual` / `screenshots[].visual` — one of the scene kinds in
-  the scene registry in `src/components/visuals/template-visual.tsx`. There are 24:
-  `landing`, `dashboard`, `analytics`, `commerce`, `portfolio`, `editorial`, `mobile`,
-  `docs`, `pricing`, `checkout`, `auth`, `settings`, `chat`, `kanban`, `terminal`, `canvas`,
-  `grid`, `gallery`, `invoice`, `map`, `timeline`, `report`, `archive` and `lookbook`. Each
-  is a different composition rather than a recoloured dashboard, and every scene is varied
-  deterministically by the template slug — so a template is recognisable by its silhouette
-  at thumbnail size.
+- `accent` — the template's hex. The preview derives its ground and its gradient stop from it,
+  so ten previews built from ten archetypes never read as one design recoloured.
+- `archetype` — which of the ten live previews renders it: `landing`, `dashboard`, `portfolio`,
+  `commerce`, `data-grid`, `board`, `docs`, `canvas`, `launch`, `editorial`. No archetype is
+  reused, so no two templates share a silhouette or a motion.
+
+A preview is a real page in `src/components/preview/archetypes/`, written at a 1120×700 design
+size and scaled to whatever box it sits in by a container query — one line of CSS, no iframe and
+no JavaScript. In a card its motion holds the finished frame until the card is hovered or
+focused; on the detail page it runs, with a pause control and a device switcher.
 
 ### Changing the prompts
 
@@ -147,21 +150,20 @@ interface follows.
 
 ## Design system
 
-Tokens are CSS custom properties defined once in `src/app/globals.css` and exposed to
-Tailwind through `@theme inline`, so components use `bg-surface`, `text-muted`,
-`border-line` rather than raw values.
+Tokens are literal values from the design handoff, defined once in `src/app/globals.css` and
+exposed to Tailwind through `@theme inline`. The chrome is achromatic warm-dark with a single
+citron accent, deliberately outside the range of the template palettes so the interface never
+competes for colour with the work it is showing.
 
-- **Surfaces** `--canvas`, `--surface`, `--surface-2`, `--surface-3`
-- **Lines** `--line`, `--line-strong`
-- **Text** `--ink`, `--ink-muted`, `--ink-faint`
-- **Accent** `--accent`, `--accent-hover`, `--accent-soft`, `--accent-line`
-- **Radius** 4 / 6 / 8 / 12 / 16 / 20px
-- **Shadows** three levels, used sparingly — borders carry most of the elevation
+- **Colour** `canvas` `canvas-raised` · `surface-1/2/3` · `border-1/2` · `text-primary/secondary/muted/faint` · `accent` `#D4F250`
+- **Type** Familjen Grotesk for display, IBM Plex Sans for body, IBM Plex Mono for labels and code, on a fourteen-step scale
+- **Radii** control 8 · card 14 · panel 20 · glass 20 · modal 24
+- **Elevation** three levels, plus an accent shadow on the primary action
+- **Glass** blur 24–28px at 140–160% saturation, never over flat colour, at most four surfaces per viewport, replaced by a solid surface below 640px
+- **Motion** twenty-three specified effects on two easing curves, transform and opacity only, all ambient motion removed under `prefers-reduced-motion`
 
-Dark is the primary theme; light is a full, deliberate second theme rather than an inversion.
-The theme resolves from the system preference on first load, can be toggled from the navbar
-or the command palette, and persists. An inline script in `<head>` applies the class before
-first paint, so there is no flash.
+Dark is the primary theme. Light is designed against the same contrast standard rather than
+inverted — citron fails on a light ground, so it is replaced by an olive that passes.
 
 ## Features
 
@@ -189,25 +191,14 @@ first paint, so there is no flash.
 
 ## Verified
 
-`npm run build` and `npm run lint` both pass with zero errors and zero warnings, and
-TypeScript is clean under `strict`. An automated pass over the running site checks:
+`npm run build` and `npm run lint` pass with zero errors and zero warnings; TypeScript is clean
+under `strict`. Against the running build:
 
-- 51 routes crawled with no broken links, and every one of the 49 sitemap URLs has exactly
-  one `<h1>`, a title, a description, a canonical and an `og:title`.
-- No unlabelled control, image or form field on any page.
-- No horizontal overflow at 390px or 768px on any route.
-- No console errors anywhere except the expected 404 request on the 404 route.
-- 40 interaction checks pass: command palette, prompt copy and download, prompt section
-  completeness (all 21 sections present, ~10k characters, template-specific), agent tabs and
-  their sync with the header actions, wrap toggle, full-screen prompt, copy from a card, the
-  homepage demonstration, favourites persistence, URL filters, back-button behaviour, search
-  states, theme persistence, lightbox keyboard control, form validation, the 404 and the skip
-  link.
-
-Page weight, measured against the production build: 13KB (explorer), 38KB (template detail),
-43KB (collections) and 60KB (homepage) of gzipped HTML. The inline SVG scenes are verbose but
-extremely repetitive, so they compress about eight to one. There are four runtime
-dependencies.
+- 31 routes crawled, no broken links, every page carrying a title, description, canonical and `og:title`.
+- No unlabelled control, image or form field; no horizontal overflow at 390px or 768px; no console errors.
+- 44 interaction checks pass, including that the preview is live DOM rather than an image
+  (29 elements, 0 `<img>`), that it scales to its container, that motion pauses, that the device
+  switcher narrows the frame to 388px, and that the full-screen preview opens and closes on Escape.
 
 ## Adding a backend later
 

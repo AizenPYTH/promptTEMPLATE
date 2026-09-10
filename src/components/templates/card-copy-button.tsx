@@ -61,7 +61,7 @@ export function CardCopyButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "inline-flex h-7 items-center gap-1.5 rounded-md border px-2 text-2xs font-medium shadow-soft backdrop-blur-sm transition-colors",
+        "inline-flex h-7 items-center gap-1.5 rounded-control border px-2 text-label font-medium shadow-e1 backdrop-blur-sm transition-colors",
         copied
           ? "border-accent-line bg-accent-soft text-accent"
           : "border-line bg-[color-mix(in_srgb,var(--surface)_92%,transparent)] text-muted hover:text-ink",

@@ -107,7 +107,7 @@ export function SubmitForm() {
 
   return (
     <>
-      <div className="mb-6 flex gap-3 rounded-lg border border-line bg-surface-2 p-4 text-[13px] leading-6 text-muted">
+      <div className="mb-6 flex gap-3 rounded-card border border-line bg-surface-3 p-4 text-[13px] leading-6 text-muted">
         <Info className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
         <p>
           <span className="font-medium text-ink">This form is a front-end demonstration.</span> Nothing
@@ -242,7 +242,7 @@ export function SubmitForm() {
           <Button type="button" variant="ghost" size="lg" onClick={reset}>
             Reset form
           </Button>
-          <p className="text-xs text-faint">Review usually takes a week in a real submission queue.</p>
+          <p className="text-xs text-soft">Review usually takes a week in a real submission queue.</p>
         </div>
       </form>
 

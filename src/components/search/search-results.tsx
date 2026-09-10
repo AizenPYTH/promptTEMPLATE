@@ -85,7 +85,7 @@ export function SearchResults() {
   return (
     <div>
       <div className="relative max-w-2xl">
-        <Search className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-faint" aria-hidden />
+        <Search className="pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 text-soft" aria-hidden />
         <input
           type="search"
           autoFocus
@@ -93,7 +93,7 @@ export function SearchResults() {
           onChange={(event) => setInput(event.target.value)}
           placeholder="Search templates, tags, technologies or authors…"
           aria-label="Search templates"
-          className="h-12 w-full rounded-lg border border-line bg-surface pl-11 pr-4 text-[15px] placeholder:text-faint transition-colors hover:border-line-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)]"
+          className="h-12 w-full rounded-card border border-line bg-surface-2 pl-11 pr-4 text-[15px] placeholder:text-soft transition-colors hover:border-line-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)]"
         />
       </div>
 
@@ -109,8 +109,8 @@ export function SearchResults() {
             {recent.length > 0 ? (
               <section>
                 <div className="flex items-center justify-between gap-4">
-                  <h2 className="text-2xs font-medium uppercase tracking-[0.12em] text-faint">Recent searches</h2>
-                  <button type="button" onClick={clearRecent} className="text-xs text-faint transition-colors hover:text-ink">
+                  <h2 className="text-label font-medium uppercase tracking-[0.12em] text-soft">Recent searches</h2>
+                  <button type="button" onClick={clearRecent} className="text-xs text-soft transition-colors hover:text-ink">
                     Clear
                   </button>
                 </div>
@@ -120,9 +120,9 @@ export function SearchResults() {
                       <button
                         type="button"
                         onClick={() => setInput(term)}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2 px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
                       >
-                        <Clock className="size-3 text-faint" aria-hidden />
+                        <Clock className="size-3 text-soft" aria-hidden />
                         {term}
                       </button>
                     </li>
@@ -132,16 +132,16 @@ export function SearchResults() {
             ) : null}
 
             <section>
-              <h2 className="text-2xs font-medium uppercase tracking-[0.12em] text-faint">Popular searches</h2>
+              <h2 className="text-label font-medium uppercase tracking-[0.12em] text-soft">Popular searches</h2>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {POPULAR.map((term) => (
                   <li key={term}>
                     <button
                       type="button"
                       onClick={() => setInput(term)}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2 px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
                     >
-                      <Search className="size-3 text-faint" aria-hidden />
+                      <Search className="size-3 text-soft" aria-hidden />
                       {term}
                     </button>
                   </li>
@@ -150,13 +150,13 @@ export function SearchResults() {
             </section>
 
             <section>
-              <h2 className="text-2xs font-medium uppercase tracking-[0.12em] text-faint">Or jump to a category</h2>
+              <h2 className="text-label font-medium uppercase tracking-[0.12em] text-soft">Or jump to a category</h2>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {categories.map((category) => (
                   <li key={category.id}>
                     <Link
                       href={`/categories/${category.slug}`}
-                      className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
+                      className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-2 px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
                     >
                       <span className="size-1.5 rounded-full" style={{ background: category.accent }} aria-hidden />
                       {category.name}
@@ -183,7 +183,7 @@ export function SearchResults() {
                     key={term}
                     type="button"
                     onClick={() => setInput(term)}
-                    className="inline-flex h-9.5 items-center rounded-md border border-line px-4 text-sm font-medium text-muted transition-colors hover:text-ink"
+                    className="inline-flex h-9.5 items-center rounded-control border border-line px-4 text-sm font-medium text-muted transition-colors hover:text-ink"
                   >
                     Try “{term}”
                   </button>
@@ -197,13 +197,13 @@ export function SearchResults() {
 
             {relatedCategories.length > 0 || relatedCollections.length > 0 ? (
               <section className="border-t border-line pt-8">
-                <h2 className="text-2xs font-medium uppercase tracking-[0.12em] text-faint">Related pages</h2>
+                <h2 className="text-label font-medium uppercase tracking-[0.12em] text-soft">Related pages</h2>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {relatedCategories.map((category) => (
                     <li key={category.id}>
                       <Link
                         href={`/categories/${category.slug}`}
-                        className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
+                        className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-2 px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
                       >
                         <span className="size-1.5 rounded-full" style={{ background: category.accent }} aria-hidden />
                         {category.name} templates
@@ -214,7 +214,7 @@ export function SearchResults() {
                     <li key={collection.slug}>
                       <Link
                         href={`/collections/${collection.slug}`}
-                        className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
+                        className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-2 px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
                       >
                         {collection.title}
                       </Link>
@@ -231,7 +231,7 @@ export function SearchResults() {
         <button
           type="button"
           onClick={() => setInput("")}
-          className="mt-10 inline-flex items-center gap-1.5 text-[13px] text-faint transition-colors hover:text-ink"
+          className="mt-10 inline-flex items-center gap-1.5 text-[13px] text-soft transition-colors hover:text-ink"
         >
           <X className="size-3.5" aria-hidden />
           Clear search

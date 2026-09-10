@@ -8,7 +8,7 @@ import { agents } from "@/data/site";
 import { buildPrompt, promptFilename, promptStats } from "@/data/prompts";
 import { getTemplates } from "@/data/templates";
 import { PromptViewer } from "@/components/prompt/prompt-viewer";
-import { TemplateVisual } from "@/components/visuals/template-visual";
+import { TemplatePreviewFrame } from "@/components/preview/preview-frame";
 import { Container, SectionHeading } from "@/components/layout/container";
 import { useToast } from "@/components/providers/toast-provider";
 import { useStore } from "@/lib/client-store";
@@ -69,7 +69,7 @@ export function PromptShowcase({ slugs }: { slugs: string[] }) {
             className={cn(
               "relative -mb-px rounded-t-md border border-b-0 px-3 py-1.5 text-[13px] font-medium transition-colors",
               active
-                ? "border-line bg-surface text-ink"
+                ? "border-line bg-surface-2 text-ink"
                 : "border-transparent text-muted hover:bg-surface-3 hover:text-ink",
             )}
           >
@@ -100,20 +100,14 @@ export function PromptShowcase({ slugs }: { slugs: string[] }) {
                 }}
                 aria-pressed={i === index}
                 className={cn(
-                  "group flex w-[240px] shrink-0 gap-3 rounded-lg border p-2.5 text-left transition-colors lg:w-full",
+                  "group flex w-[240px] shrink-0 gap-3 rounded-card border p-2.5 text-left transition-colors lg:w-full",
                   i === index
                     ? "border-accent-line bg-accent-soft"
-                    : "border-line bg-surface hover:border-line-strong",
+                    : "border-line bg-surface-2 hover:border-line-strong",
                 )}
               >
-                <span className="w-20 shrink-0 overflow-hidden rounded-md border border-line bg-surface-2">
-                  <TemplateVisual
-                    kind={item.visual}
-                    accent={item.accent}
-                    seed={item.slug}
-                    label={`${item.title} preview`}
-                    className="aspect-[16/10] w-full"
-                  />
+                <span className="w-20 shrink-0 overflow-hidden rounded-control border border-line bg-surface-3">
+                  <TemplatePreviewFrame template={item} className="aspect-[16/10] w-full" />
                 </span>
                 <span className="min-w-0 flex-1 py-0.5">
                   <span className={cn("block truncate text-[13.5px] font-semibold", i === index && "text-accent")}>
@@ -125,7 +119,7 @@ export function PromptShowcase({ slugs }: { slugs: string[] }) {
             ))}
             <Link
               href="/templates"
-              className="hidden items-center justify-between gap-2 rounded-lg border border-dashed border-line px-3 py-2.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink lg:flex"
+              className="hidden items-center justify-between gap-2 rounded-card border border-dashed border-line px-3 py-2.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink lg:flex"
             >
               Browse all templates
               <ArrowUpRight className="size-3.5" aria-hidden />
@@ -144,7 +138,7 @@ export function PromptShowcase({ slugs }: { slugs: string[] }) {
                 toast({ title: "Prompt downloaded", description: filename, tone: "info" });
               }}
             />
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-faint">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-soft">
               <p>
                 {stats.lines.toLocaleString("en-GB")} lines · {stats.characters.toLocaleString("en-GB")} characters ·
                 every template ships one of these for each agent.

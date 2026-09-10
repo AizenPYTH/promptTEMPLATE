@@ -33,10 +33,10 @@ export default function ChangelogPage() {
                 <span className="font-mono text-[13px] font-medium">v{entry.version}</span>
                 <span className="hidden size-2 rounded-full border-2 border-accent bg-canvas sm:block" aria-hidden />
               </div>
-              <time dateTime={entry.date} className="mt-1 block text-xs text-faint">
+              <time dateTime={entry.date} className="mt-1 block text-xs text-soft">
                 {formatDate(entry.date)}
               </time>
-              <span className="mt-0.5 block text-2xs text-faint/80">{relativeTime(entry.date)}</span>
+              <span className="mt-0.5 block text-label text-soft/80">{relativeTime(entry.date)}</span>
             </div>
 
             <div className="relative sm:border-l sm:border-line sm:pl-8">

@@ -36,12 +36,12 @@ export function HowItWorks() {
           title="A template is only half of it"
           description="Screenshots inspire, prompts build. Everything on Promptly ships with a brief detailed enough for an agent to work from without guessing."
         />
-        <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
+        <div className="grid gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-2">
           {points.map((point) => {
             const Icon = point.icon;
             return (
-              <div key={point.title} className="bg-surface p-6 sm:p-7">
-                <span className="flex size-9 items-center justify-center rounded-lg border border-line bg-surface-2 text-accent">
+              <div key={point.title} className="bg-surface-2 p-6 sm:p-7">
+                <span className="flex size-9 items-center justify-center rounded-card border border-line bg-surface-3 text-accent">
                   <Icon className="size-4" aria-hidden strokeWidth={1.75} />
                 </span>
                 <h3 className="mt-4 text-[15px] font-semibold">{point.title}</h3>

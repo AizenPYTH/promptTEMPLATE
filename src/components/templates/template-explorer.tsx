@@ -136,14 +136,14 @@ export function TemplateExplorer() {
       <div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-faint" aria-hidden />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-soft" aria-hidden />
             <input
               type="search"
               value={queryInput}
               onChange={(event) => setQueryInput(event.target.value)}
               placeholder="Search by name, tag, technology or author…"
               aria-label="Search templates"
-              className="h-10 w-full rounded-md border border-line bg-surface pl-9 pr-3 text-sm placeholder:text-faint transition-colors hover:border-line-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)]"
+              className="h-10 w-full rounded-control border border-line bg-surface-2 pl-9 pr-3 text-sm placeholder:text-soft transition-colors hover:border-line-strong focus:border-accent focus:outline-none focus:ring-2 focus:ring-[var(--accent-soft)]"
             />
           </div>
 
@@ -158,7 +158,7 @@ export function TemplateExplorer() {
               <SlidersHorizontal className="size-4" aria-hidden />
               Filters
               {activeCount > 0 ? (
-                <span className="rounded-full bg-accent px-1.5 text-2xs font-semibold text-accent-ink">{activeCount}</span>
+                <span className="rounded-full bg-accent px-1.5 text-label font-semibold text-accent-ink">{activeCount}</span>
               ) : null}
             </Button>
 
@@ -178,7 +178,7 @@ export function TemplateExplorer() {
               ))}
             </Select>
 
-            <div className="hidden items-center rounded-md border border-line p-0.5 sm:flex">
+            <div className="hidden items-center rounded-control border border-line p-0.5 sm:flex">
               {([
                 { id: "grid" as const, icon: LayoutGrid, label: "Grid layout" },
                 { id: "list" as const, icon: Rows3, label: "List layout" },
@@ -192,8 +192,8 @@ export function TemplateExplorer() {
                     aria-label={option.label}
                     aria-pressed={layout === option.id}
                     className={cn(
-                      "flex size-8 items-center justify-center rounded-sm transition-colors",
-                      layout === option.id ? "bg-surface-2 text-ink" : "text-faint hover:text-muted",
+                      "flex size-8 items-center justify-center rounded-control transition-colors",
+                      layout === option.id ? "bg-surface-3 text-ink" : "text-soft hover:text-muted",
                     )}
                   >
                     <Icon className="size-4" aria-hidden />
@@ -211,14 +211,14 @@ export function TemplateExplorer() {
                 key={chip.key}
                 type="button"
                 onClick={chip.remove}
-                className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-1 text-xs text-muted transition-colors hover:border-line-strong hover:text-ink"
+                className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2 px-2.5 py-1 text-xs text-muted transition-colors hover:border-line-strong hover:text-ink"
               >
                 {chip.label}
                 <X className="size-3" aria-hidden />
                 <span className="sr-only">Remove filter</span>
               </button>
             ))}
-            <button type="button" onClick={clearAll} className="text-xs text-faint underline-offset-2 hover:text-ink hover:underline">
+            <button type="button" onClick={clearAll} className="text-xs text-soft underline-offset-2 hover:text-ink hover:underline">
               Clear all
             </button>
           </div>
@@ -251,12 +251,12 @@ export function TemplateExplorer() {
                   <Button variant="secondary" size="lg" onClick={() => setVisible((v) => v + PAGE_SIZE)}>
                     Load more templates
                   </Button>
-                  <p className="text-xs text-faint tabular-nums">
+                  <p className="text-xs text-soft tabular-nums">
                     Showing {shown.length} of {results.length}
                   </p>
                 </div>
               ) : results.length > PAGE_SIZE ? (
-                <p className="mt-10 text-center text-xs text-faint">That’s all {results.length} templates.</p>
+                <p className="mt-10 text-center text-xs text-soft">That’s all {results.length} templates.</p>
               ) : null}
             </>
           )}

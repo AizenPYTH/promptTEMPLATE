@@ -6,7 +6,7 @@ import { categories, categoryMap } from "@/data/taxonomy";
 import { categoryStats, templatesByCategory } from "@/lib/catalog";
 import { Container } from "@/components/layout/container";
 import { TemplateGrid } from "@/components/templates/template-grid";
-import { TemplateVisual } from "@/components/visuals/template-visual";
+import { ArchetypeCover } from "@/components/preview/archetype-visual";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import type { CategoryId } from "@/types/template";
@@ -54,18 +54,18 @@ export default async function CategoryPage({ params }: PageProps<"/categories/[s
               <li>
                 <Link href="/" className="transition-colors hover:text-ink">Home</Link>
               </li>
-              <ChevronRight className="size-3 text-faint" aria-hidden />
+              <ChevronRight className="size-3 text-soft" aria-hidden />
               <li>
                 <Link href="/categories" className="transition-colors hover:text-ink">Categories</Link>
               </li>
-              <ChevronRight className="size-3 text-faint" aria-hidden />
+              <ChevronRight className="size-3 text-soft" aria-hidden />
               <li aria-current="page" className="text-ink">{category.name}</li>
             </ol>
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-center">
             <div className="max-w-xl">
-              <span className="inline-flex items-center gap-2 text-2xs font-medium uppercase tracking-[0.14em] text-faint">
+              <span className="inline-flex items-center gap-2 text-label font-medium uppercase tracking-[0.14em] text-soft">
                 <span className="size-2 rounded-full" style={{ background: category.accent }} aria-hidden />
                 Category
               </span>
@@ -81,21 +81,20 @@ export default async function CategoryPage({ params }: PageProps<"/categories/[s
                   { label: "Premium", value: stats.premium },
                 ].map((stat) => (
                   <div key={stat.label}>
-                    <dt className="text-2xs uppercase tracking-[0.1em] text-faint">{stat.label}</dt>
+                    <dt className="text-label uppercase tracking-[0.1em] text-soft">{stat.label}</dt>
                     <dd className="mt-1 text-xl font-semibold tabular-nums">{stat.value}</dd>
                   </div>
                 ))}
               </dl>
             </div>
 
-            <div className="overflow-hidden rounded-xl border border-line bg-surface shadow-card">
-              <TemplateVisual
-                kind={category.visual}
-                accent={category.accent}
-                seed={`category-hero-${category.id}`}
-                label={`${category.name} interface example`}
-                className="aspect-[16/10] w-full"
-              />
+            <div className="overflow-hidden rounded-panel border border-line bg-surface-2 shadow-e2">
+              <ArchetypeCover
+                  archetype={category.archetype}
+                  accent={category.accent}
+                  label={category.name}
+                  className="aspect-[16/8] w-full"
+                />
             </div>
           </div>
         </Container>
@@ -114,13 +113,13 @@ export default async function CategoryPage({ params }: PageProps<"/categories/[s
         )}
 
         <div className="mt-16 border-t border-line pt-8">
-          <h2 className="text-2xs font-medium uppercase tracking-[0.12em] text-faint">Other categories</h2>
+          <h2 className="text-label font-medium uppercase tracking-[0.12em] text-soft">Other categories</h2>
           <ul className="mt-4 flex flex-wrap gap-2">
             {others.map((other) => (
               <li key={other.id}>
                 <Link
                   href={`/categories/${other.slug}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
+                  className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-2 px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-line-strong hover:text-ink"
                 >
                   <span className="size-1.5 rounded-full" style={{ background: other.accent }} aria-hidden />
                   {other.name}

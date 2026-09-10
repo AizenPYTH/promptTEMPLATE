@@ -49,13 +49,13 @@ export function Navbar() {
       className={cn(
         "sticky top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-200",
         scrolled
-          ? "border-line bg-[color-mix(in_srgb,var(--canvas)_82%,transparent)] shadow-soft backdrop-blur-xl"
+          ? "border-line bg-[color-mix(in_srgb,var(--canvas)_82%,transparent)] shadow-e1 backdrop-blur-xl"
           : "border-transparent bg-canvas",
       )}
     >
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2 focus:text-sm focus:shadow-float"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-control focus:bg-surface-2 focus:px-3 focus:py-2 focus:text-sm focus:shadow-e3"
       >
         Skip to content
       </a>
@@ -68,7 +68,7 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "rounded-md px-3 py-1.5 text-[13.5px] font-medium transition-colors",
+                "rounded-control px-3 py-1.5 text-[13.5px] font-medium transition-colors",
                 isActive(item.href) ? "text-ink" : "text-muted hover:text-ink",
               )}
               aria-current={isActive(item.href) ? "page" : undefined}
@@ -82,7 +82,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={openPalette}
-            className="hidden h-9 w-56 items-center gap-2 rounded-md border border-line bg-surface px-2.5 text-[13px] text-faint transition-colors hover:border-line-strong hover:text-muted lg:flex"
+            className="hidden h-9 w-56 items-center gap-2 rounded-control border border-line bg-surface-2 px-2.5 text-[13px] text-soft transition-colors hover:border-line-strong hover:text-muted lg:flex"
           >
             <Search className="size-3.5" aria-hidden />
             <span className="flex-1 text-left">Search templates…</span>
@@ -93,7 +93,7 @@ export function Navbar() {
             type="button"
             onClick={openPalette}
             aria-label="Search"
-            className="flex size-9 items-center justify-center rounded-md text-muted transition-colors hover:bg-surface-2 hover:text-ink lg:hidden"
+            className="flex size-9 items-center justify-center rounded-control text-muted transition-colors hover:bg-surface-3 hover:text-ink lg:hidden"
           >
             <Search className="size-[18px]" aria-hidden />
           </button>
@@ -102,7 +102,7 @@ export function Navbar() {
             type="button"
             onClick={toggle}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-            className="hidden size-9 items-center justify-center rounded-md text-muted transition-colors hover:bg-surface-2 hover:text-ink sm:flex"
+            className="hidden size-9 items-center justify-center rounded-control text-muted transition-colors hover:bg-surface-3 hover:text-ink sm:flex"
           >
             {theme === "dark" ? <Sun className="size-[18px]" aria-hidden /> : <Moon className="size-[18px]" aria-hidden />}
           </button>
@@ -111,7 +111,7 @@ export function Navbar() {
             href="/favorites"
             aria-label={`Favorites${ready && favorites.length ? ` (${favorites.length})` : ""}`}
             className={cn(
-              "relative hidden size-9 items-center justify-center rounded-md transition-colors hover:bg-surface-2 hover:text-ink sm:flex",
+              "relative hidden size-9 items-center justify-center rounded-control transition-colors hover:bg-surface-3 hover:text-ink sm:flex",
               isActive("/favorites") ? "text-ink" : "text-muted",
             )}
           >
@@ -134,7 +134,7 @@ export function Navbar() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
-            className="flex size-9 items-center justify-center rounded-md text-muted transition-colors hover:bg-surface-2 hover:text-ink md:hidden"
+            className="flex size-9 items-center justify-center rounded-control text-muted transition-colors hover:bg-surface-3 hover:text-ink md:hidden"
           >
             {menuOpen ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           </button>
@@ -150,8 +150,8 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center justify-between rounded-lg px-3 py-3 text-[15px] font-medium transition-colors",
-                    isActive(item.href) ? "bg-surface-2 text-ink" : "text-muted",
+                    "flex items-center justify-between rounded-card px-3 py-3 text-[15px] font-medium transition-colors",
+                    isActive(item.href) ? "bg-surface-3 text-ink" : "text-muted",
                   )}
                 >
                   {item.label}
@@ -171,7 +171,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={toggle}
-              className="flex h-11 items-center justify-center gap-2 rounded-md border border-line text-sm font-medium text-muted"
+              className="flex h-11 items-center justify-center gap-2 rounded-control border border-line text-sm font-medium text-muted"
             >
               {theme === "dark" ? <Sun className="size-4" aria-hidden /> : <Moon className="size-4" aria-hidden />}
               Switch to {theme === "dark" ? "light" : "dark"} theme

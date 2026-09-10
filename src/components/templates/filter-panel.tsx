@@ -23,7 +23,7 @@ const counts = {
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="border-b border-line py-5 first:pt-0 last:border-b-0">
-      <h3 className="mb-2 text-2xs font-medium uppercase tracking-[0.12em] text-faint">{title}</h3>
+      <h3 className="mb-2 text-label font-medium uppercase tracking-[0.12em] text-soft">{title}</h3>
       <div className="-mx-0.5">{children}</div>
     </section>
   );
@@ -105,8 +105,8 @@ export function FilterPanel({
                 onClick={() => onChange({ ...filters, minRating: active ? 0 : rating })}
                 aria-pressed={active}
                 className={cn(
-                  "flex items-center gap-2 rounded-md px-2 py-1.5 text-[13px] transition-colors",
-                  active ? "bg-accent-soft text-accent" : "text-muted hover:bg-surface-2 hover:text-ink",
+                  "flex items-center gap-2 rounded-control px-2 py-1.5 text-[13px] transition-colors",
+                  active ? "bg-accent-soft text-accent" : "text-muted hover:bg-surface-3 hover:text-ink",
                 )}
               >
                 <Star className={cn("size-3.5", active ? "fill-accent text-accent" : "text-line-strong")} aria-hidden />

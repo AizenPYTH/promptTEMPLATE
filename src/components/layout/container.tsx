@@ -41,7 +41,7 @@ export function PageHeader({
     <div className={cn("flex flex-col gap-6 md:flex-row md:items-end md:justify-between", className)}>
       <div className="max-w-2xl">
         {eyebrow ? (
-          <div className="mb-3 text-2xs font-medium uppercase tracking-[0.14em] text-faint">{eyebrow}</div>
+          <div className="mb-3 text-label font-medium uppercase tracking-[0.14em] text-soft">{eyebrow}</div>
         ) : null}
         <h1 className="text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{title}</h1>
         {description ? (

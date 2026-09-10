@@ -26,7 +26,7 @@ export function CategoryStrip() {
               <Link
                 key={category.id}
                 href={`/categories/${category.slug}`}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-lg border border-line bg-surface p-4 transition-[border-color,transform] hover:-translate-y-0.5 hover:border-line-strong"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-card border border-line bg-surface-2 p-4 transition-[border-color,transform] hover:-translate-y-0.5 hover:border-line-strong"
               >
                 <span
                   className="absolute -right-6 -top-6 size-16 rounded-full opacity-[0.16] blur-xl transition-opacity group-hover:opacity-30"
@@ -38,7 +38,7 @@ export function CategoryStrip() {
                   <span className="mt-3 block text-sm font-medium">{category.name}</span>
                   <span className="mt-1 block text-xs leading-5 text-muted">{category.short}</span>
                 </span>
-                <span className="relative mt-4 text-2xs text-faint">{pluralise(stats.total, "template")}</span>
+                <span className="relative mt-4 text-label text-soft">{pluralise(stats.total, "template")}</span>
               </Link>
             );
           })}

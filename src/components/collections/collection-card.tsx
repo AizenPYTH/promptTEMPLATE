@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Collection } from "@/types/template";
-import { TemplateVisual } from "@/components/visuals/template-visual";
+import { ArchetypeCover } from "@/components/preview/archetype-visual";
 import { cn, pluralise } from "@/lib/utils";
 
 export function CollectionCard({
@@ -16,18 +16,17 @@ export function CollectionCard({
   return (
     <article
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-xl border border-line bg-surface transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-card",
+        "group relative flex flex-col overflow-hidden rounded-panel border border-line bg-surface-2 transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-e2",
         className,
       )}
     >
-      <div className="relative overflow-hidden border-b border-line bg-surface-2">
-        <TemplateVisual
-          kind={collection.visual}
+      <div className="relative overflow-hidden border-b border-line bg-surface-3">
+        <ArchetypeCover
+          archetype={collection.archetype}
           accent={collection.accent}
-          seed={collection.slug}
-          label={`${collection.title} cover`}
+          label={collection.title}
           className={cn(
-            "w-full transition-transform duration-500 ease-out group-hover:scale-[1.035]",
+            "w-full",
             size === "compact" ? "aspect-[16/9]" : "aspect-[16/8]",
           )}
         />
@@ -44,10 +43,10 @@ export function CollectionCard({
               {collection.title}
             </Link>
           </h3>
-          <ArrowUpRight className="size-4 shrink-0 text-faint transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+          <ArrowUpRight className="size-4 shrink-0 text-soft transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
         </div>
         <p className="mt-1.5 line-clamp-2 text-[13px] leading-5 text-muted">{collection.subtitle}</p>
-        <div className="mt-auto flex items-center gap-2 pt-4 text-2xs text-faint">
+        <div className="mt-auto flex items-center gap-2 pt-4 text-label text-soft">
           <span>{pluralise(collection.templateSlugs.length, "template")}</span>
           <span aria-hidden>·</span>
           <span className="truncate">Curated by {collection.curator}</span>

@@ -1,64 +1,35 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, Copy, Layers, Sparkles, Terminal, Wand2 } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import type { AgentId } from "@/types/template";
-import { getTemplate } from "@/data/templates";
+import { getTemplates } from "@/data/templates";
 import { buildPrompt } from "@/data/prompts";
-import { agentStore } from "@/lib/preferences";
-import { useStore } from "@/lib/client-store";
-import { TemplateVisual } from "@/components/visuals/template-visual";
-import { copyText } from "@/lib/clipboard";
+import { TemplatePreviewFrame } from "@/components/preview/preview-frame";
 import { useToast } from "@/components/providers/toast-provider";
+import { useStore } from "@/lib/client-store";
+import { agentStore } from "@/lib/preferences";
+import { copyText } from "@/lib/clipboard";
 import { cn } from "@/lib/utils";
 
-const STEP_DURATION = 3400;
+const STEPS = ["Discover", "Preview", "Copy", "Build"] as const;
+const STEP_MS = 3000;
+const SLUGS = ["nova-ai", "orbit-analytics", "studio-27-portfolio", "arcadia-ecommerce"];
 
-const steps = [
-  { id: "design", label: "Design", icon: Layers, caption: "Pick one you'd ship." },
-  { id: "prompt", label: "Prompt", icon: Wand2, caption: "Copy the full brief." },
-  { id: "agent", label: "AI", icon: Terminal, caption: "Paste into your agent." },
-  { id: "website", label: "Website", icon: Sparkles, caption: "A real codebase." },
-] as const;
-
-const promptLines = [
-  { text: "You are a senior front-end engineer and product designer.", tone: "comment" },
-  { text: "", tone: "plain" },
-  { text: "# Objective", tone: "heading" },
-  { text: "Build the Nova AI website — an AI startup launch site —", tone: "plain" },
-  { text: "as a complete, runnable front-end project.", tone: "plain" },
-  { text: "", tone: "plain" },
-  { text: "# Design system", tone: "heading" },
-  { text: "--background      #08080b", tone: "token" },
-  { text: "--surface         #101014", tone: "token" },
-  { text: "--accent          #7c6dff", tone: "token" },
-  { text: "", tone: "plain" },
-  { text: "# Motion", tone: "heading" },
-  { text: "- Hero text streams at 28ms per character, skippable", tone: "plain" },
-  { text: "- Sections fade in at 0.4s with a 24px rise, once only", tone: "plain" },
-] as const;
-
-const agentLines = [
-  "› Reading brief — 14 requirements, 5 routes",
-  "✓ app/layout.tsx",
-  "✓ app/page.tsx",
-  "✓ components/hero/streaming-message.tsx",
-  "✓ components/benchmarks/benchmark-table.tsx",
-  "✓ lib/canned-responses.ts",
-  "› Running typecheck… 0 errors",
-  "› Running lint… 0 warnings",
-  "✓ Build complete in 6.2s",
-] as const;
-
-export function HeroFlow({ slug }: { slug: string }) {
-  const template = getTemplate(slug)!;
-  const storedAgent = useStore(agentStore, "claude-code");
+/**
+ * The hero loop object — decoration and content at once (handoff exception 2).
+ * It exists to explain DISCOVER → PREVIEW → COPY → BUILD, which is why it earns
+ * a 12s infinite loop where nothing else on the page gets one.
+ */
+export function HeroFlow() {
+  const templates = getTemplates(SLUGS);
   const [step, setStep] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [reduced, setReduced] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const storedAgent = useStore(agentStore, "claude-code");
   const { toast } = useToast();
-  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -70,184 +41,129 @@ export function HeroFlow({ slug }: { slug: string }) {
 
   useEffect(() => {
     if (paused || reduced) return;
-    const timer = setTimeout(() => setStep((s) => (s + 1) % steps.length), STEP_DURATION);
-    return () => clearTimeout(timer);
+    const id = setTimeout(() => setStep((s) => (s + 1) % STEPS.length), STEP_MS);
+    return () => clearTimeout(id);
   }, [step, paused, reduced]);
 
-  useEffect(() => () => {
-    if (copyTimer.current) clearTimeout(copyTimer.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
+
+  // Effect 5: the glow follows the pointer through a custom property, no state.
+  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const box = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--pointer-x", `${event.clientX - box.left}px`);
+    event.currentTarget.style.setProperty("--pointer-y", `${event.clientY - box.top}px`);
+  };
+
+  const active = templates[step] ?? templates[0];
 
   const onCopy = async () => {
-    const ok = await copyText(buildPrompt(template, storedAgent as AgentId));
+    const ok = await copyText(buildPrompt(active, storedAgent as AgentId));
     setCopied(ok);
     toast({
-      title: ok ? "Prompt copied" : "Could not copy",
-      description: ok ? `${template.title} · Claude Code prompt` : "Your browser blocked clipboard access.",
+      title: ok ? "Prompt copied" : "Could not copy the prompt",
+      description: ok ? active.title : "Your browser blocked clipboard access.",
       tone: ok ? "success" : "warning",
     });
-    if (copyTimer.current) clearTimeout(copyTimer.current);
-    copyTimer.current = setTimeout(() => setCopied(false), 2200);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => setCopied(false), 2400);
   };
 
   return (
     <div
-      className="w-full"
+      className="group/hero relative"
+      onPointerMove={onPointerMove}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
-      {/* Step rail */}
-      <div role="tablist" aria-label="How Promptly works" className="mb-4 flex items-stretch gap-1.5 overflow-x-auto no-scrollbar">
-        {steps.map((item, index) => {
-          const Icon = item.icon;
-          const isActive = index === step;
-          return (
+      <span
+        className="pointer-events-none absolute -inset-24 opacity-0 transition-opacity duration-300 group-hover/hero:opacity-100 motion-reduce:hidden"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(620px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), color-mix(in srgb, var(--accent) 16%, transparent), transparent 62%)",
+        }}
+      />
+
+      <div className="glass-panel sheen relative rounded-glass p-5">
+        <div role="tablist" aria-label="How Promptly works" className="flex gap-1">
+          {STEPS.map((label, i) => (
             <button
-              key={item.id}
+              key={label}
               role="tab"
               type="button"
-              id={`flow-tab-${item.id}`}
-              aria-selected={isActive}
-              aria-controls="flow-panel"
-              tabIndex={isActive ? 0 : -1}
-              onClick={() => setStep(index)}
+              aria-selected={i === step}
+              tabIndex={i === step ? 0 : -1}
+              onClick={() => setStep(i)}
               onKeyDown={(event) => {
-                if (event.key === "ArrowRight") setStep((index + 1) % steps.length);
-                if (event.key === "ArrowLeft") setStep((index - 1 + steps.length) % steps.length);
+                if (event.key === "ArrowRight") setStep((i + 1) % STEPS.length);
+                if (event.key === "ArrowLeft") setStep((i - 1 + STEPS.length) % STEPS.length);
               }}
               className={cn(
-                "group relative flex min-w-0 flex-1 flex-col gap-1 rounded-lg border px-3 py-2.5 text-left transition-colors",
-                isActive ? "border-accent-line bg-accent-soft" : "border-line bg-surface hover:border-line-strong",
+                "flex-1 rounded-control px-3 py-2.5 font-mono text-label uppercase tracking-[0.14em] transition-colors",
+                i === step ? "text-accent-ink" : "text-soft hover:text-ink",
               )}
+              style={i === step ? { background: "var(--accent)" } : undefined}
             >
-              <span className={cn("flex items-center gap-1.5 text-2xs font-medium uppercase tracking-[0.1em]", isActive ? "text-accent" : "text-faint")}>
-                <Icon className="size-3" aria-hidden />
-                {item.label}
-              </span>
-              <span className={cn("truncate text-xs", isActive ? "text-ink" : "text-muted")}>{item.caption}</span>
-              {!reduced ? (
-                <span className="absolute inset-x-3 bottom-0 h-px overflow-hidden rounded-full bg-transparent" aria-hidden>
-                  <span
-                    className={cn("block h-full bg-accent transition-[width] ease-linear", isActive ? "w-full" : "w-0")}
-                    style={{ transitionDuration: isActive && !paused ? `${STEP_DURATION}ms` : "0ms" }}
-                  />
-                </span>
-              ) : null}
+              {label}
             </button>
-          );
-        })}
-      </div>
-
-      {/* Panel */}
-      <div
-        id="flow-panel"
-        role="tabpanel"
-        aria-labelledby={`flow-tab-${steps[step].id}`}
-        className="relative overflow-hidden rounded-xl border border-line bg-surface shadow-card"
-      >
-        <div className="flex items-center gap-2 border-b border-line bg-surface-2 px-3.5 py-2.5">
-          <span className="flex gap-1.5" aria-hidden>
-            <span className="size-2.5 rounded-full border border-line bg-surface-3" />
-            <span className="size-2.5 rounded-full border border-line bg-surface-3" />
-            <span className="size-2.5 rounded-full border border-line bg-surface-3" />
-          </span>
-          <span className="ml-1.5 truncate font-mono text-2xs text-faint">
-            {step === 0 && `promptly.design/templates/${template.slug}`}
-            {step === 1 && `${template.slug}-claude-code-prompt.txt`}
-            {step === 2 && "~/projects/nova-ai — claude"}
-            {step === 3 && "localhost:3000"}
-          </span>
-          {step === 1 ? (
-            <button
-              type="button"
-              onClick={onCopy}
-              className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-2 py-1 text-2xs font-medium text-muted transition-colors hover:text-ink"
-            >
-              {copied ? <Check className="size-3 text-accent" aria-hidden /> : <Copy className="size-3" aria-hidden />}
-              {copied ? "Copied" : "Copy"}
-            </button>
-          ) : null}
+          ))}
         </div>
 
-        <div className="relative aspect-[16/10] w-full">
-          {/* Design */}
-          <div className={cn("absolute inset-0 transition-opacity duration-300", step === 0 ? "opacity-100" : "pointer-events-none opacity-0")}>
-            <TemplateVisual
-              kind={template.visual}
-              accent={template.accent}
-              seed={template.slug}
-              label={`${template.title} preview`}
-              className="size-full"
-            />
-          </div>
-
-          {/* Prompt */}
-          <div
-            className={cn(
-              "absolute inset-0 overflow-hidden bg-surface p-4 font-mono text-[11px] leading-[1.7] transition-opacity duration-300 sm:p-5 sm:text-xs",
-              step === 1 ? "opacity-100" : "pointer-events-none opacity-0",
-            )}
-          >
-            {promptLines.map((line, index) => (
-              <div key={index} className="flex gap-3">
-                <span className="w-5 shrink-0 select-none text-right text-faint/60 tabular-nums">{index + 1}</span>
-                <span
-                  className={cn(
-                    "truncate",
-                    line.tone === "heading" && "font-semibold text-accent",
-                    line.tone === "comment" && "text-muted",
-                    line.tone === "token" && "text-positive",
-                    line.tone === "plain" && "text-ink/80",
-                  )}
-                >
-                  {line.text || " "}
-                </span>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          {templates.map((template, i) => (
+            <div
+              key={template.id}
+              className={cn(
+                "overflow-hidden rounded-card border transition-[border-color,transform,opacity] duration-500",
+                i === step ? "border-accent" : "border-line opacity-60",
+              )}
+              style={i === step ? { transform: "translateY(-4px)" } : undefined}
+            >
+              <TemplatePreviewFrame
+                template={template}
+                size="small"
+                playing={i === step && !reduced}
+                className="aspect-[16/10] w-full"
+              />
+              <div className="flex items-center justify-between gap-2 bg-surface-3 px-3 py-2">
+                <span className="truncate text-caption font-medium">{template.title}</span>
+                {i === step ? (
+                  <span className="font-mono text-label uppercase tracking-[0.14em] text-accent">
+                    {STEPS[step]}
+                  </span>
+                ) : null}
               </div>
-            ))}
-          </div>
-
-          {/* Agent */}
-          <div
-            className={cn(
-              "absolute inset-0 overflow-hidden bg-surface p-4 font-mono text-[11px] leading-[1.9] transition-opacity duration-300 sm:p-5 sm:text-xs",
-              step === 2 ? "opacity-100" : "pointer-events-none opacity-0",
-            )}
-          >
-            {agentLines.map((line, index) => (
-              <div
-                key={line}
-                className={cn(
-                  "truncate",
-                  line.startsWith("✓") ? "text-positive" : "text-muted",
-                  step === 2 && !reduced && "animate-fade-in",
-                )}
-                style={step === 2 && !reduced ? { animationDelay: `${index * 110}ms` } : undefined}
-              >
-                {line}
-              </div>
-            ))}
-            <div className="mt-2 flex items-center gap-2 text-ink">
-              <span aria-hidden>›</span>
-              <span className={cn("inline-block h-3.5 w-1.5 bg-accent", !reduced && "animate-flow")} aria-hidden />
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Website */}
-          <div className={cn("absolute inset-0 transition-opacity duration-300", step === 3 ? "opacity-100" : "pointer-events-none opacity-0")}>
-            <TemplateVisual
-              kind="docs"
-              accent={template.accent}
-              seed={`${template.slug}-built`}
-              label="The generated website running locally"
-              className="size-full"
-            />
-            <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-2.5 py-1.5 text-2xs font-medium shadow-soft">
-              <Check className="size-3 text-positive" aria-hidden />
-              Shipped in one prompt
-            </span>
-          </div>
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <p className="min-w-0 flex-1 truncate text-caption text-soft">
+            {step === 0 && "Browse finished designs, not screenshots of them."}
+            {step === 1 && `Open ${active.title} and look at it running.`}
+            {step === 2 && "Copy the prompt that rebuilds it."}
+            {step === 3 && "Paste it into your agent and get the repository."}
+          </p>
+          <button
+            type="button"
+            onClick={onCopy}
+            className={cn(
+              "inline-flex h-9 shrink-0 items-center gap-2 rounded-control px-3.5 text-caption font-semibold transition-colors",
+              copied
+                ? "bg-surface-3 text-accent ring-1 ring-inset ring-[var(--accent)]"
+                : "bg-accent text-accent-ink hover:bg-accent-hover",
+            )}
+          >
+            {copied ? <Check className="size-3.5" aria-hidden /> : <Copy className="size-3.5" aria-hidden />}
+            {copied ? "Copied" : "Copy prompt"}
+          </button>
         </div>
       </div>
     </div>

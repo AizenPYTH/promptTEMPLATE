@@ -109,10 +109,10 @@ export function Modal({
         aria-describedby={description ? "modal-description" : undefined}
         tabIndex={-1}
         className={cn(
-          "relative flex w-full flex-col overflow-hidden border-line bg-surface shadow-float animate-scale-in",
+          "relative flex w-full flex-col overflow-hidden border-line bg-surface-2 shadow-e3 animate-scale-in",
           size === "screen"
             ? "h-full max-h-none rounded-none border-0"
-            : "max-h-[92vh] rounded-t-xl border sm:rounded-xl",
+            : "max-h-[92vh] rounded-t-xl border sm:rounded-panel",
           sizes[size],
         )}
       >
@@ -123,7 +123,7 @@ export function Modal({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="absolute right-3 top-3 z-10 rounded-md border border-line bg-surface/90 p-1.5 text-muted backdrop-blur transition-colors hover:text-ink"
+            className="absolute right-3 top-3 z-10 rounded-control border border-line bg-surface-2/90 p-1.5 text-muted backdrop-blur transition-colors hover:text-ink"
           >
             <X className="size-4" aria-hidden />
           </button>
@@ -141,7 +141,7 @@ export function Modal({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="-m-1.5 rounded-md p-1.5 text-faint transition-colors hover:bg-surface-2 hover:text-ink"
+              className="-m-1.5 rounded-control p-1.5 text-soft transition-colors hover:bg-surface-3 hover:text-ink"
             >
               <X className="size-4" aria-hidden />
             </button>

@@ -76,7 +76,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             <div
               key={item.id}
               className={cn(
-                "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-lg border bg-surface p-3 shadow-float",
+                "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-card border bg-surface-2 p-3 shadow-e3",
                 "animate-scale-in",
               )}
             >
@@ -112,7 +112,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 type="button"
                 onClick={() => dismiss(item.id)}
                 aria-label="Dismiss notification"
-                className="-m-1 rounded p-1 text-faint transition-colors hover:text-ink"
+                className="-m-1 rounded p-1 text-soft transition-colors hover:text-ink"
               >
                 <X className="size-3.5" aria-hidden />
               </button>

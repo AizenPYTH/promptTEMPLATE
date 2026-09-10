@@ -72,7 +72,7 @@ const comparison: { label: string; free: boolean | string; pro: boolean | string
 
 function Cell({ value }: { value: boolean | string }) {
   if (value === true) return <Check className="mx-auto size-4 text-accent" aria-label="Included" />;
-  if (value === false) return <Minus className="mx-auto size-4 text-faint" aria-label="Not included" />;
+  if (value === false) return <Minus className="mx-auto size-4 text-soft" aria-label="Not included" />;
   return <span className="text-xs text-muted">{value}</span>;
 }
 
@@ -92,12 +92,12 @@ export function PricingPlans() {
           onClick={() => setAnnual((v) => !v)}
           className={cn(
             "relative h-6 w-11 rounded-full border transition-colors",
-            annual ? "border-accent-line bg-accent" : "border-line bg-surface-2",
+            annual ? "border-accent-line bg-accent" : "border-line bg-surface-3",
           )}
         >
           <span
             className={cn(
-              "absolute top-0.5 size-4.5 rounded-full bg-surface transition-transform duration-200",
+              "absolute top-0.5 size-4.5 rounded-full bg-surface-2 transition-transform duration-200",
               annual ? "translate-x-5.5" : "translate-x-0.5",
             )}
             aria-hidden
@@ -115,12 +115,12 @@ export function PricingPlans() {
             <div
               key={plan.id}
               className={cn(
-                "relative flex flex-col rounded-xl border bg-surface p-6",
-                plan.highlight ? "border-accent-line shadow-card" : "border-line",
+                "relative flex flex-col rounded-panel border bg-surface-2 p-6",
+                plan.highlight ? "border-accent-line shadow-e2" : "border-line",
               )}
             >
               {plan.highlight ? (
-                <span className="absolute -top-2.5 left-6 rounded-full bg-accent px-2.5 py-0.5 text-2xs font-semibold uppercase tracking-[0.08em] text-accent-ink">
+                <span className="absolute -top-2.5 left-6 rounded-full bg-accent px-2.5 py-0.5 text-label font-semibold uppercase tracking-[0.08em] text-accent-ink">
                   Most popular
                 </span>
               ) : null}
@@ -134,9 +134,9 @@ export function PricingPlans() {
                 ) : null}
               </p>
               {plan.id === "pro" && annual ? (
-                <p className="mt-1 text-xs tabular-nums text-faint">${plan.yearly} billed annually</p>
+                <p className="mt-1 text-xs tabular-nums text-soft">${plan.yearly} billed annually</p>
               ) : (
-                <p className="mt-1 text-xs text-faint">
+                <p className="mt-1 text-xs text-soft">
                   {plan.id === "lifetime"
                     ? "One payment, no renewal"
                     : plan.id === "pro"
@@ -171,10 +171,10 @@ export function PricingPlans() {
 
       <section className="mt-16">
         <h2 className="text-xl font-semibold tracking-[-0.025em]">Compare plans</h2>
-        <div className="mt-6 overflow-x-auto scrollbar-slim rounded-xl border border-line">
+        <div className="mt-6 overflow-x-auto scrollbar-slim rounded-panel border border-line">
           <table className="w-full min-w-[560px] border-collapse text-left">
             <thead>
-              <tr className="border-b border-line bg-surface-2">
+              <tr className="border-b border-line bg-surface-3">
                 <th scope="col" className="px-4 py-3 text-[13px] font-medium">Feature</th>
                 <th scope="col" className="px-4 py-3 text-center text-[13px] font-medium">Free</th>
                 <th scope="col" className="px-4 py-3 text-center text-[13px] font-medium">Pro</th>
@@ -183,7 +183,7 @@ export function PricingPlans() {
             </thead>
             <tbody>
               {comparison.map((row) => (
-                <tr key={row.label} className="border-b border-line last:border-b-0 hover:bg-surface-2/60">
+                <tr key={row.label} className="border-b border-line last:border-b-0 hover:bg-surface-3/60">
                   <th scope="row" className="px-4 py-3 text-[13px] font-normal text-muted">{row.label}</th>
                   <td className="px-4 py-3 text-center"><Cell value={row.free} /></td>
                   <td className="px-4 py-3 text-center"><Cell value={row.pro} /></td>
