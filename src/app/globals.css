@@ -30,6 +30,21 @@
   --shadow-md: 0 4px 16px -4px rgba(16, 16, 20, 0.1), 0 1px 3px rgba(16, 16, 20, 0.05);
   --shadow-lg: 0 24px 48px -20px rgba(16, 16, 20, 0.22), 0 2px 8px rgba(16, 16, 20, 0.06);
   --grid-line: rgba(22, 22, 26, 0.045);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-strong: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 24px 60px -24px rgba(20, 20, 40, 0.24);
+  --glass-blur: 28px;
+
+  /* Ambient mesh */
+  --mesh-1: rgba(91, 79, 240, 0.5);
+  --mesh-2: rgba(34, 184, 214, 0.42);
+  --mesh-3: rgba(236, 72, 153, 0.3);
+  --mesh-opacity: 0.5;
+  --grain-opacity: 0.035;
 }
 
 .dark {
@@ -54,6 +69,19 @@
   --shadow-md: 0 4px 20px -6px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 32px 64px -24px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.4);
   --grid-line: rgba(255, 255, 255, 0.04);
+
+  --glass-bg: rgba(255, 255, 255, 0.055);
+  --glass-bg-strong: rgba(255, 255, 255, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.28);
+  --glass-shadow: 0 28px 70px -28px rgba(0, 0, 0, 0.85);
+  --glass-blur: 30px;
+
+  --mesh-1: rgba(124, 109, 255, 0.55);
+  --mesh-2: rgba(34, 211, 238, 0.4);
+  --mesh-3: rgba(244, 114, 182, 0.3);
+  --mesh-opacity: 0.62;
+  --grain-opacity: 0.05;
 }
 
 @theme inline {
@@ -91,11 +119,23 @@
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1rem;
 
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
   --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-fade-in: fade-in 0.3s ease-out both;
   --animate-scale-in: scale-in 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-shimmer: shimmer 1.6s linear infinite;
   --animate-flow: flow 2.4s ease-in-out infinite;
+  --animate-drift-a: drift-a 26s ease-in-out infinite;
+  --animate-drift-b: drift-b 32s ease-in-out infinite;
+  --animate-drift-c: drift-c 38s ease-in-out infinite;
+  --animate-sweep: sweep 9s ease-in-out infinite;
+  --animate-marquee: marquee 34s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-draw: draw 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-pulse-ring: pulse-ring 3.2s ease-out infinite;
 }
 
 @keyframes fade-up {
@@ -117,6 +157,46 @@
 @keyframes flow {
   0%, 100% { opacity: 0.25; }
   50% { opacity: 1; }
+}
+@keyframes drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(6%, -8%, 0) scale(1.12); }
+  66% { transform: translate3d(-5%, 6%, 0) scale(0.94); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  40% { transform: translate3d(-9%, 5%, 0) scale(0.92); }
+  70% { transform: translate3d(7%, 9%, 0) scale(1.14); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.96); }
+  50% { transform: translate3d(8%, 7%, 0) scale(1.16); }
+}
+@keyframes sweep {
+  0%, 62% { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+  70% { opacity: 1; }
+  100% { transform: translateX(220%) skewX(-18deg); opacity: 0; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes draw {
+  from { stroke-dashoffset: var(--draw-length, 1000); }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.55; }
+  70% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
 }
 
 @layer base {
@@ -158,6 +238,89 @@
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
+
+  /* Frosted surface. Only ever used over something worth blurring. */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
+  }
+  .glass-strong {
+    background: var(--glass-bg-strong);
+  }
+  /* Below the small breakpoint blur costs more than it gives. */
+  @media (max-width: 639px) {
+    .glass {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: var(--surface);
+    }
+  }
+
+  /* A light streak that crosses a surface every few seconds. */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, var(--glass-highlight), transparent);
+    opacity: 0;
+    pointer-events: none;
+    animation: var(--animate-sweep);
+  }
+
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Pointer-driven 3D tilt. The component sets the two custom properties. */
+  .tilt {
+    transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  .tilt[data-active="true"] {
+    transition: transform 0.12s linear;
+  }
+  .tilt-shine {
+    background: radial-gradient(
+      340px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+      var(--glass-highlight),
+      transparent 62%
+    );
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: var(--animate-marquee);
+  }
+  .marquee-paused .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Ambient animation is idle until the card is hovered or focused. */
+  .idle-motion [data-motion] {
+    animation-play-state: paused;
+  }
+  .idle-motion:hover [data-motion],
+  .idle-motion:focus-within [data-motion],
+  .idle-motion[data-playing="true"] [data-motion] {
+    animation-play-state: running;
+  }
   .grid-backdrop {
     background-image:
       linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
@@ -183,6 +346,10 @@
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
   }
+  /* Ambient decoration is removed outright rather than merely sped up. */
+  .mesh-layer, .sheen::after, .grain::before { display: none !important; }
+  .tilt { transform: none !important; }
 }
