@@ -139,7 +139,7 @@ export function PromptSection({ slug }: { slug: string }) {
                 className={cn(
                   "inline-flex h-8 items-center gap-1.5 rounded-control px-3 text-xs font-semibold transition-colors",
                   copied
-                    ? "bg-accent-soft text-accent ring-1 ring-inset ring-[var(--accent-line)]"
+                    ? "bg-select-bg text-select-fg ring-1 ring-inset ring-[var(--select-line)]"
                     : "bg-accent text-accent-ink hover:bg-accent-hover",
                 )}
               >

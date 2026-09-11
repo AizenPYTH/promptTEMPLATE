@@ -76,11 +76,11 @@ export function Checkbox({
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="peer size-4 shrink-0 cursor-pointer appearance-none rounded-control border border-line-strong bg-surface-2 transition-colors checked:border-accent checked:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+        className="peer size-4 shrink-0 cursor-pointer appearance-none rounded-control border border-line-strong bg-surface-2 transition-colors checked:border-fill-bg checked:bg-fill-bg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
       />
       <svg
         viewBox="0 0 16 16"
-        className="pointer-events-none -ml-[26px] size-4 shrink-0 text-accent-ink opacity-0 peer-checked:opacity-100"
+        className="pointer-events-none -ml-[26px] size-4 shrink-0 text-fill-fg opacity-0 peer-checked:opacity-100"
         aria-hidden
       >
         <path d="M4 8.5l2.5 2.5L12 5.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

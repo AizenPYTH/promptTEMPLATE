@@ -63,7 +63,7 @@ export function CardCopyButton({
       className={cn(
         "inline-flex h-7 items-center gap-1.5 rounded-control border px-2 text-label font-medium shadow-e1 backdrop-blur-sm transition-colors",
         copied
-          ? "border-accent-line bg-accent-soft text-accent"
+          ? "border-select-line bg-select-bg text-select-fg"
           : "border-line bg-[color-mix(in_srgb,var(--surface)_92%,transparent)] text-muted hover:text-ink",
         className,
       )}

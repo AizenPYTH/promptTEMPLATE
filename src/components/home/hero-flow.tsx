@@ -107,9 +107,9 @@ export function HeroFlow() {
               }}
               className={cn(
                 "flex-1 rounded-control px-3 py-2.5 font-mono text-label uppercase tracking-[0.14em] transition-colors",
-                i === step ? "text-accent-ink" : "text-soft hover:text-ink",
+                i === step ? "text-fill-fg" : "text-soft hover:text-ink",
               )}
-              style={i === step ? { background: "var(--accent)" } : undefined}
+              style={i === step ? { background: "var(--fill-bg)" } : undefined}
             >
               {label}
             </button>
@@ -122,7 +122,7 @@ export function HeroFlow() {
               key={template.id}
               className={cn(
                 "overflow-hidden rounded-card border transition-[border-color,transform,opacity] duration-500",
-                i === step ? "border-accent" : "border-line opacity-60",
+                i === step ? "border-select-line" : "border-line opacity-60",
               )}
               style={i === step ? { transform: "translateY(-4px)" } : undefined}
             >
@@ -135,7 +135,7 @@ export function HeroFlow() {
               <div className="flex items-center justify-between gap-2 bg-surface-3 px-3 py-2">
                 <span className="truncate text-caption font-medium">{template.title}</span>
                 {i === step ? (
-                  <span className="font-mono text-label uppercase tracking-[0.14em] text-accent">
+                  <span className="font-mono text-label uppercase tracking-[0.14em] text-select-fg">
                     {STEPS[step]}
                   </span>
                 ) : null}

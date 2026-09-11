@@ -162,7 +162,7 @@ export function PromptViewer({
               className={cn(
                 "inline-flex h-7 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-control px-2.5 text-label font-semibold transition-colors",
                 copied
-                  ? "bg-accent-soft text-accent ring-1 ring-inset ring-[var(--accent-line)]"
+                  ? "bg-select-bg text-select-fg ring-1 ring-inset ring-[var(--select-line)]"
                   : "bg-accent text-accent-ink hover:bg-accent-hover",
               )}
             >

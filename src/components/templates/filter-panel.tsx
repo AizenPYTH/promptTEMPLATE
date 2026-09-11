@@ -106,10 +106,10 @@ export function FilterPanel({
                 aria-pressed={active}
                 className={cn(
                   "flex items-center gap-2 rounded-control px-2 py-1.5 text-[13px] transition-colors",
-                  active ? "bg-accent-soft text-accent" : "text-muted hover:bg-surface-3 hover:text-ink",
+                  active ? "bg-select-bg text-select-fg" : "text-muted hover:bg-surface-3 hover:text-ink",
                 )}
               >
-                <Star className={cn("size-3.5", active ? "fill-accent text-accent" : "text-line-strong")} aria-hidden />
+                <Star className={cn("size-3.5", active ? "fill-select-fg text-select-fg" : "text-line-strong")} aria-hidden />
                 {rating.toFixed(1)} and above
               </button>
             );

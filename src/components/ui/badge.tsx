@@ -4,7 +4,7 @@ type Tone = "neutral" | "accent" | "outline" | "solid" | "positive";
 
 const tones: Record<Tone, string> = {
   neutral: "bg-surface-3 text-muted border border-line",
-  accent: "bg-accent-soft text-accent border border-accent-line",
+  accent: "bg-select-bg text-select-fg border border-select-line",
   outline: "border border-line text-muted",
   solid: "bg-ink text-canvas border border-transparent",
   positive: "border border-line text-positive bg-surface-3",
@@ -46,7 +46,7 @@ export function Pill({
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors",
         active
-          ? "border-accent-line bg-accent-soft text-accent"
+          ? "border-select-line bg-select-bg text-select-fg"
           : "border-line bg-surface-2 text-muted",
         className,
       )}

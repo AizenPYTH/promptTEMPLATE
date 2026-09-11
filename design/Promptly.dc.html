@@ -24,7 +24,7 @@
   @keyframes maskIn { from{clip-path:inset(0 0 100% 0)} to{clip-path:inset(0 0 0 0)} }
   @keyframes sweep { 0%{transform:translateX(-120%) skewX(-18deg);opacity:0} 8%{opacity:.5} 26%{transform:translateX(320%) skewX(-18deg);opacity:0} 100%{transform:translateX(320%) skewX(-18deg);opacity:0} }
   @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-  @keyframes drawIn { from{stroke-dashoffset:900} to{stroke-dashoffset:0} }
+  @keyframes edgeFlow { from{stroke-dashoffset:0} to{stroke-dashoffset:-32} }
   @keyframes caret { 0%,49%{opacity:1} 50%,100%{opacity:0} }
   @keyframes typeOut { from{width:0} to{width:100%} }
   @keyframes loopA { 0%,26%{opacity:1;transform:translateY(0) scale(1)} 33%,100%{opacity:0;transform:translateY(-10px) scale(.98)} }
@@ -33,10 +33,10 @@
   @keyframes railStep { 0%,24%{transform:translateX(0)} 33%,57%{transform:translateX(100%)} 66%,90%{transform:translateX(200%)} 99%,100%{transform:translateX(300%)} }
   @keyframes cursorPath { 0%{transform:translate(40px,120px)} 30%{transform:translate(210px,66px)} 55%{transform:translate(196px,74px)} 80%{transform:translate(96px,168px)} 100%{transform:translate(40px,120px)} }
   @keyframes liftPulse { 0%,44%{transform:translateY(0)} 56%,72%{transform:translateY(-6px)} 88%,100%{transform:translateY(0)} }
-  @keyframes barGrow { from{transform:scaleY(.15)} to{transform:scaleY(1)} }
+  @keyframes barGrow { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(.62)} }
   @keyframes hueShift { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(14deg)} }
-  @keyframes dashFlow { from{stroke-dashoffset:0} to{stroke-dashoffset:-64} }
-  @keyframes scanRow { 0%{transform:translateY(0);opacity:0} 8%{opacity:1} 92%{opacity:1} 100%{transform:translateY(132px);opacity:0} }
+  @keyframes dashFlow { from{stroke-dashoffset:0} to{stroke-dashoffset:-454} }
+  @keyframes scanRow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(232px)} }
   @keyframes slideCard { 0%,20%{transform:translate(0,0);opacity:1} 45%,70%{transform:translate(104%,26px);opacity:1} 95%,100%{transform:translate(0,0);opacity:1} }
   @keyframes tick { 0%,44%{opacity:1;transform:translateY(0)} 50%{opacity:0;transform:translateY(-6px)} 56%,100%{opacity:1;transform:translateY(0)} }
   @keyframes tocMove { 0%,18%{transform:translateY(0)} 33%,51%{transform:translateY(24px)} 66%,84%{transform:translateY(48px)} 100%{transform:translateY(0)} }
@@ -53,10 +53,332 @@
 <div style="min-height:100%;background:#08080A;padding:64px 56px 120px;display:flex;flex-direction:column;gap:96px;font-family:'IBM Plex Sans',sans-serif">
 
   <div style="display:flex;flex-direction:column;gap:14px;max-width:960px">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8A857D">Pass one · dark theme · live motion</div>
-    <div style="font-family:'Familjen Grotesk',sans-serif;font-size:56px;font-weight:700;letter-spacing:-0.03em;line-height:1.02;color:#F4F2EF">Promptly — seven artboards, running</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8A857D">Pass one + pass two · dark et clair · live motion</div>
+    <div style="font-family:'Familjen Grotesk',sans-serif;font-size:56px;font-weight:700;letter-spacing:-0.03em;line-height:1.02;color:#F4F2EF">Promptly — dix artboards, running</div>
     <div style="font-size:17px;line-height:1.6;color:#A8A39B;max-width:720px">Everything below animates in place. Hover the cards to tilt them, hover a grid preview to start its motion. Tokens, motion table and the handoff contract are in <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#D4F250">promptly-handoff.md</span>.</div>
   </div>
+
+  <section style="display:flex;flex-direction:column;gap:40px">
+
+    <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8A857D">Pass two · light mode + mobile 390</div>
+      <div style="font-size:15px;line-height:1.6;color:#A8A39B">Le clair n'est pas une inversion : l'encre <span style="font-family:'IBM Plex Mono',monospace;color:#F4F2EF">#14130F</span> porte toute la hiérarchie et l'accent olive <span style="font-family:'IBM Plex Mono',monospace;color:#F4F2EF">#5F7A0E</span> ne sert qu'au CTA primaire et à l'anneau de focus. Sur mobile, le verre ne subsiste que sur la palette.</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:baseline;gap:14px">
+        <span id="2a" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#14180A;background:#D4F250;padding:5px 9px;border-radius:6px">2a</span>
+        <span style="font-family:'Familjen Grotesk',sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">Homepage hero — light · 1440</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A857D">mesh à 0.14 · ombres portées, pas de lueur · CTA olive seul élément saturé</span>
+      </div>
+
+      <div style="position:relative;width:1440px;height:860px;overflow:hidden;border-radius:20px;border:1px solid rgba(20,19,18,0.10);background:#F7F6F3;box-shadow:0 32px 64px -24px rgba(20,19,18,0.22)">
+        <div data-anim="mesh" style="position:absolute;width:820px;height:820px;left:-180px;top:-260px;border-radius:50%;background:radial-gradient(circle,#1F6F6A 0%,rgba(31,111,106,0) 66%);opacity:0.14;filter:blur(120px);animation:mesh1 26s ease-in-out infinite"></div>
+        <div data-anim="mesh" style="position:absolute;width:760px;height:760px;right:-160px;top:-120px;border-radius:50%;background:radial-gradient(circle,#4B3F8F 0%,rgba(75,63,143,0) 66%);opacity:0.12;filter:blur(120px);animation:mesh2 34s ease-in-out infinite"></div>
+        <div data-anim="mesh" style="position:absolute;width:900px;height:700px;left:34%;bottom:-340px;border-radius:50%;background:radial-gradient(circle,#7A5A22 0%,rgba(122,90,34,0) 66%);opacity:0.10;filter:blur(130px);animation:mesh3 41s ease-in-out infinite"></div>
+
+        <div style="position:relative;display:flex;align-items:center;justify-content:space-between;height:72px;padding:0 40px;border-bottom:1px solid rgba(20,19,18,0.10)">
+          <div style="display:flex;align-items:center;gap:36px">
+            <div style="font-family:'Familjen Grotesk',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.02em;color:#14130F">Promptly</div>
+            <div style="display:flex;gap:26px;font-size:14px;color:#5B564F"><span>Templates</span><span>Collections</span><span>Categories</span><span>Pricing</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="display:flex;align-items:center;gap:10px;height:34px;padding:0 12px;border-radius:8px;border:1px solid rgba(20,19,18,0.14);background:#FFFFFF;font-size:13px;color:#6F6A63">Search templates<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:2px 6px;border-radius:4px;background:rgba(20,19,18,0.06);color:#5B564F">⌘K</span></div>
+            <div style="height:34px;display:flex;align-items:center;padding:0 14px;border-radius:8px;background:#5F7A0E;color:#FFFFFF;font-size:13px;font-weight:600">Submit a template</div>
+          </div>
+        </div>
+
+        <div style="position:relative;display:grid;grid-template-columns:1fr 600px;gap:64px;padding:80px 40px 0;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:26px;padding-top:12px">
+            <div style="display:flex;align-items:center;gap:10px;width:max-content;padding:6px 12px 6px 8px;border-radius:999px;border:1px solid rgba(20,19,18,0.12);background:#FFFFFF;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:#5B564F">
+              <span style="width:6px;height:6px;border-radius:50%;background:#5F7A0E"></span>10 templates · 10 archétypes
+            </div>
+            <h3 style="margin:0;font-family:'Familjen Grotesk',sans-serif;font-size:88px;font-weight:700;line-height:0.94;letter-spacing:-0.035em;color:#14130F">The design gallery<br>that hands you<br><span style="color:#5F7A0E">the prompt.</span></h3>
+            <p style="margin:0;max-width:520px;font-size:19px;line-height:1.55;color:#5B564F">Browse finished website designs. Open one, look at it properly, then copy the prompt that rebuilds it in Claude Code, Cursor or Codex.</p>
+            <div style="display:flex;gap:12px">
+              <div data-magnet="1" style="display:flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:8px;background:#5F7A0E;color:#FFFFFF;font-size:16px;font-weight:600;transition:transform .35s cubic-bezier(.16,1,.3,1);box-shadow:0 8px 24px -10px rgba(20,19,18,0.35)">Browse 10 templates<span style="font-family:'IBM Plex Mono',monospace">→</span></div>
+              <div data-magnet="1" style="display:flex;align-items:center;height:52px;padding:0 22px;border-radius:8px;border:1px solid rgba(20,19,18,0.18);background:#FFFFFF;font-size:16px;font-weight:500;color:#14130F;transition:transform .35s cubic-bezier(.16,1,.3,1)">See how it works</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:24px;padding-top:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6F6A63">
+              <span><span style="color:#14130F;font-size:15px">14,200</span> prompts copied</span>
+              <span style="width:1px;height:14px;background:rgba(20,19,18,0.14)"></span>
+              <span><span style="color:#14130F;font-size:15px">4</span> free templates</span>
+            </div>
+          </div>
+
+          <div data-tilt="1" style="position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1)">
+            <div style="position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(20,19,18,0.10);background:rgba(255,255,255,0.62);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);box-shadow:0 32px 64px -24px rgba(20,19,18,0.25),inset 0 1px 0 rgba(255,255,255,0.9);padding:20px">
+              <div data-anim="1" style="position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.7) 50%,rgba(255,255,255,0) 100%);opacity:0;animation:sweep 7s cubic-bezier(.4,0,.2,1) infinite;pointer-events:none"></div>
+              <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">
+                <div style="padding:9px 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.10em;color:#14130F;border-radius:8px;background:rgba(95,122,14,0.12);border:1px solid rgba(95,122,14,0.35)">DISCOVER</div>
+                <div style="padding:9px 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.10em;color:#6F6A63">PREVIEW</div>
+                <div style="padding:9px 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.10em;color:#6F6A63">COPY</div>
+                <div style="padding:9px 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.10em;color:#6F6A63">BUILD</div>
+              </div>
+              <div style="position:relative;height:400px;border-radius:14px;overflow:hidden;background:#FFFFFF;border:1px solid rgba(20,19,18,0.10);padding:14px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px">
+                <div style="border-radius:10px;background:linear-gradient(150deg,#7c6dff 0%,#2a2350 100%);position:relative"><div style="position:absolute;left:14px;bottom:12px;font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;color:#FFFFFF">Nova AI</div></div>
+                <div style="border-radius:10px;background:linear-gradient(150deg,#22b8a6 0%,#0e3b37 100%);position:relative"><div style="position:absolute;left:14px;bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#FFFFFF">Orbit</div></div>
+                <div style="border-radius:10px;background:linear-gradient(150deg,#b4423f 0%,#3a1615 100%);position:relative"><div style="position:absolute;left:14px;bottom:12px;font-family:'Familjen Grotesk',sans-serif;font-style:italic;font-size:15px;color:#FFFFFF">Studio 27</div></div>
+                <div style="border-radius:10px;background:linear-gradient(150deg,#8a6d3b 0%,#2e2413 100%);position:relative"><div style="position:absolute;left:14px;bottom:12px;font-family:'Familjen Grotesk',sans-serif;font-size:15px;color:#FFFFFF">Arcadia</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:baseline;gap:14px">
+        <span id="2b" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#14180A;background:#D4F250;padding:5px 9px;border-radius:6px">2b</span>
+        <span style="font-family:'Familjen Grotesk',sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">Explorateur — light · 1440</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A857D">cartes blanches sur canevas chaud · filtre actif en encre · anneau de focus olive</span>
+      </div>
+
+      <div style="width:1440px;border-radius:20px;border:1px solid rgba(20,19,18,0.10);background:#F7F6F3;overflow:hidden;box-shadow:0 32px 64px -24px rgba(20,19,18,0.22);display:grid;grid-template-columns:264px 1fr">
+        <div style="border-right:1px solid rgba(20,19,18,0.10);padding:28px 22px;display:flex;flex-direction:column;gap:26px">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6F6A63">Category</div>
+            <div style="display:flex;flex-direction:column;gap:2px;font-size:14px">
+              <div style="display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;background:rgba(20,19,18,0.08);color:#14130F"><span>All</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px">10</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;color:#5B564F"><span>Dashboard</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6F6A63">2</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;color:#5B564F"><span>AI</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6F6A63">2</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;color:#5B564F"><span>Portfolio</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6F6A63">1</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;color:#5B564F"><span>E-commerce</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6F6A63">1</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;color:#5B564F"><span>Editorial</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6F6A63">1</span></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6F6A63">Style</div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px">
+              <div style="padding:6px 11px;border-radius:999px;background:#14130F;color:#F7F6F3;font-size:12.5px">Glass</div>
+              <div style="padding:6px 11px;border-radius:999px;border:1px solid rgba(20,19,18,0.14);color:#5B564F;font-size:12.5px">Editorial</div>
+              <div style="padding:6px 11px;border-radius:999px;border:1px solid rgba(20,19,18,0.14);color:#5B564F;font-size:12.5px">Brutalist</div>
+              <div style="padding:6px 11px;border-radius:999px;border:1px solid rgba(20,19,18,0.14);color:#5B564F;font-size:12.5px">Minimal</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6F6A63">Price</div>
+            <div style="display:flex;gap:6px;padding:4px;border-radius:8px;background:rgba(20,19,18,0.06);position:relative">
+              <div style="position:absolute;left:4px;top:4px;width:calc(33.33% - 4px);height:calc(100% - 8px);border-radius:6px;background:#FFFFFF;box-shadow:0 1px 2px rgba(20,19,18,0.18)"></div>
+              <div style="position:relative;flex:1;text-align:center;padding:6px 0;font-size:12.5px;color:#14130F">Any</div>
+              <div style="position:relative;flex:1;text-align:center;padding:6px 0;font-size:12.5px;color:#5B564F">Free</div>
+              <div style="position:relative;flex:1;text-align:center;padding:6px 0;font-size:12.5px;color:#5B564F">Paid</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6F6A63">Rating</div>
+            <div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:4px;border-radius:2px;background:rgba(20,19,18,0.12);position:relative"><div style="position:absolute;left:0;top:0;height:100%;width:72%;border-radius:2px;background:#14130F"></div><div style="position:absolute;left:72%;top:-4px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(20,19,18,0.35)"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#5B564F">4.5+</span></div>
+          </div>
+        </div>
+
+        <div style="padding:28px 32px 36px;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+            <div style="flex:1;display:flex;align-items:center;height:42px;padding:0 14px;border-radius:8px;border:1px solid rgba(20,19,18,0.14);background:#FFFFFF;font-size:14px;color:#6F6A63">Search 10 templates, tags, technologies…</div>
+            <div style="display:flex;gap:8px;font-size:13px;color:#5B564F"><div style="height:42px;display:flex;align-items:center;padding:0 14px;border-radius:8px;border:1px solid rgba(20,19,18,0.14);background:#FFFFFF">Most copied ▾</div><div style="height:42px;display:flex;align-items:center;padding:0 12px;border-radius:8px;border:1px solid rgba(20,19,18,0.14);background:#FFFFFF;font-family:'IBM Plex Mono',monospace;font-size:12px">⊞</div></div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6F6A63">
+            <span>10 results</span><span style="width:1px;height:12px;background:rgba(20,19,18,0.14)"></span>
+            <span style="padding:4px 9px;border-radius:999px;background:rgba(20,19,18,0.06);color:#5B564F">style: glass ×</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+            <sc-for list="{{ gridLight }}" as="t" hint-placeholder-count="6">
+              <div data-tilt="1" style="transition:transform .5s cubic-bezier(.16,1,.3,1);transform-style:preserve-3d">
+                <div data-card="1" data-border-hover="rgba(20,19,18,0.22)" data-shadow-hover="0 24px 48px -20px rgba(20,19,18,0.30)" data-border-rest="rgba(20,19,18,0.10)" data-shadow-rest="0 1px 2px rgba(20,19,18,0.06)" style="position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(20,19,18,0.10);background:#FFFFFF;box-shadow:0 1px 2px rgba(20,19,18,0.06);transition:box-shadow .35s ease,border-color .25s ease">
+                  <div style="position:relative;margin:8px 8px 0;height:170px;border-radius:10px;overflow:hidden;background:#0A0A0C;box-shadow:inset 0 0 0 1px rgba(20,19,18,0.55),0 2px 6px -2px rgba(20,19,18,0.30)">
+                    <div style="position:absolute;inset:0;background:linear-gradient(155deg,{{ t.hex }} 0%,rgba(10,10,12,0.92) 78%)"></div>
+                    <div style="position:absolute;inset:0;background:radial-gradient(280px circle at 24% 8%,rgba(255,255,255,0.20),rgba(255,255,255,0) 62%)"></div>
+                    <div style="position:absolute;left:14px;right:14px;bottom:14px;font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:700;letter-spacing:-0.02em;color:#FFFFFF">{{ t.line }}</div>
+                    <div data-hoveractions="1" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(20,19,18,0.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:opacity .28s ease">
+                      <div style="height:34px;padding:0 14px;display:flex;align-items:center;border-radius:8px;background:#5F7A0E;color:#FFFFFF;font-size:13px;font-weight:600">Copy prompt</div>
+                      <div style="height:34px;padding:0 12px;display:flex;align-items:center;border-radius:8px;background:#FFFFFF;color:#14130F;font-size:13px">Preview</div>
+                    </div>
+                  </div>
+                  <div style="padding:14px 14px 16px;display:flex;flex-direction:column;gap:7px">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline">
+                      <span style="font-family:'Familjen Grotesk',sans-serif;font-size:16px;font-weight:600;color:#14130F">{{ t.name }}</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:{{ t.priceColorLight }}">{{ t.price }}</span>
+                    </div>
+                    <div style="font-size:13px;color:#5B564F;line-height:1.5">{{ t.tagline }}</div>
+                    <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#6F6A63;padding-top:2px"><span>{{ t.author }}</span><span>★ {{ t.rating }}</span><span>{{ t.category }}</span></div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:6px;padding-top:24px;border-top:1px solid rgba(20,19,18,0.10);display:flex;flex-direction:column;gap:14px">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#6F6A63">États en clair — repos / survol / focus</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+              <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(20,19,18,0.10);background:#FFFFFF;box-shadow:0 1px 2px rgba(20,19,18,0.06)">
+                <div style="margin:8px 8px 0;height:120px;border-radius:10px;background:linear-gradient(155deg,#22b8a6 0%,rgba(10,10,12,0.92) 78%);box-shadow:inset 0 0 0 1px rgba(20,19,18,0.55),0 2px 6px -2px rgba(20,19,18,0.30)"></div>
+                <div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;color:#14130F">Repos</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6F6A63">e1 · bord 10%</span></div>
+              </div>
+              <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(20,19,18,0.16);background:#FFFFFF;transform:translateY(-6px) rotateX(3deg) rotateY(-4deg);box-shadow:0 24px 48px -20px rgba(20,19,18,0.30)">
+                <div style="position:relative;margin:8px 8px 0;height:120px;border-radius:10px;overflow:hidden;background:linear-gradient(155deg,#22b8a6 0%,rgba(10,10,12,0.92) 78%);box-shadow:inset 0 0 0 1px rgba(20,19,18,0.55)"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(20,19,18,0.45);backdrop-filter:blur(8px)"><div style="height:30px;padding:0 12px;display:flex;align-items:center;border-radius:8px;background:#5F7A0E;color:#FFFFFF;font-size:12.5px;font-weight:600">Copy prompt</div></div></div>
+                <div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;color:#14130F">Survol</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6F6A63">tilt 4° · ombre portée</span></div>
+              </div>
+              <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(20,19,18,0.10);background:#FFFFFF;outline:2px solid #5F7A0E;outline-offset:3px;box-shadow:0 1px 2px rgba(20,19,18,0.06)">
+                <div style="margin:8px 8px 0;height:120px;border-radius:10px;background:linear-gradient(155deg,#22b8a6 0%,rgba(10,10,12,0.92) 78%);box-shadow:inset 0 0 0 1px rgba(20,19,18,0.55),0 2px 6px -2px rgba(20,19,18,0.30)"></div>
+                <div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;color:#14130F">Focus</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6F6A63">anneau olive 2px</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:baseline;gap:14px">
+        <span id="2c" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#14180A;background:#D4F250;padding:5px 9px;border-radius:6px">2c</span>
+        <span style="font-family:'Familjen Grotesk',sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">Mobile 390 — quatre écrans</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A857D">verre uniquement sur la palette · cibles 44px · mesh conservé, sweep supprimé</span>
+      </div>
+
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A857D">HERO</div>
+          <div style="position:relative;width:390px;height:760px;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0C0B0A;box-shadow:0 32px 64px -24px rgba(0,0,0,0.7)">
+            <div data-anim="mesh" style="position:absolute;width:520px;height:520px;left:-140px;top:-160px;border-radius:50%;background:radial-gradient(circle,#1F6F6A,rgba(31,111,106,0) 66%);opacity:0.34;filter:blur(90px);animation:mesh1 26s ease-in-out infinite"></div>
+            <div data-anim="mesh" style="position:absolute;width:480px;height:480px;right:-160px;top:40px;border-radius:50%;background:radial-gradient(circle,#4B3F8F,rgba(75,63,143,0) 66%);opacity:0.30;filter:blur(90px);animation:mesh2 34s ease-in-out infinite"></div>
+            <div style="position:relative;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.06)">
+              <span style="font-family:'Familjen Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.02em">Promptly</span>
+              <div style="display:flex;gap:8px"><div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid rgba(255,255,255,0.12);font-size:14px;color:#A8A39B">⌕</div><div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid rgba(255,255,255,0.12);font-size:15px;color:#A8A39B">☰</div></div>
+            </div>
+            <div style="position:relative;padding:28px 20px;display:flex;flex-direction:column;gap:20px">
+              <div style="display:flex;align-items:center;gap:8px;width:max-content;padding:6px 12px 6px 8px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.05);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.10em;text-transform:uppercase;color:#A8A39B"><span style="width:6px;height:6px;border-radius:50%;background:#D4F250"></span>10 templates</div>
+              <div style="font-family:'Familjen Grotesk',sans-serif;font-size:44px;font-weight:700;line-height:0.96;letter-spacing:-0.035em">The design gallery that hands you <span style="color:#D4F250">the prompt.</span></div>
+              <div style="font-size:15px;line-height:1.55;color:#A8A39B">Browse finished designs, copy the prompt that rebuilds them. No signup.</div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;background:#D4F250;color:#14180A;font-size:16px;font-weight:600">Browse 10 templates →</div>
+                <div style="height:52px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);font-size:16px">See how it works</div>
+              </div>
+              <div style="margin-top:4px;border-radius:14px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.05);overflow:hidden">
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+                  <div style="padding:8px 0;color:#14180A;background:#D4F250">DISCOVER</div><div style="padding:8px 0;color:#8A857D">PREVIEW</div><div style="padding:8px 0;color:#8A857D">COPY</div><div style="padding:8px 0;color:#8A857D">BUILD</div>
+                </div>
+                <div style="padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <div style="height:74px;border-radius:8px;background:linear-gradient(150deg,#7c6dff,#2a2350)"></div>
+                  <div style="height:74px;border-radius:8px;background:linear-gradient(150deg,#22b8a6,#0e3b37)"></div>
+                  <div style="height:74px;border-radius:8px;background:linear-gradient(150deg,#b4423f,#3a1615)"></div>
+                  <div style="height:74px;border-radius:8px;background:linear-gradient(150deg,#8a6d3b,#2e2413)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A857D">EXPLORATEUR</div>
+          <div style="position:relative;width:390px;height:760px;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0C0B0A;box-shadow:0 32px 64px -24px rgba(0,0,0,0.7)">
+            <div style="height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.06)">
+              <span style="font-family:'Familjen Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.02em">Templates</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A857D">10</span>
+            </div>
+            <div style="padding:14px 20px;display:flex;gap:8px">
+              <div style="flex:1;height:44px;display:flex;align-items:center;padding:0 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);font-size:14px;color:#8A857D">Search…</div>
+              <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(212,242,80,0.14);border:1px solid rgba(212,242,80,0.4);font-size:14px;color:#D4F250">⚙</div>
+            </div>
+            <div style="padding:0 20px 12px;display:flex;gap:7px;overflow:hidden">
+              <div style="padding:7px 12px;border-radius:999px;background:rgba(212,242,80,0.12);border:1px solid rgba(212,242,80,0.4);color:#D4F250;font-size:12.5px;white-space:nowrap">All</div>
+              <div style="padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:12.5px;white-space:nowrap">Dashboard</div>
+              <div style="padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:12.5px;white-space:nowrap">AI</div>
+              <div style="padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:12.5px;white-space:nowrap">Docs</div>
+            </div>
+            <div style="padding:0 20px;display:flex;flex-direction:column;gap:14px">
+              <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.04)">
+                <div style="height:150px;background:linear-gradient(155deg,#7c6dff,rgba(10,10,12,0.92) 78%);position:relative"><div style="position:absolute;left:14px;bottom:12px;font-family:'Familjen Grotesk',sans-serif;font-size:18px;font-weight:700;color:#FFFFFF">Ship the model</div></div>
+                <div style="padding:12px 14px;display:flex;align-items:center;justify-content:space-between"><div style="display:flex;flex-direction:column;gap:3px"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:16px;font-weight:600">Nova AI</span><span style="font-size:12.5px;color:#A8A39B">AI startup launch page</span></div><div style="height:36px;padding:0 12px;display:flex;align-items:center;border-radius:8px;background:#D4F250;color:#14180A;font-size:12.5px;font-weight:600">Copy</div></div>
+              </div>
+              <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.04)">
+                <div style="height:150px;background:linear-gradient(155deg,#22b8a6,rgba(10,10,12,0.92) 78%);position:relative"><div style="position:absolute;left:14px;bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:15px;color:#FFFFFF">Orbit</div></div>
+                <div style="padding:12px 14px;display:flex;align-items:center;justify-content:space-between"><div style="display:flex;flex-direction:column;gap:3px"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:16px;font-weight:600">Orbit</span><span style="font-size:12.5px;color:#A8A39B">Analytics dashboard</span></div><div style="height:36px;padding:0 12px;display:flex;align-items:center;border-radius:8px;border:1px solid rgba(255,255,255,0.14);font-size:12.5px">$29</div></div>
+              </div>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:220px;background:linear-gradient(180deg,rgba(12,11,10,0) 0%,#0C0B0A 62%);pointer-events:none"></div>
+            <div style="position:absolute;left:0;right:0;bottom:0;border-top:1px solid rgba(255,255,255,0.10);background:#121110;border-radius:20px 20px 0 0;padding:14px 20px 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,0.22);margin:0 auto"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:17px;font-weight:600">Filtres</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">2 actifs</span></div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#8A857D">STYLE</div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap"><div style="padding:9px 13px;border-radius:999px;background:rgba(212,242,80,0.12);border:1px solid rgba(212,242,80,0.4);color:#D4F250;font-size:13px">Glass</div><div style="padding:9px 13px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:13px">Editorial</div><div style="padding:9px 13px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:13px">Minimal</div></div>
+              </div>
+              <div style="display:flex;gap:10px"><div style="flex:1;height:48px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid rgba(255,255,255,0.14);font-size:15px">Effacer</div><div style="flex:2;height:48px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#D4F250;color:#14180A;font-size:15px;font-weight:600">Voir 10 résultats</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A857D">DÉTAIL</div>
+          <div style="position:relative;width:390px;height:760px;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0C0B0A;box-shadow:0 32px 64px -24px rgba(0,0,0,0.7)">
+            <div style="height:56px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.06)"><span style="font-size:16px;color:#A8A39B">←</span><span style="font-family:'Familjen Grotesk',sans-serif;font-size:17px;font-weight:600">Nova AI</span></div>
+            <div style="padding:18px 20px;display:flex;flex-direction:column;gap:16px">
+              <div style="position:relative;height:230px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0B0A14">
+                <div data-anim="1" style="position:absolute;width:420px;height:420px;left:-80px;top:-160px;border-radius:50%;background:radial-gradient(circle,rgba(124,109,255,0.6),rgba(124,109,255,0) 62%);filter:blur(70px);animation:mesh1 20s ease-in-out infinite"></div>
+                <div style="position:relative;padding:16px;display:flex;flex-direction:column;gap:10px">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.16em;color:#9b90ff">NOVA AI</div>
+                  <div style="font-family:'Familjen Grotesk',sans-serif;font-size:26px;font-weight:700;letter-spacing:-0.03em;line-height:1.02">Ship the model,<br>not the marketing</div>
+                  <div style="display:flex;gap:6px"><div style="height:26px;padding:0 12px;display:flex;align-items:center;border-radius:6px;background:#7c6dff;font-size:11.5px;font-weight:600">Start free</div><div style="height:26px;padding:0 12px;display:flex;align-items:center;border-radius:6px;border:1px solid rgba(255,255,255,0.16);font-size:11.5px">Docs</div></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;padding:4px;border-radius:8px;background:rgba(255,255,255,0.05);font-size:13px">
+                <div style="flex:1;text-align:center;padding:9px 0;border-radius:6px;background:rgba(255,255,255,0.10)">Mobile</div>
+                <div style="flex:1;text-align:center;padding:9px 0;color:#A8A39B">Tablet</div>
+                <div style="flex:1;text-align:center;padding:9px 0;color:#A8A39B">Desktop</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="font-size:15px;line-height:1.55;color:#A8A39B">An AI startup launch page that puts the model demo above the pricing.</div>
+                <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D"><span>Mira Okonkwo</span><span>★ 4.8</span><span>AI</span></div>
+              </div>
+              <div style="display:flex;gap:7px;flex-wrap:wrap"><div style="padding:6px 11px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:12.5px">Next.js</div><div style="padding:6px 11px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:12.5px">Tailwind</div><div style="padding:6px 11px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);color:#A8A39B;font-size:12.5px">Glass</div></div>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 22px;border-top:1px solid rgba(255,255,255,0.10);background:#121110;display:flex;gap:10px;align-items:center">
+              <div style="flex:1;height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;background:#D4F250;color:#14180A;font-size:16px;font-weight:600">Copy prompt <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;opacity:.7">4.1k</span></div>
+              <div style="width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid rgba(255,255,255,0.14);font-size:15px">♥</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#8A857D">PROMPT</div>
+          <div style="position:relative;width:390px;height:760px;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0C0B0A;box-shadow:0 32px 64px -24px rgba(0,0,0,0.7)">
+            <div style="height:56px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,0.06)"><span style="font-size:16px;color:#A8A39B">←</span><span style="font-family:'Familjen Grotesk',sans-serif;font-size:17px;font-weight:600">Le prompt</span><span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8A857D">4,118</span></div>
+            <div style="padding:14px 20px;display:flex;gap:6px;overflow:hidden">
+              <div style="padding:9px 13px;border-radius:8px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.12);font-family:'IBM Plex Mono',monospace;font-size:12px;white-space:nowrap">Claude Code</div>
+              <div style="padding:9px 13px;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A8A39B;white-space:nowrap">Cursor</div>
+              <div style="padding:9px 13px;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A8A39B;white-space:nowrap">Codex</div>
+            </div>
+            <div style="margin:0 20px;border-radius:14px;border:1px solid rgba(255,255,255,0.10);background:#0A0A0C;padding:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.95;color:#A8A39B;height:470px;overflow:hidden">
+              <div><span style="color:#3F3C38">01</span> <span style="color:#F4F2EF">## Role</span></div>
+              <div><span style="color:#3F3C38">02</span> Build a production landing</div>
+              <div><span style="color:#3F3C38">03</span> page for Nova AI, an</div>
+              <div><span style="color:#3F3C38">04</span> inference platform.</div>
+              <div><span style="color:#3F3C38">05</span></div>
+              <div><span style="color:#3F3C38">06</span> <span style="color:#F4F2EF">## Tokens</span></div>
+              <div><span style="color:#3F3C38">07</span> canvas <span style="color:#9b90ff">#0B0A14</span></div>
+              <div><span style="color:#3F3C38">08</span> surface <span style="color:#9b90ff">#13111F</span></div>
+              <div><span style="color:#3F3C38">09</span> accent <span style="color:#9b90ff">#7C6DFF</span></div>
+              <div><span style="color:#3F3C38">10</span></div>
+              <div><span style="color:#3F3C38">11</span> <span style="color:#F4F2EF">## Type</span></div>
+              <div><span style="color:#3F3C38">12</span> Display: Familjen 700,</div>
+              <div><span style="color:#3F3C38">13</span> −3.5% tracking.</div>
+              <div><span style="color:#3F3C38">14</span> Body: Plex Sans 16/1.6.</div>
+              <div><span style="color:#3F3C38">15</span></div>
+              <div><span style="color:#3F3C38">16</span> <span style="color:#F4F2EF">## Hero</span></div>
+              <div><span style="color:#3F3C38">17</span> Two columns. Glass panel</div>
+              <div><span style="color:#3F3C38">18</span> right, blur 24 sat 140.</div>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 22px;border-top:1px solid rgba(255,255,255,0.10);background:#121110;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(212,242,80,0.45);background:rgba(212,242,80,0.12)"><span style="width:20px;height:20px;border-radius:50%;background:#D4F250;color:#14180A;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">✓</span><span style="font-size:13px">Copié pour Claude Code</span></div>
+              <div style="height:52px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#D4F250;color:#14180A;font-size:16px;font-weight:600">Copier le prompt</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section style="display:flex;flex-direction:column;gap:20px">
     <div style="display:flex;align-items:baseline;gap:14px">
@@ -118,7 +440,7 @@
 
         <div data-tilt="1" style="position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.16,1,.3,1);will-change:transform">
           <div style="position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:rgba(20,19,18,0.55);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);box-shadow:0 32px 64px -24px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.14);padding:22px">
-            <div data-anim="1" style="position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.10) 50%,rgba(255,255,255,0) 100%);animation:sweep 7s cubic-bezier(.4,0,.2,1) infinite;pointer-events:none"></div>
+            <div data-anim="1" style="position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.10) 50%,rgba(255,255,255,0) 100%);opacity:0;animation:sweep 7s cubic-bezier(.4,0,.2,1) infinite;pointer-events:none"></div>
             <div data-spec="1" style="position:absolute;inset:0;background:radial-gradient(320px circle at 50% 0%,rgba(255,255,255,0.10),rgba(255,255,255,0) 60%);pointer-events:none;opacity:0;transition:opacity .3s ease"></div>
 
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:relative;margin-bottom:18px">
@@ -144,7 +466,7 @@
                 </div>
               </div>
 
-              <div data-anim="1" style="position:absolute;inset:0;animation:loopB 12s ease-in-out infinite;padding:16px;box-sizing:border-box">
+              <div data-anim="1" style="position:absolute;inset:0;opacity:0;animation:loopB 12s ease-in-out infinite;padding:16px;box-sizing:border-box">
                 <div style="height:100%;border-radius:10px;overflow:hidden;background:#0B0A14;border:1px solid rgba(124,109,255,0.28);position:relative">
                   <div data-anim="1" style="position:absolute;inset:0;background:radial-gradient(500px circle at 20% 0%,rgba(124,109,255,0.45),rgba(124,109,255,0) 60%);animation:mesh2 18s ease-in-out infinite"></div>
                   <div style="position:relative;padding:22px;display:flex;flex-direction:column;gap:14px">
@@ -160,7 +482,7 @@
                 </div>
               </div>
 
-              <div data-anim="1" style="position:absolute;inset:0;animation:loopC 12s ease-in-out infinite;padding:16px;box-sizing:border-box">
+              <div data-anim="1" style="position:absolute;inset:0;opacity:0;animation:loopC 12s ease-in-out infinite;padding:16px;box-sizing:border-box">
                 <div style="height:100%;border-radius:10px;background:#07070A;border:1px solid rgba(255,255,255,0.10);padding:16px;box-sizing:border-box;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.85;color:#A8A39B;display:flex;flex-direction:column;gap:2px">
                   <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="color:#8A857D;font-size:10px;letter-spacing:0.14em">CLAUDE CODE</span><span style="color:#D4F250;font-size:10px;letter-spacing:0.10em">COPIED ✓</span></div>
                   <div><span style="color:#8A857D">1</span>&nbsp;&nbsp;Build a dark AI product landing page.</div>
@@ -203,7 +525,7 @@
           <div data-tilt="1" style="transition:transform .5s cubic-bezier(.16,1,.3,1)"><div data-anim="1" style="border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.04);animation:maskIn .9s cubic-bezier(.16,1,.3,1) both;animation-delay:.08s">
             <div style="height:160px;background:#08120F;position:relative;overflow:hidden;padding:14px;box-sizing:border-box">
               <div style="display:flex;gap:6px;margin-bottom:10px"><div style="width:34px;height:6px;border-radius:3px;background:#22b8a6"></div><div style="width:20px;height:6px;border-radius:3px;background:rgba(255,255,255,0.14)"></div></div>
-              <svg width="100%" height="86" viewBox="0 0 240 86" fill="none"><polyline data-anim="1" points="0,70 34,52 68,60 102,32 136,40 170,18 204,26 238,8" stroke="#22b8a6" stroke-width="2" stroke-dasharray="900" style="animation:drawIn 2.4s cubic-bezier(.4,0,.2,1) infinite alternate"></polyline></svg>
+              <svg width="100%" height="86" viewBox="0 0 240 86" fill="none"><polyline points="0,70 34,52 68,60 102,32 136,40 170,18 204,26 238,8" stroke="#22b8a6" stroke-width="2" fill="none"></polyline><polyline data-anim="1" points="0,70 34,52 68,60 102,32 136,40 170,18 204,26 238,8" stroke="rgba(255,255,255,0.85)" stroke-width="2" fill="none" stroke-dasharray="26 240" style="animation:dashFlow 3.4s linear infinite"></polyline></svg>
             </div>
             <div style="padding:14px 14px 16px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:16px;font-weight:600">Orbit</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A8A39B">$29</span></div><div style="font-size:13px;color:#A8A39B;line-height:1.5">Product analytics dashboard, six chart types</div></div>
           </div></div>
@@ -246,7 +568,7 @@
             </div>
           </div>
           <div style="position:relative;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:rgba(20,19,18,0.55);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);box-shadow:0 32px 64px -24px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,255,255,0.14);padding:18px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.9;color:#A8A39B;overflow:hidden">
-            <div data-anim="1" style="position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.09) 50%,rgba(255,255,255,0) 100%);animation:sweep 9s cubic-bezier(.4,0,.2,1) infinite;pointer-events:none"></div>
+            <div data-anim="1" style="position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.09) 50%,rgba(255,255,255,0) 100%);opacity:0;animation:sweep 9s cubic-bezier(.4,0,.2,1) infinite;pointer-events:none"></div>
             <div style="position:relative">
               <div><span style="color:#8A857D">01</span>&nbsp;&nbsp;<span style="color:#F4F2EF">## Orbit — analytics dashboard</span></div>
               <div><span style="color:#8A857D">02</span></div>
@@ -365,7 +687,7 @@
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
           <sc-for list="{{ grid }}" as="t" hint-placeholder-count="9">
             <div data-tilt="1" style="transition:transform .5s cubic-bezier(.16,1,.3,1);transform-style:preserve-3d">
-              <div data-card="1" style="position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.04);transition:border-color .25s ease,box-shadow .35s ease">
+              <div data-card="1" data-border-hover="rgba(255,255,255,0.20)" style="position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.04);transition:border-color .25s ease,box-shadow .35s ease">
                 <div data-preview="1" style="position:relative;height:180px;overflow:hidden;background:#0A0A0C">
                   <div style="position:absolute;inset:0;background:linear-gradient(155deg,{{ t.hex }} 0%,rgba(10,10,12,0.92) 78%)"></div>
                   <div style="position:absolute;inset:0;background:radial-gradient(280px circle at 24% 8%,rgba(255,255,255,0.20),rgba(255,255,255,0) 62%)"></div>
@@ -487,7 +809,7 @@
               <div style="display:flex;gap:10px"><div style="height:44px;padding:0 20px;display:flex;align-items:center;border-radius:8px;background:#7c6dff;font-size:14px;font-weight:600">Start free</div><div style="height:44px;padding:0 18px;display:flex;align-items:center;border-radius:8px;border:1px solid rgba(255,255,255,0.16);font-size:14px">Read the docs</div></div>
             </div>
             <div style="position:relative;border-radius:20px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.18);padding:18px;overflow:hidden">
-              <div data-anim="1" style="position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0) 100%);animation:sweep 8s cubic-bezier(.4,0,.2,1) infinite"></div>
+              <div data-anim="1" style="position:absolute;top:0;left:0;width:120px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0) 100%);opacity:0;animation:sweep 8s cubic-bezier(.4,0,.2,1) infinite"></div>
               <div style="position:relative;display:flex;flex-direction:column;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:12.5px">
                 <div style="display:flex;justify-content:space-between;color:rgba(244,242,239,0.72);font-size:10.5px;letter-spacing:0.12em">NOVA-3-SMALL<span>40ms</span></div>
                 <div style="padding:12px;border-radius:8px;background:rgba(0,0,0,0.35);color:rgba(244,242,239,0.8);line-height:1.7">&gt; summarise this contract in three bullets</div>
@@ -685,29 +1007,35 @@
       <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A857D">ten archetypes, ten palettes, ten different motions — no two share a silhouette</span>
     </div>
 
-    <div style="width:1440px;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div style="width:1440px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">landing — Nova AI</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: centred stack + glass panel right</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0B0A14">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0B0A14">
           <div data-anim="1" style="position:absolute;width:600px;height:600px;left:-100px;top:-220px;border-radius:50%;background:radial-gradient(circle,rgba(124,109,255,0.6),rgba(124,109,255,0) 62%);filter:blur(80px);animation:mesh1 20s ease-in-out infinite"></div>
-          <div style="position:relative;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+          <div style="position:relative;height:100%;box-sizing:border-box;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
             <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:14px;font-weight:700">nova</span><span style="height:22px;padding:0 10px;display:flex;align-items:center;border-radius:5px;background:#7c6dff;font-size:11px;font-weight:600">Get API key</span></div>
             <div style="font-family:'Familjen Grotesk',sans-serif;font-size:38px;font-weight:700;letter-spacing:-0.035em;line-height:1">Ship the model,<br>not the marketing</div>
             <div style="display:flex;gap:14px;margin-top:4px">
               <div style="flex:1;font-size:12.5px;color:rgba(244,242,239,0.74);line-height:1.55">40ms first token. Open weights, your infrastructure.</div>
               <div style="width:180px;border-radius:14px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.06);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.18);padding:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:rgba(244,242,239,0.75);position:relative;overflow:hidden">
-                <div data-anim="1" style="position:absolute;top:0;left:0;width:80px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,0.14),rgba(255,255,255,0));animation:sweep 6s cubic-bezier(.4,0,.2,1) infinite"></div>
+                <div data-anim="1" style="position:absolute;top:0;left:0;width:80px;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,0.14),rgba(255,255,255,0));opacity:0;animation:sweep 6s cubic-bezier(.4,0,.2,1) infinite"></div>
                 <div style="position:relative;line-height:1.8">&gt; nova run<br><span style="color:#9b90ff">✓ 40ms · nova-3-small</span></div>
               </div>
             </div>
+            <div style="margin-top:4px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+              <div style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.05)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#9b90ff">OPEN WEIGHTS</div><div style="font-size:11.5px;line-height:1.5;color:rgba(244,242,239,0.74);margin-top:5px">Bring your own, or start from ours.</div></div>
+              <div style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.05)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#9b90ff">PER TOKEN</div><div style="font-size:11.5px;line-height:1.5;color:rgba(244,242,239,0.74);margin-top:5px">No seats, no minimum spend.</div></div>
+              <div style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.05)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#9b90ff">EU HOSTED</div><div style="font-size:11.5px;line-height:1.5;color:rgba(244,242,239,0.74);margin-top:5px">Frankfurt and Dublin regions.</div></div>
+            </div>
+            <div style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:rgba(244,242,239,0.6)"><span>TRUSTED BY 400+ TEAMS</span><span style="color:#9b90ff">SOC 2 TYPE II</span></div>
           </div>
         </div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">dashboard — Orbit</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: left rail + KPI row + one chart</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#08120F;display:grid;grid-template-columns:132px 1fr">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#08120F;display:grid;grid-template-columns:132px 1fr">
           <div style="border-right:1px solid rgba(255,255,255,0.07);padding:16px 12px;display:flex;flex-direction:column;gap:9px">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#22b8a6;letter-spacing:0.06em">ORBIT</div>
             <div style="height:24px;border-radius:6px;background:rgba(34,184,166,0.16);border:1px solid rgba(34,184,166,0.3)"></div>
@@ -724,7 +1052,7 @@
             <div style="flex:1;border-radius:10px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);padding:12px;position:relative;overflow:hidden">
               <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#8A857D;margin-bottom:8px">ACTIVATION · 30D</div>
               <svg width="100%" height="128" viewBox="0 0 420 128" preserveAspectRatio="none" fill="none">
-                <polyline data-anim="1" points="0,104 42,88 84,94 126,62 168,72 210,44 252,52 294,28 336,36 378,14 418,20" stroke="#22b8a6" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="900" style="animation:drawIn 2.8s cubic-bezier(.4,0,.2,1) infinite alternate"></polyline>
+                <polyline points="0,104 42,88 84,94 126,62 168,72 210,44 252,52 294,28 336,36 378,14 418,20" stroke="#22b8a6" stroke-width="2.5" stroke-linejoin="round" fill="none"></polyline><polyline data-anim="1" points="0,104 42,88 84,94 126,62 168,72 210,44 252,52 294,28 336,36 378,14 418,20" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linejoin="round" fill="none" stroke-dasharray="34 420" style="animation:dashFlow 4s linear infinite"></polyline>
                 <polyline points="0,116 42,110 84,112 126,98 168,102 210,90 252,94 294,84 336,88 378,78 418,80" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" stroke-dasharray="4 4"></polyline>
               </svg>
             </div>
@@ -734,7 +1062,7 @@
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">portfolio — Studio 27</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: oversized italic serif + tall image column</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#140807;display:grid;grid-template-columns:1fr 200px">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#140807;display:grid;grid-template-columns:1fr 200px">
           <div style="padding:22px;display:flex;flex-direction:column;justify-content:space-between">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:rgba(244,242,239,0.72)">STUDIO 27 · STILLS &amp; MOTION</div>
             <div>
@@ -755,7 +1083,7 @@
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">commerce — Arcadia</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: 2×2 product grid + price rail + marquee</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#12100A;display:flex;flex-direction:column">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#12100A;display:flex;flex-direction:column">
           <div style="padding:16px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.07)">
             <span style="font-family:'Familjen Grotesk',sans-serif;font-size:16px;font-weight:600;letter-spacing:0.02em">ARCADIA</span>
             <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:rgba(244,242,239,0.72)">CART · 2</span>
@@ -776,29 +1104,34 @@
       </div>
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">data grid — Finora</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: frozen first column + scanning row</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#080C18">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#080C18">
           <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.07)">
             <span style="font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;letter-spacing:-0.01em">Finora</span>
             <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#7f9cf5">LEDGER · SEP 2026</span>
           </div>
           <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:10px 18px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#8A857D;border-bottom:1px solid rgba(255,255,255,0.07)"><span>COUNTERPARTY</span><span>AMOUNT</span><span>SETTLED</span><span>STATUS</span></div>
-          <div style="position:relative;height:220px;overflow:hidden">
+          <div style="position:relative;height:300px;overflow:hidden">
             <div data-anim="1" style="position:absolute;left:0;right:0;top:0;height:26px;background:linear-gradient(90deg,rgba(59,110,240,0.22),rgba(59,110,240,0.04));border-top:1px solid rgba(59,110,240,0.35);animation:scanRow 5.5s cubic-bezier(.4,0,.2,1) infinite"></div>
             <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Aureus Trading</span><span>£412,900</span><span>09:14</span><span style="color:#62D19A">cleared</span></div>
             <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Northwind Ltd</span><span>£88,140</span><span>09:22</span><span style="color:#62D19A">cleared</span></div>
             <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Kestrel Capital</span><span>£1,204,000</span><span>—</span><span style="color:#E8B04B">pending</span></div>
             <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Meridian FX</span><span>£63,020</span><span>10:03</span><span style="color:#62D19A">cleared</span></div>
             <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Halden &amp; Co</span><span>£297,500</span><span>10:41</span><span style="color:#62D19A">cleared</span></div>
-            <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF"><span>Vale Partners</span><span>£19,880</span><span>11:07</span><span style="color:#62D19A">cleared</span></div>
+            <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Vale Partners</span><span>£19,880</span><span>11:07</span><span style="color:#62D19A">cleared</span></div>
+            <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Orrin Bros</span><span>£540,300</span><span>11:26</span><span style="color:#62D19A">cleared</span></div>
+            <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Saltire Asset</span><span>£77,410</span><span>—</span><span style="color:#E8B04B">pending</span></div>
+            <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Pell &amp; Vance</span><span>£3,900</span><span>12:02</span><span style="color:#62D19A">cleared</span></div>
+            <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF;border-bottom:1px solid rgba(255,255,255,0.05)"><span>Corvid Markets</span><span>£212,650</span><span>12:18</span><span style="color:#62D19A">cleared</span></div>
+            <div style="position:relative;display:grid;grid-template-columns:1.2fr 1fr 1fr 0.8fr;padding:7px 18px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F4F2EF"><span>Lunar Freight</span><span>£46,120</span><span>12:44</span><span style="color:#62D19A">cleared</span></div>
             <div style="position:absolute;left:0;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.10)"></div>
           </div>
-          <div style="position:absolute;left:0;right:0;bottom:0;padding:10px 18px;border-top:1px solid rgba(255,255,255,0.07);background:#080C18;display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8A857D"><span>6 of 1,284 rows</span><span style="color:#7f9cf5">net £2.09m</span></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:10px 18px;border-top:1px solid rgba(255,255,255,0.07);background:#080C18;display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8A857D"><span>11 of 1,284 rows</span><span style="color:#7f9cf5">net £2.09m</span></div>
         </div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">board — Cadence</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: three columns, one card in flight</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0B0B18">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0B0B18">
           <div style="padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.07)"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600">Cadence</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#a5a8fb">SPRINT 42 · DAY 6</span></div>
           <div style="padding:16px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;height:250px;box-sizing:border-box">
             <div style="display:flex;flex-direction:column;gap:8px"><div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#8A857D">TODO · 4</div>
@@ -821,13 +1154,13 @@
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">docs — Mono</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: three columns, ToC marker walking</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0E1013;display:grid;grid-template-columns:120px 1fr 116px">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0E1013;display:grid;grid-template-columns:120px 1fr 116px">
           <div style="border-right:1px solid rgba(255,255,255,0.07);padding:16px 12px;display:flex;flex-direction:column;gap:7px;font-size:11.5px;color:rgba(244,242,239,0.72)">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#F4F2EF;letter-spacing:0.04em">mono/docs</div>
             <div style="height:1px;background:rgba(255,255,255,0.08);margin:4px 0"></div>
             <div>Install</div><div style="color:#F4F2EF">Configuration</div><div>CLI reference</div><div>Themes</div><div>Deploy</div>
           </div>
-          <div style="padding:18px;display:flex;flex-direction:column;gap:10px">
+          <div style="padding:18px;display:flex;flex-direction:column;gap:10px;height:100%;box-sizing:border-box">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8A857D">CONFIGURATION</div>
             <div style="font-family:'Familjen Grotesk',sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">mono.config.ts</div>
             <div style="font-size:11.5px;line-height:1.6;color:rgba(244,242,239,0.72)">Every option is optional. Values below are the defaults applied when the key is absent.</div>
@@ -837,6 +1170,11 @@
               <div style="display:flex"><span style="color:#8A857D">3</span>&nbsp; &nbsp;<span data-anim="1" style="display:inline-block;overflow:hidden;white-space:nowrap;animation:typeOut 2.4s steps(26,end) infinite alternate">search: { command: true },</span></div>
               <div><span style="color:#8A857D">4</span>&nbsp; }</div>
             </div>
+            <div style="display:flex;gap:10px;margin-top:2px">
+              <div style="flex:1;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.03)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#8A857D">PREVIOUS</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">← Install</div></div>
+              <div style="flex:1;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.03);text-align:right"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#8A857D">NEXT</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">CLI reference →</div></div>
+            </div>
+            <div style="margin-top:auto;display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.07);font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8A857D"><span>Edit this page</span><span>·</span><span>Updated 3 days ago</span></div>
           </div>
           <div style="border-left:1px solid rgba(255,255,255,0.07);padding:16px 10px;position:relative;font-size:10.5px;color:rgba(244,242,239,0.72);display:flex;flex-direction:column;gap:10px">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#8A857D">ON THIS PAGE</div>
@@ -850,22 +1188,22 @@
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">canvas — Flux</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: dotted grid, nodes joined by flowing edges</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0C0716;background-image:radial-gradient(rgba(255,255,255,0.10) 1px,transparent 1px);background-size:18px 18px">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#0C0716;background-image:radial-gradient(rgba(255,255,255,0.10) 1px,transparent 1px);background-size:18px 18px">
           <div data-anim="1" style="position:absolute;width:520px;height:520px;right:-140px;bottom:-220px;border-radius:50%;background:radial-gradient(circle,rgba(155,92,240,0.5),rgba(155,92,240,0) 62%);filter:blur(80px);animation:mesh2 24s ease-in-out infinite"></div>
           <div style="position:absolute;inset:0;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;height:44px;box-sizing:border-box;border-bottom:1px solid rgba(255,255,255,0.07)"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600">Flux</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#c4a1f7">RUN · 3 NODES</span></div>
-          <svg width="660" height="340" viewBox="0 0 660 340" fill="none" style="position:absolute;left:0;top:0">
-            <path d="M150 118 C 220 118, 230 176, 300 176" stroke="rgba(196,161,247,0.5)" stroke-width="2" stroke-dasharray="8 8" data-anim="1" style="animation:dashFlow 1.4s linear infinite"></path>
-            <path d="M420 176 C 470 176, 480 246, 540 246" stroke="rgba(196,161,247,0.5)" stroke-width="2" stroke-dasharray="8 8" data-anim="1" style="animation:dashFlow 1.4s linear infinite"></path>
+          <svg viewBox="0 0 660 437" preserveAspectRatio="none" fill="none" style="position:absolute;inset:0;width:100%;height:100%">
+            <path d="M150 140 C 220 140, 230 198, 300 198" stroke="rgba(196,161,247,0.5)" stroke-width="2" stroke-dasharray="8 8" data-anim="1" style="animation:edgeFlow 1.4s linear infinite"></path>
+            <path d="M420 198 C 470 198, 480 290, 540 290" stroke="rgba(196,161,247,0.5)" stroke-width="2" stroke-dasharray="8 8" data-anim="1" style="animation:edgeFlow 1.4s linear infinite"></path>
           </svg>
-          <div style="position:absolute;left:24px;top:96px;width:126px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.07);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.18)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#c4a1f7">TRIGGER</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">New form entry</div></div>
-          <div data-anim="1" style="position:absolute;left:300px;top:152px;width:120px;padding:10px;border-radius:10px;border:1px solid rgba(155,92,240,0.45);background:rgba(155,92,240,0.18);animation:nodePulse 2.6s ease-out infinite"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#c4a1f7">TRANSFORM</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">Classify intent</div></div>
-          <div style="position:absolute;left:540px;top:222px;width:100px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.07);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.18)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#c4a1f7">OUTPUT</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">Post to Slack</div></div>
+          <div style="position:absolute;left:24px;top:118px;width:126px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.07);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.18)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#c4a1f7">TRIGGER</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">New form entry</div></div>
+          <div data-anim="1" style="position:absolute;left:300px;top:174px;width:120px;padding:10px;border-radius:10px;border:1px solid rgba(155,92,240,0.45);background:rgba(155,92,240,0.18);animation:nodePulse 2.6s ease-out infinite"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#c4a1f7">TRANSFORM</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">Classify intent</div></div>
+          <div style="position:absolute;left:540px;top:266px;width:100px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.07);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,0.18)"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#c4a1f7">OUTPUT</div><div style="font-size:11.5px;color:#F4F2EF;margin-top:4px">Post to Slack</div></div>
         </div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">launch — Launchpad</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: centred stack over a counting clock</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#140A06;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#140A06;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center">
           <div data-anim="1" style="position:absolute;width:620px;height:620px;left:50%;margin-left:-310px;top:-260px;border-radius:50%;background:radial-gradient(circle,rgba(240,96,60,0.55),rgba(240,96,60,0) 62%);filter:blur(90px);animation:mesh1 21s ease-in-out infinite"></div>
           <div style="position:relative;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.2em;color:rgba(244,242,239,0.74)">FRIDAY · 09:00 GMT</div>
           <div style="position:relative;font-family:'Familjen Grotesk',sans-serif;font-size:44px;font-weight:700;letter-spacing:-0.035em;line-height:1">One page.<br>One deadline.</div>
@@ -881,7 +1219,7 @@
 
       <div style="display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600">editorial — Zenith</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#8A857D">silhouette: one narrow measure + drop cap</span></div>
-        <div style="position:relative;height:340px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#12100C;display:grid;grid-template-columns:1fr 150px">
+        <div style="position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);background:#12100C;display:grid;grid-template-columns:1fr 150px">
           <div style="padding:20px 22px;display:flex;flex-direction:column;gap:12px">
             <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.18em;color:rgba(244,242,239,0.74)"><span>ZENITH</span><span>ISSUE 14</span></div>
             <div data-anim="1" style="font-family:'Familjen Grotesk',sans-serif;font-size:30px;font-weight:400;letter-spacing:-0.02em;line-height:1.12;color:#F4F2EF;animation:wipeUp 900ms cubic-bezier(.16,1,.3,1) both">The quiet return of the long page</div>
@@ -913,10 +1251,10 @@ class Component extends DCLogic {
   renderVals() {
     const c = (hex, name, line, tagline, author, rating, category, price) => ({
       hex, name, line, tagline, author, rating, category, price,
-      priceColor: price === "Free" ? "#D4F250" : "#A8A39B"
+      priceColor: price === "Free" ? "#D4F250" : "#A8A39B",
+      priceColorLight: price === "Free" ? "#5F7A0E" : "#5B564F"
     });
-    return {
-      grid: [
+    const grid = [
         c("#7c6dff", "Nova AI", "Ship the model", "AI startup launch page with a live model demo", "Mira Okonkwo", "4.8", "AI", "Free"),
         c("#22b8a6", "Orbit", "Everything, measured", "Product analytics dashboard, six chart types", "Ilya Brandt", "4.7", "Dashboard", "$29"),
         c("#b4423f", "Studio 27", "Light, held still", "Photographic portfolio with mask-reveal galleries", "Studio 27", "4.9", "Portfolio", "$19"),
@@ -927,8 +1265,8 @@ class Component extends DCLogic {
         c("#9b5cf0", "Flux", "Wire it up", "Node-editor canvas for automation flows", "Petra Kovac", "4.6", "AI", "$49"),
         c("#f0603c", "Launchpad", "Go live Friday", "One-page product launch with a countdown", "Ravi Menon", "4.3", "Landing page", "Free"),
         c("#8b7355", "Zenith", "The long page", "Editorial magazine with a single reading measure", "Zenith Press", "4.7", "Editorial", "$19")
-      ]
-    };
+    ];
+    return { grid, gridLight: grid.slice(0, 6) };
   }
 
   componentDidMount() {
@@ -942,7 +1280,10 @@ class Component extends DCLogic {
           el.style.transform = `perspective(1000px) rotateY(${(px - 0.5) * 8}deg) rotateX(${(0.5 - py) * 8}deg) translateY(-6px)`;
           if (spec) { spec.style.opacity = "1"; spec.style.background = `radial-gradient(320px circle at ${px * 100}% ${py * 100}%,rgba(255,255,255,0.12),rgba(255,255,255,0) 60%)`; }
           const card = el.querySelector("[data-card]");
-          if (card) { card.style.borderColor = "rgba(255,255,255,0.20)"; card.style.boxShadow = "0 32px 64px -24px rgba(0,0,0,0.7)"; }
+          if (card) {
+            card.style.borderColor = card.dataset.borderHover || "rgba(255,255,255,0.20)";
+            card.style.boxShadow = card.dataset.shadowHover || "0 32px 64px -24px rgba(0,0,0,0.7)";
+          }
           const ha = el.querySelector("[data-hoveractions]");
           if (ha) ha.style.opacity = "1";
         });
@@ -950,7 +1291,10 @@ class Component extends DCLogic {
           el.style.transform = "";
           if (spec) spec.style.opacity = "0";
           const card = el.querySelector("[data-card]");
-          if (card) { card.style.borderColor = "rgba(255,255,255,0.09)"; card.style.boxShadow = "none"; }
+          if (card) {
+            card.style.borderColor = card.dataset.borderRest || "rgba(255,255,255,0.09)";
+            card.style.boxShadow = card.dataset.shadowRest || "none";
+          }
           const ha = el.querySelector("[data-hoveractions]");
           if (ha) ha.style.opacity = "0";
         });
@@ -988,8 +1332,10 @@ class Component extends DCLogic {
         t.style.color = "#F4F2EF";
       }));
 
+      // Rest = the finished frame, never keyframe 0%. Removing the animation
+      // drops each element to its authored base style, which IS the rest state.
       if (this.props.ambientMotion === false) {
-        root.querySelectorAll("[data-anim]").forEach(el => { el.style.animationPlayState = "paused"; });
+        root.querySelectorAll("[data-anim]").forEach(el => { el.style.animation = "none"; });
       }
       const blur = this.props.glassBlur;
       if (typeof blur === "number") {

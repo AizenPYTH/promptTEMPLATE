@@ -45,7 +45,7 @@ export function FavoriteButton({
         className={cn(
           "inline-flex h-9.5 items-center justify-center gap-2 rounded-control border px-4 text-sm font-medium transition-colors",
           active
-            ? "border-accent-line bg-accent-soft text-accent"
+            ? "border-select-line bg-select-bg text-select-fg"
             : "border-line text-ink hover:bg-surface-3 hover:border-line-strong",
           className,
         )}
@@ -67,7 +67,7 @@ export function FavoriteButton({
         variant === "floating"
           ? "size-8 border border-line bg-[color-mix(in_srgb,var(--surface)_88%,transparent)] backdrop-blur-sm hover:border-line-strong"
           : "size-8 hover:bg-surface-3",
-        active ? "text-accent" : "text-muted hover:text-ink",
+        active ? "text-select-fg" : "text-muted hover:text-ink",
         className,
       )}
     >

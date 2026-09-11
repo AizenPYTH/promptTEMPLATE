@@ -10,23 +10,32 @@
 ------------------------------------------------------------------ */
 
 :root {
-  /* Light is reserved from the handoff; citron fails on light and is replaced. */
-  --canvas: #f7f6f3;
-  --canvas-raised: #ffffff;
+  /* Designed light mode — a value swap on the dark token names. */
+  --canvas: #f2f0ec;
+  --canvas-raised: #f7f6f3;
   --surface-1: rgba(20, 19, 18, 0.03);
-  --surface-2: rgba(20, 19, 18, 0.05);
-  --surface-3: rgba(20, 19, 18, 0.08);
+  --surface-2: #ffffff;
+  --surface-3: rgba(20, 19, 18, 0.06);
   --border-1: rgba(20, 19, 18, 0.1);
   --border-2: rgba(20, 19, 18, 0.18);
+  --border-hover: rgba(20, 19, 18, 0.22);
   --text-primary: #14130f;
   --text-secondary: #5b564f;
   --text-muted: #6f6a63;
-  --text-faint: #b4afa7;
+  --text-faint: rgba(20, 19, 18, 0.3);
   --accent: #5f7a0e;
   --accent-hover: #4e650b;
   --accent-contrast: #ffffff;
-  --positive: #1a7f5a;
-  --warning: #9a6212;
+  --positive: #2f7d55;
+  --warning: #8a6212;
+
+  /* Accent is reserved to the primary CTA and the focus ring in light mode, so
+     selected filters, rail items and segments resolve to ink instead. */
+  --select-bg: var(--surface-3);
+  --select-fg: var(--text-primary);
+  --select-line: var(--border-2);
+  --fill-bg: var(--text-primary);
+  --fill-fg: #ffffff;
 
   --mesh-a: rgba(31, 111, 106, 0.14);
   --mesh-b: rgba(75, 63, 143, 0.12);
@@ -42,12 +51,11 @@
   --e1: 0 1px 2px rgba(20, 19, 18, 0.08);
   --e2: 0 8px 24px -8px rgba(20, 19, 18, 0.16);
   --e3: 0 32px 64px -24px rgba(20, 19, 18, 0.24);
+  --shadow-hover: 0 24px 48px -20px rgba(20, 19, 18, 0.3);
   --accent-shadow: 0 8px 24px -8px rgba(95, 122, 14, 0.34);
 
   --overlay: rgba(20, 19, 18, 0.4);
   --grain-opacity: 0.03;
-  /* Light-mode surfaces are pale, so a white sweep or hover edge disappears. */
-  --hover-border: rgba(20, 19, 18, 0.28);
   --sheen-tint: rgba(20, 19, 18, 0.1);
   color-scheme: light;
 }
@@ -60,6 +68,7 @@
   --surface-3: rgba(255, 255, 255, 0.06);
   --border-1: rgba(255, 255, 255, 0.08);
   --border-2: rgba(255, 255, 255, 0.14);
+  --border-hover: rgba(255, 255, 255, 0.2);
   --text-primary: #f4f2ef;
   --text-secondary: #a8a39b;
   --text-muted: #8a857d;
@@ -69,6 +78,12 @@
   --accent-contrast: #14180a;
   --positive: #62d19a;
   --warning: #e8b04b;
+
+  --select-bg: color-mix(in srgb, var(--accent) 12%, transparent);
+  --select-fg: var(--accent);
+  --select-line: color-mix(in srgb, var(--accent) 40%, transparent);
+  --fill-bg: var(--accent);
+  --fill-fg: var(--accent-contrast);
 
   --mesh-a: rgba(31, 111, 106, 0.34);
   --mesh-b: rgba(75, 63, 143, 0.3);
@@ -84,11 +99,11 @@
   --e1: 0 1px 2px rgba(0, 0, 0, 0.4);
   --e2: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
   --e3: 0 32px 64px -24px rgba(0, 0, 0, 0.7);
+  --shadow-hover: 0 32px 64px -24px rgba(0, 0, 0, 0.7);
   --accent-shadow: 0 8px 24px -8px rgba(212, 242, 80, 0.4);
 
   --overlay: rgba(4, 4, 6, 0.72);
   --grain-opacity: 0.05;
-  --hover-border: rgba(255, 255, 255, 0.2);
   --sheen-tint: rgba(255, 255, 255, 0.16);
   color-scheme: dark;
 }
@@ -110,7 +125,12 @@
   --color-accent-ink: var(--accent-contrast);
   --color-accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
   --color-accent-line: color-mix(in srgb, var(--accent) 40%, transparent);
-  --color-hover-border: var(--hover-border);
+  --color-border-hover: var(--border-hover);
+  --color-select-bg: var(--select-bg);
+  --color-select-fg: var(--select-fg);
+  --color-select-line: var(--select-line);
+  --color-fill-bg: var(--fill-bg);
+  --color-fill-fg: var(--fill-fg);
   --color-positive: var(--positive);
   --color-warning: var(--warning);
 
@@ -127,6 +147,7 @@
   --shadow-e1: var(--e1);
   --shadow-e2: var(--e2);
   --shadow-e3: var(--e3);
+  --shadow-hover: var(--shadow-hover);
   --shadow-accent: var(--accent-shadow);
 
   --text-label: 11px;
@@ -335,6 +356,23 @@
    iframe.
 ------------------------------------------------------------------ */
 @layer utilities {
+  /* A dark preview butted against a white card reads as a hole punched in the
+     sheet. Matting it turns the dark rectangle into a framed image sitting on
+     the card. Dark mode has no value jump to resolve, so it stays full-bleed. */
+  .preview-mat {
+    margin: 8px 8px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 0 1px rgba(20, 19, 18, 0.55),
+      0 2px 6px -2px rgba(20, 19, 18, 0.3);
+  }
+  .dark .preview-mat {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
   .preview-frame {
     container-type: inline-size;
     position: relative;

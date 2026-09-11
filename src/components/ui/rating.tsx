@@ -25,7 +25,7 @@ export function Rating({
             key={step}
             className={cn(
               starSize,
-              step <= rounded ? "fill-accent text-accent" : "fill-transparent text-line-strong",
+              step <= rounded ? "fill-select-fg text-select-fg" : "fill-transparent text-line-strong",
             )}
             strokeWidth={1.5}
           />

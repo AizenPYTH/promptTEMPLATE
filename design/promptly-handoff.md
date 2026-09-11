@@ -37,9 +37,43 @@ Ambient mesh (three blobs, no others):
 | mesh-b | `#4B3F8F` violet | `0.30` | `120px` | 34s |
 | mesh-c | `#7A5A22` amber | `0.25` | `130px` | 41s |
 
-### 1.2 Colour — light (pass two)
+### 1.2 Colour — light (designed: hero + explorateur)
 
-Not derived by inversion. Reserved values, to be designed against the same contrast standard: canvas `#F7F6F3`, surfaces `#FFFFFF` / `rgba(20,19,18,0.03)` / `rgba(20,19,18,0.06)`, borders `rgba(20,19,18,0.10)` / `rgba(20,19,18,0.18)`, text `#14130F` / `#5B564F` / `#6F6A63`, accent `#5F7A0E` on white (accent-contrast `#FFFFFF`) — citron at `#D4F250` fails on light and is replaced, not reused. Mesh opacities drop to `0.14 / 0.12 / 0.10`.
+**Light mode is a value swap on the existing token names — no new names, no new code.** Same keys as §1.1:
+
+| Token | Dark | Light |
+|---|---|---|
+| `canvas` | `#08080A` | `#F2F0EC` |
+| `canvas-raised` | `#0C0B0A` | `#F7F6F3` |
+| `surface-1` | `rgba(255,255,255,0.03)` | `rgba(20,19,18,0.03)` |
+| `surface-2` | `rgba(255,255,255,0.04)` | `#FFFFFF` |
+| `surface-3` | `rgba(255,255,255,0.06)` | `rgba(20,19,18,0.06)` |
+| `border-1` | `rgba(255,255,255,0.08)` | `rgba(20,19,18,0.10)` |
+| `border-2` | `rgba(255,255,255,0.14)` | `rgba(20,19,18,0.18)` |
+| `text-primary` | `#F4F2EF` | `#14130F` |
+| `text-secondary` | `#A8A39B` | `#5B564F` |
+| `text-muted` | `#8A857D` | `#6F6A63` |
+| `text-faint` | `#3F3C38` | `rgba(20,19,18,0.30)` |
+| `accent` | `#D4F250` | `#5F7A0E` |
+| `accent-hover` | `#E4FF7E` | `#4E650B` |
+| `accent-contrast` | `#14180A` | `#FFFFFF` |
+| `positive` | `#62D19A` | `#2F7D55` |
+| `warning` | `#E8B04B` | `#8A6212` |
+
+**Two token names are NEW — that is new code, say so up front:**
+
+| New token | Dark | Light | Why it has to exist |
+|---|---|---|---|
+| `border-hover` | `rgba(255,255,255,0.20)` | `rgba(20,19,18,0.22)` | The card hover border was hard-coded white. On a white card in light mode it is invisible. Hover border can never be derived from `border-1` by opacity — it changes direction with the theme. |
+| `shadow-hover` | `0 32px 64px -24px rgba(0,0,0,0.70)` | `0 24px 48px -20px rgba(20,19,18,0.30)` | Dark mode lifts a card with a deeper void; light mode lifts it with a cast shadow. Same role, incompatible values. |
+
+In the artboards both are read off the card element (`data-border-hover` / `data-shadow-hover`), never from a literal in the hover handler — that is the shape the fix should take in code.
+
+**Accent is reserved to the primary CTA and the focus ring in light mode.** Active filters, active rail items and selected segments use ink (`text-primary` fill or a `surface-3` tint), not accent. Olive `#5F7A0E` on white is 4.6:1 — it passes for the button label and the ring, and it is the only saturated chrome element on the page. Citron `#D4F250` is not reused: it fails on light and has no place there.
+
+Mesh opacities in light: `0.14 / 0.12 / 0.10` (from `0.34 / 0.30 / 0.25`).
+
+**The composition problem light mode actually has to solve: dark previews on a light canvas.** Previews keep their own dark grounds in both themes — a preview is a picture of someone else's site, not our surface, and lightening Nova AI would misrepresent the template being sold. So in light mode a card is a white sheet holding a dark image, and butting the two edge-to-edge reads as a hole punched in the card. The fix is a **mat**: the preview is inset 8px on three sides inside the card, radius 10px, with `inset 0 0 0 1px rgba(20,19,18,0.55)` and `0 2px 6px -2px rgba(20,19,18,0.30)`. The dark rectangle then reads as a framed image sitting on the sheet. Dark mode keeps the full-bleed preview — there is no value jump to resolve.
 
 ### 1.3 Typography
 
@@ -109,6 +143,14 @@ Rules:
 
 ## 3. Motion table
 
+**Rest state is the FINISHED frame, never keyframe 0%.** A paused CSS animation renders its first keyframe, so any effect authored as an entrance (0% = invisible, 0% = undrawn, 0% = squashed) renders *invisible* at rest. Two rules follow, and both are already applied in the artboards:
+
+1. **Looping effects are authored rest-finished**: 0% and 100% are the settled state and the excursion happens in the middle. `barGrow` is `scaleY(1) → .62 → 1`, not `.15 → 1`. `scanRow` starts and ends parked at the top row.
+2. **A chart line is never animated by `stroke-dashoffset` on the line itself.** The line is statically drawn; a second overlaid path with a short dash carries the motion (`dashFlow`). At rest the chart is drawn — which is what a preview at rest must show.
+3. **Pausing sets `animation: none`, not `animation-play-state: paused`.** The element then falls to its authored base style, which is the finished frame. This requires base styles to BE the finished frame: the light-sweep strip is `opacity:0` in its base style, and the two trailing states of the hero loop are `opacity:0` — so a paused hero shows the DISCOVER frame, not three stacked states.
+
+Entrance effects (#1, #2, #3) are exempt: they fire once and their finished state is the element's normal style, so `animation:none` lands correctly on it.
+
 Two curves only: **out** `cubic-bezier(.16,1,.3,1)` for anything entering or responding to a pointer, **inout** `cubic-bezier(.4,0,.2,1)` for anything looping. Duration bands: micro 120–200ms, UI 240–400ms, entrance 600–900ms, ambient 6–41s. Transform and opacity only (plus `clip-path`, `stroke-dashoffset`, `filter: blur` on the palette scrim). Entrances fire once.
 
 | # | Effect | Trigger | Property | From → To | Duration | Easing | Repeats | Reduced motion |
@@ -164,7 +206,9 @@ Scope is now **ten templates, ten archetypes** — one preview per template, all
 Shared contract, every archetype:
 
 - **Palette hooks** — exactly three: `canvas` (template's darkest), `accent` (template's hex), `gradient-stop` (accent at 18% lightness). Chrome greys, borders and text greys never change, so twenty-three previews read as one family without reading as one design.
-- **Small state** — frame one only: mesh at 0%, charts drawn, marquees parked, no caret. Motion starts 120ms after hover or focus, stops on leave.
+- **Geometry is fixed: 1120×700, 16:10**, scaled by container query — never by fixed pixel heights. Any new preview support must hold 16:10 or it crops. The specimens in 1g are authored with `aspect-ratio: 16/10` for this reason.
+- **Dark ground in both themes.** The preview is the template's own design, not our surface. In light mode it is matted (see §1.2), not lightened.
+- **Rest state** — the finished frame: charts drawn, counters at their value, marquees parked, no caret. Motion starts 120ms after hover or focus and stops on leave, returning to the same finished frame.
 - **Large state** — everything runs, plus a Pause motion control.
 
 | Archetype | Composition | Type treatment | Internal motion | Recognisable at 320px by |
@@ -223,6 +267,10 @@ Large preview (detail page): 560px tall, `r-panel`, device switcher desktop/tabl
 7. **The `data-faint` code-gutter grey (`#3F3C38`) is below 4.5:1 on purpose.** Line numbers are decorative; they are `aria-hidden` and `user-select: none`, and no information exists only there.
 8. **Filter rail is 264px, wider than the 240px sidebar the dashboard archetype uses.** Five filter groups need the room; the two are not the same component.
 
-## Still to do (pass two)
+## Already built in code — design against it, do not reinvent
 
-Light theme designed to this standard · mobile 390 (hero, explorer with filter sheet, detail above fold, prompt section) · remaining eight preview archetypes · collections index + one collection · category page · pricing · about, submit, favorites empty, 404 · responsive notes at 1280 / 1024 / 768 with per-effect survive/simplify/drop.
+Mobile filter sheet with a live result count · filters synced to the URL · command palette · full prompt viewer · device switcher and pause control on the large preview. The artboards dress these; they do not propose new mechanics for them.
+
+## Still to do
+
+Light mode for detail + prompt + palette (hero and explorateur are designed) · collections index + one collection · category page · pricing · about, submit, favorites empty, 404 · responsive notes at 1280 / 1024 / 768 with per-effect survive/simplify/drop.
