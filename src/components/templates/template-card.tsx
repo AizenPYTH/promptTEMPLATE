@@ -75,7 +75,7 @@ export function TemplateCard({
       <article
         className={cn(
           "group relative flex h-full flex-col overflow-hidden rounded-card border bg-surface-2 transition-[border-color,background-color] duration-300",
-          "border-line hover:border-[rgba(255,255,255,0.20)] hover:bg-surface-3 focus-within:border-[rgba(255,255,255,0.20)]",
+          "border-line hover:border-hover-border hover:bg-surface-3 focus-within:border-hover-border",
         )}
       >
         <div className="relative overflow-hidden border-b border-line">

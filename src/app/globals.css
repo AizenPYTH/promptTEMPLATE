@@ -46,6 +46,9 @@
 
   --overlay: rgba(20, 19, 18, 0.4);
   --grain-opacity: 0.03;
+  /* Light-mode surfaces are pale, so a white sweep or hover edge disappears. */
+  --hover-border: rgba(20, 19, 18, 0.28);
+  --sheen-tint: rgba(20, 19, 18, 0.1);
   color-scheme: light;
 }
 
@@ -85,6 +88,8 @@
 
   --overlay: rgba(4, 4, 6, 0.72);
   --grain-opacity: 0.05;
+  --hover-border: rgba(255, 255, 255, 0.2);
+  --sheen-tint: rgba(255, 255, 255, 0.16);
   color-scheme: dark;
 }
 
@@ -105,6 +110,7 @@
   --color-accent-ink: var(--accent-contrast);
   --color-accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
   --color-accent-line: color-mix(in srgb, var(--accent) 40%, transparent);
+  --color-hover-border: var(--hover-border);
   --color-positive: var(--positive);
   --color-warning: var(--warning);
 
@@ -255,7 +261,7 @@
     inset: 0 auto 0 0;
     width: 36%;
     pointer-events: none;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+    background: linear-gradient(90deg, transparent, var(--sheen-tint), transparent);
     animation: sweep 7s var(--ease-inout) infinite;
   }
 
@@ -275,6 +281,9 @@
     transition: transform 500ms var(--ease-out);
     transform-style: preserve-3d;
   }
+  /* The specular only ever sits over a preview, and a preview is dark in both
+     themes — it is a picture of another site, not our surface. So white is
+     correct here in light mode too, and is deliberately not tokenised. */
   .specular {
     background: radial-gradient(
       380px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
